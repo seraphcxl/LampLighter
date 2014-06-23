@@ -1,0 +1,498 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		893CF24E1957CA2B006FF12D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 893CF24D1957CA2B006FF12D /* Cocoa.framework */; };
+		893CF2581957CA2B006FF12D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 893CF2561957CA2B006FF12D /* InfoPlist.strings */; };
+		893CF25A1957CA2B006FF12D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 893CF2591957CA2B006FF12D /* main.m */; };
+		893CF25E1957CA2B006FF12D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 893CF25C1957CA2B006FF12D /* Credits.rtf */; };
+		893CF2611957CA2B006FF12D /* DCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 893CF2601957CA2B006FF12D /* DCAppDelegate.m */; };
+		893CF2641957CA2B006FF12D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 893CF2621957CA2B006FF12D /* MainMenu.xib */; };
+		893CF2661957CA2B006FF12D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893CF2651957CA2B006FF12D /* Images.xcassets */; };
+		893CF26D1957CA2B006FF12D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 893CF26C1957CA2B006FF12D /* XCTest.framework */; };
+		893CF26E1957CA2B006FF12D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 893CF24D1957CA2B006FF12D /* Cocoa.framework */; };
+		893CF2761957CA2B006FF12D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 893CF2741957CA2B006FF12D /* InfoPlist.strings */; };
+		893CF2781957CA2B006FF12D /* Quartz2D_CoreImageDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 893CF2771957CA2B006FF12D /* Quartz2D_CoreImageDemoTests.m */; };
+		8950582619580ED3005B2C8C /* LampLighter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 893CF2BB1957CA93006FF12D /* LampLighter.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		893CF26F1957CA2B006FF12D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 893CF2421957CA2B006FF12D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 893CF2491957CA2B006FF12D;
+			remoteInfo = "Quartz2D&CoreImageDemo";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		893CF24A1957CA2B006FF12D /* Quartz2D&CoreImageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quartz2D&CoreImageDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		893CF24D1957CA2B006FF12D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		893CF2501957CA2B006FF12D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		893CF2511957CA2B006FF12D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		893CF2521957CA2B006FF12D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		893CF2551957CA2B006FF12D /* Quartz2D&CoreImageDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Quartz2D&CoreImageDemo-Info.plist"; sourceTree = "<group>"; };
+		893CF2571957CA2B006FF12D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		893CF2591957CA2B006FF12D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		893CF25B1957CA2B006FF12D /* Quartz2D&CoreImageDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Quartz2D&CoreImageDemo-Prefix.pch"; sourceTree = "<group>"; };
+		893CF25D1957CA2B006FF12D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		893CF25F1957CA2B006FF12D /* DCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCAppDelegate.h; sourceTree = "<group>"; };
+		893CF2601957CA2B006FF12D /* DCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCAppDelegate.m; sourceTree = "<group>"; };
+		893CF2631957CA2B006FF12D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		893CF2651957CA2B006FF12D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		893CF26B1957CA2B006FF12D /* Quartz2D&CoreImageDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quartz2D&CoreImageDemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		893CF26C1957CA2B006FF12D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		893CF2731957CA2B006FF12D /* Quartz2D&CoreImageDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Quartz2D&CoreImageDemoTests-Info.plist"; sourceTree = "<group>"; };
+		893CF2751957CA2B006FF12D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		893CF2771957CA2B006FF12D /* Quartz2D_CoreImageDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quartz2D_CoreImageDemoTests.m; sourceTree = "<group>"; };
+		893CF2BB1957CA93006FF12D /* LampLighter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LampLighter.framework; path = "../../../../../../Users/chenxiaoliang/Library/Developer/Xcode/DerivedData/LampLighter-bvcrhzwdgfpinphhtqdrhxjcuuou/Build/Products/Debug/LampLighter.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		893CF2471957CA2B006FF12D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8950582619580ED3005B2C8C /* LampLighter.framework in Frameworks */,
+				893CF24E1957CA2B006FF12D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		893CF2681957CA2B006FF12D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				893CF26E1957CA2B006FF12D /* Cocoa.framework in Frameworks */,
+				893CF26D1957CA2B006FF12D /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		893CF2411957CA2B006FF12D = {
+			isa = PBXGroup;
+			children = (
+				893CF2531957CA2B006FF12D /* Quartz2D&CoreImageDemo */,
+				893CF2711957CA2B006FF12D /* Quartz2D&CoreImageDemoTests */,
+				893CF24C1957CA2B006FF12D /* Frameworks */,
+				893CF24B1957CA2B006FF12D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		893CF24B1957CA2B006FF12D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				893CF24A1957CA2B006FF12D /* Quartz2D&CoreImageDemo.app */,
+				893CF26B1957CA2B006FF12D /* Quartz2D&CoreImageDemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		893CF24C1957CA2B006FF12D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				893CF2BB1957CA93006FF12D /* LampLighter.framework */,
+				893CF24D1957CA2B006FF12D /* Cocoa.framework */,
+				893CF26C1957CA2B006FF12D /* XCTest.framework */,
+				893CF24F1957CA2B006FF12D /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		893CF24F1957CA2B006FF12D /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				893CF2501957CA2B006FF12D /* AppKit.framework */,
+				893CF2511957CA2B006FF12D /* CoreData.framework */,
+				893CF2521957CA2B006FF12D /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		893CF2531957CA2B006FF12D /* Quartz2D&CoreImageDemo */ = {
+			isa = PBXGroup;
+			children = (
+				893CF25F1957CA2B006FF12D /* DCAppDelegate.h */,
+				893CF2601957CA2B006FF12D /* DCAppDelegate.m */,
+				893CF2621957CA2B006FF12D /* MainMenu.xib */,
+				893CF2651957CA2B006FF12D /* Images.xcassets */,
+				893CF2541957CA2B006FF12D /* Supporting Files */,
+			);
+			path = "Quartz2D&CoreImageDemo";
+			sourceTree = "<group>";
+		};
+		893CF2541957CA2B006FF12D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				893CF2551957CA2B006FF12D /* Quartz2D&CoreImageDemo-Info.plist */,
+				893CF2561957CA2B006FF12D /* InfoPlist.strings */,
+				893CF2591957CA2B006FF12D /* main.m */,
+				893CF25B1957CA2B006FF12D /* Quartz2D&CoreImageDemo-Prefix.pch */,
+				893CF25C1957CA2B006FF12D /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		893CF2711957CA2B006FF12D /* Quartz2D&CoreImageDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				893CF2771957CA2B006FF12D /* Quartz2D_CoreImageDemoTests.m */,
+				893CF2721957CA2B006FF12D /* Supporting Files */,
+			);
+			path = "Quartz2D&CoreImageDemoTests";
+			sourceTree = "<group>";
+		};
+		893CF2721957CA2B006FF12D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				893CF2731957CA2B006FF12D /* Quartz2D&CoreImageDemoTests-Info.plist */,
+				893CF2741957CA2B006FF12D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		893CF2491957CA2B006FF12D /* Quartz2D&CoreImageDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 893CF27B1957CA2B006FF12D /* Build configuration list for PBXNativeTarget "Quartz2D&CoreImageDemo" */;
+			buildPhases = (
+				893CF2461957CA2B006FF12D /* Sources */,
+				893CF2471957CA2B006FF12D /* Frameworks */,
+				893CF2481957CA2B006FF12D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Quartz2D&CoreImageDemo";
+			productName = "Quartz2D&CoreImageDemo";
+			productReference = 893CF24A1957CA2B006FF12D /* Quartz2D&CoreImageDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		893CF26A1957CA2B006FF12D /* Quartz2D&CoreImageDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 893CF27E1957CA2B006FF12D /* Build configuration list for PBXNativeTarget "Quartz2D&CoreImageDemoTests" */;
+			buildPhases = (
+				893CF2671957CA2B006FF12D /* Sources */,
+				893CF2681957CA2B006FF12D /* Frameworks */,
+				893CF2691957CA2B006FF12D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				893CF2701957CA2B006FF12D /* PBXTargetDependency */,
+			);
+			name = "Quartz2D&CoreImageDemoTests";
+			productName = "Quartz2D&CoreImageDemoTests";
+			productReference = 893CF26B1957CA2B006FF12D /* Quartz2D&CoreImageDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		893CF2421957CA2B006FF12D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DC;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Derek Chen";
+				TargetAttributes = {
+					893CF26A1957CA2B006FF12D = {
+						TestTargetID = 893CF2491957CA2B006FF12D;
+					};
+				};
+			};
+			buildConfigurationList = 893CF2451957CA2B006FF12D /* Build configuration list for PBXProject "Quartz2D&CoreImageDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 893CF2411957CA2B006FF12D;
+			productRefGroup = 893CF24B1957CA2B006FF12D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				893CF2491957CA2B006FF12D /* Quartz2D&CoreImageDemo */,
+				893CF26A1957CA2B006FF12D /* Quartz2D&CoreImageDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		893CF2481957CA2B006FF12D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				893CF2581957CA2B006FF12D /* InfoPlist.strings in Resources */,
+				893CF2661957CA2B006FF12D /* Images.xcassets in Resources */,
+				893CF25E1957CA2B006FF12D /* Credits.rtf in Resources */,
+				893CF2641957CA2B006FF12D /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		893CF2691957CA2B006FF12D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				893CF2761957CA2B006FF12D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		893CF2461957CA2B006FF12D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				893CF25A1957CA2B006FF12D /* main.m in Sources */,
+				893CF2611957CA2B006FF12D /* DCAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		893CF2671957CA2B006FF12D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				893CF2781957CA2B006FF12D /* Quartz2D_CoreImageDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		893CF2701957CA2B006FF12D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 893CF2491957CA2B006FF12D /* Quartz2D&CoreImageDemo */;
+			targetProxy = 893CF26F1957CA2B006FF12D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		893CF2561957CA2B006FF12D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				893CF2571957CA2B006FF12D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		893CF25C1957CA2B006FF12D /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				893CF25D1957CA2B006FF12D /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		893CF2621957CA2B006FF12D /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				893CF2631957CA2B006FF12D /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		893CF2741957CA2B006FF12D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				893CF2751957CA2B006FF12D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		893CF2791957CA2B006FF12D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		893CF27A1957CA2B006FF12D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		893CF27C1957CA2B006FF12D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Volumes/Data/Workspace/GitHub/LampLighter/LampLighter/build/Debug,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LampLighter-bvcrhzwdgfpinphhtqdrhxjcuuou/Build/Products/Debug",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Quartz2D&CoreImageDemo/Quartz2D&CoreImageDemo-Prefix.pch";
+				INFOPLIST_FILE = "Quartz2D&CoreImageDemo/Quartz2D&CoreImageDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		893CF27D1957CA2B006FF12D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Volumes/Data/Workspace/GitHub/LampLighter/LampLighter/build/Debug,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/LampLighter-bvcrhzwdgfpinphhtqdrhxjcuuou/Build/Products/Debug",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Quartz2D&CoreImageDemo/Quartz2D&CoreImageDemo-Prefix.pch";
+				INFOPLIST_FILE = "Quartz2D&CoreImageDemo/Quartz2D&CoreImageDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		893CF27F1957CA2B006FF12D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Quartz2D&CoreImageDemo.app/Contents/MacOS/Quartz2D&CoreImageDemo";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Quartz2D&CoreImageDemo/Quartz2D&CoreImageDemo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Quartz2D&CoreImageDemoTests/Quartz2D&CoreImageDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		893CF2801957CA2B006FF12D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Quartz2D&CoreImageDemo.app/Contents/MacOS/Quartz2D&CoreImageDemo";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Quartz2D&CoreImageDemo/Quartz2D&CoreImageDemo-Prefix.pch";
+				INFOPLIST_FILE = "Quartz2D&CoreImageDemoTests/Quartz2D&CoreImageDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		893CF2451957CA2B006FF12D /* Build configuration list for PBXProject "Quartz2D&CoreImageDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				893CF2791957CA2B006FF12D /* Debug */,
+				893CF27A1957CA2B006FF12D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		893CF27B1957CA2B006FF12D /* Build configuration list for PBXNativeTarget "Quartz2D&CoreImageDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				893CF27C1957CA2B006FF12D /* Debug */,
+				893CF27D1957CA2B006FF12D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		893CF27E1957CA2B006FF12D /* Build configuration list for PBXNativeTarget "Quartz2D&CoreImageDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				893CF27F1957CA2B006FF12D /* Debug */,
+				893CF2801957CA2B006FF12D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 893CF2421957CA2B006FF12D /* Project object */;
+}
