@@ -10,5 +10,7 @@
 #define LampLighter_LampLighter_h
 
 #import "DCEditableImage.h"
+#import "DCPhotoEditTool.h"
+#import "DCPhotoEditView.h"
 
 #endif

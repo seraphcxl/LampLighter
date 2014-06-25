@@ -17,6 +17,13 @@
 		895058241957ED8C005B2C8C /* DCEditableImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 895058221957ED8C005B2C8C /* DCEditableImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		895058251957ED8C005B2C8C /* DCEditableImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 895058231957ED8C005B2C8C /* DCEditableImage.m */; };
 		8950582819581B08005B2C8C /* LampLighter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8950582719581B08005B2C8C /* LampLighter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		89B289AB1958452800ECB3B7 /* DCPhotoEditTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 89B289A91958452800ECB3B7 /* DCPhotoEditTool.h */; };
+		89B289AC1958452800ECB3B7 /* DCPhotoEditTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B289AA1958452800ECB3B7 /* DCPhotoEditTool.m */; };
+		89E2138D195A9AFE00DF6BB1 /* DCPhotoEditView.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E2138B195A9AFE00DF6BB1 /* DCPhotoEditView.h */; };
+		89E2138E195A9AFE00DF6BB1 /* DCPhotoEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E2138C195A9AFE00DF6BB1 /* DCPhotoEditView.m */; };
+		89E21392195A9F9B00DF6BB1 /* DCPhotoEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E2138F195A9F9B00DF6BB1 /* DCPhotoEditViewController.h */; };
+		89E21393195A9F9B00DF6BB1 /* DCPhotoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E21390195A9F9B00DF6BB1 /* DCPhotoEditViewController.m */; };
+		89E21394195A9F9B00DF6BB1 /* DCPhotoEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89E21391195A9F9B00DF6BB1 /* DCPhotoEditViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +53,13 @@
 		895058221957ED8C005B2C8C /* DCEditableImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCEditableImage.h; sourceTree = "<group>"; };
 		895058231957ED8C005B2C8C /* DCEditableImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCEditableImage.m; sourceTree = "<group>"; };
 		8950582719581B08005B2C8C /* LampLighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LampLighter.h; sourceTree = "<group>"; };
+		89B289A91958452800ECB3B7 /* DCPhotoEditTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPhotoEditTool.h; sourceTree = "<group>"; };
+		89B289AA1958452800ECB3B7 /* DCPhotoEditTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPhotoEditTool.m; sourceTree = "<group>"; };
+		89E2138B195A9AFE00DF6BB1 /* DCPhotoEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPhotoEditView.h; sourceTree = "<group>"; };
+		89E2138C195A9AFE00DF6BB1 /* DCPhotoEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPhotoEditView.m; sourceTree = "<group>"; };
+		89E2138F195A9F9B00DF6BB1 /* DCPhotoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPhotoEditViewController.h; sourceTree = "<group>"; };
+		89E21390195A9F9B00DF6BB1 /* DCPhotoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPhotoEditViewController.m; sourceTree = "<group>"; };
+		89E21391195A9F9B00DF6BB1 /* DCPhotoEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DCPhotoEditViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,10 +126,17 @@
 		893CF2941957CA5F006FF12D /* LampLighter */ = {
 			isa = PBXGroup;
 			children = (
+				8950582719581B08005B2C8C /* LampLighter.h */,
 				893CF2951957CA5F006FF12D /* Supporting Files */,
 				895058221957ED8C005B2C8C /* DCEditableImage.h */,
 				895058231957ED8C005B2C8C /* DCEditableImage.m */,
-				8950582719581B08005B2C8C /* LampLighter.h */,
+				89B289A91958452800ECB3B7 /* DCPhotoEditTool.h */,
+				89B289AA1958452800ECB3B7 /* DCPhotoEditTool.m */,
+				89E2138B195A9AFE00DF6BB1 /* DCPhotoEditView.h */,
+				89E2138C195A9AFE00DF6BB1 /* DCPhotoEditView.m */,
+				89E2138F195A9F9B00DF6BB1 /* DCPhotoEditViewController.h */,
+				89E21390195A9F9B00DF6BB1 /* DCPhotoEditViewController.m */,
+				89E21391195A9F9B00DF6BB1 /* DCPhotoEditViewController.xib */,
 			);
 			path = LampLighter;
 			sourceTree = "<group>";
@@ -155,7 +176,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E21392195A9F9B00DF6BB1 /* DCPhotoEditViewController.h in Headers */,
+				89B289AB1958452800ECB3B7 /* DCPhotoEditTool.h in Headers */,
 				8950582819581B08005B2C8C /* LampLighter.h in Headers */,
+				89E2138D195A9AFE00DF6BB1 /* DCPhotoEditView.h in Headers */,
 				895058241957ED8C005B2C8C /* DCEditableImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E21394195A9F9B00DF6BB1 /* DCPhotoEditViewController.xib in Resources */,
 				893CF2991957CA5F006FF12D /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,7 +280,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E21393195A9F9B00DF6BB1 /* DCPhotoEditViewController.m in Sources */,
 				895058251957ED8C005B2C8C /* DCEditableImage.m in Sources */,
+				89E2138E195A9AFE00DF6BB1 /* DCPhotoEditView.m in Sources */,
+				89B289AC1958452800ECB3B7 /* DCPhotoEditTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
