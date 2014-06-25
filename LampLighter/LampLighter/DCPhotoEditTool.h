@@ -14,7 +14,7 @@
 @protocol DCPhotoEditToolActionDelegate <NSObject>
 
 - (void)photoEditTool:(DCPhotoEditTool *)tool valueChanged:(NSDictionary *)infoDict;
-- (void)photoEditToolReset:(DCPhotoEditTool *)tool;
+- (void)photoEditToolReseted:(DCPhotoEditTool *)tool;
 
 @end
 
@@ -23,6 +23,8 @@
 
 @property (assign, nonatomic) id<DCPhotoEditToolActionDelegate> actionDelegate;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
+@property (assign, atomic) BOOL visiable;
+@property (assign, nonatomic, readonly, getter = isEdited) BOOL edited;
 
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage;
 

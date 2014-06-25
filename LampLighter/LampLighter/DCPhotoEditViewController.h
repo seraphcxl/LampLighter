@@ -32,5 +32,6 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 
 - (BOOL)addEditTool:(DCPhotoEditTool *)photoEditTool;
 - (BOOL)activeEditTool:(DCPhotoEditTool *)photoEditTool;
+- (BOOL)activeEditToolByClassName:(NSString *)photoEditToolClassName;
 
 @end

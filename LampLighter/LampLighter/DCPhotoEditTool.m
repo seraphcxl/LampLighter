@@ -19,6 +19,9 @@
 
 @synthesize actionDelegate = _actionDelegate;
 @synthesize currentImg = _currentImg;
+@synthesize visiable = _visiable;
+@synthesize edited = _edited;
+
 #pragma mark - Lifecycle
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage {
     BOOL goodToGo = NO;
@@ -38,6 +41,7 @@
     return self;
 }
 
+#pragma mark - Public
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
         ;

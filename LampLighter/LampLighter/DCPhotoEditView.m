@@ -16,6 +16,7 @@
 @implementation DCPhotoEditView
 
 @synthesize drawDelegate = _drawDelegate;
+
 #pragma mark - Lifecycle
 - (id)initWithFrame:(NSRect)frame
 {
