@@ -678,10 +678,10 @@
         </menu>
         <window title="LampLighter" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="335" y="390" width="640" height="480"/>
+            <rect key="contentRect" x="335" y="298" width="640" height="480"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
-            <value key="minSize" type="size" width="640" height="540"/>
-            <value key="maxSize" type="size" width="800" height="768"/>
+            <value key="minSize" type="size" width="640" height="480"/>
+            <value key="maxSize" type="size" width="800" height="600"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -698,7 +698,10 @@
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="Qgy-QW-5Wd">
                         <rect key="frame" x="167" y="15" width="28" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="circular" id="p8s-uU-f5v"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="circular" id="p8s-uU-f5v"/>
+                        <connections>
+                            <action selector="setRotateSliderValue:" target="Voe-Tx-rLC" id="4ce-dD-lUz"/>
+                        </connections>
                     </slider>
                     <button verticalHuggingPriority="750" id="pqw-t3-qWh">
                         <rect key="frame" x="552" y="13" width="74" height="32"/>
@@ -765,7 +768,7 @@ Gw
                     <comboBox verticalHuggingPriority="750" id="Sm6-wm-z92">
                         <rect key="frame" x="268" y="17" width="128" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="cVe-ba-zij">
+                        <comboBoxCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="cVe-ba-zij">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -774,5 +777,6 @@ Gw
                 </subviews>
             </view>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="ia9-ko-1nr"/>
     </objects>
 </document>

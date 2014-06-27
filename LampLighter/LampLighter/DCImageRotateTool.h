@@ -10,4 +10,6 @@
 
 @interface DCImageRotateTool : DCImageEditTool
 
+@property (assign, nonatomic) CGFloat rotation;
+
 @end

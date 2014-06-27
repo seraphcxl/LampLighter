@@ -8,7 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DCAppDelegate : NSObject <NSApplicationDelegate, NSTextFieldDelegate>
+@class DCImageCropTool;
+@class DCImageRotateTool;
+
+@interface DCAppDelegate : NSObject <NSApplicationDelegate, NSTextFieldDelegate, NSComboBoxDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *mainView;
@@ -31,5 +34,6 @@
 
 - (IBAction)showHideRotateTool:(id)sender;
 - (IBAction)showHideCropTool:(id)sender;
+- (IBAction)setRotateSliderValue:(id)sender;
 
 @end

@@ -10,10 +10,23 @@
 
 @implementation DCImageRotateTool
 
+@synthesize rotation = _rotation;
+
 #pragma mark - Public
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
         ;
+    } while (NO);
+}
+
+- (void)setRotation:(CGFloat)rotation {
+    do {
+        CGFloat r = 0.0f;
+        r = fmodf(rotation, 360.0f);
+        if (r < 0.0f) {
+            r += 360.0f;
+        }
+        _rotation = r;
     } while (NO);
 }
 

@@ -24,24 +24,33 @@
 
 #pragma mark - Lifecycle
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage {
-    BOOL goodToGo = NO;
-    do {
-        if (!editableImage) {
-            break;
-        }
-        goodToGo = YES;
-    } while (NO);
-    if (!goodToGo) {
-        return nil;
-    }
     self = [super init];
     if (self) {
-        self.currentImg = editableImage;
+        if (editableImage) {
+            self.currentImg = editableImage;
+        }
     }
     return self;
 }
 
 #pragma mark - Public
+- (void)resetEditableImage:(DCEditableImage *)editableImage {
+    do {
+        if (editableImage) {
+            self.currentImg = editableImage;
+            [self reset];
+        }
+    } while (NO);
+}
+
+- (void)reset {
+    do {
+        if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditToolReseted:)]) {
+            [self.actionDelegate imageEditToolReseted:self];
+        }
+    } while (NO);
+}
+
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
         ;

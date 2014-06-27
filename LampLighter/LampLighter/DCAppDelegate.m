@@ -10,6 +10,7 @@
 #import "DCImageEditViewController.h"
 
 #import "DCImageCropTool.h"
+#import "DCImageRotateTool.h"
 
 @interface DCAppDelegate () {
 }
@@ -41,6 +42,8 @@
         self.imageEditVC.view.frame = self.imageEditView.bounds;
         [self.imageEditView addSubview:self.imageEditVC.view];
         
+        self.cropComboBox.delegate = self;
+        
         for (NSInteger i = 0; i < DCImageCropType_Count; ++i) {
             [self.cropComboBox addItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:i]];
         }
@@ -56,6 +59,11 @@
 - (void)applicationWillTerminate:(NSNotification *)notification {
     do {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+        
+        self.cropComboBox.delegate = nil;
+        
+        [self.imageEditVC.view removeFromSuperview];
+        self.imageEditVC = nil;
     } while (NO);
 }
 
@@ -99,11 +107,33 @@
     } while (NO);
 }
 
+- (IBAction)setRotateSliderValue:(id)sender {
+    do {
+        if (!sender || sender != self.rotateSlider) {
+            break;
+        }
+        NSLog(@"%@ %@%f", [self className], NSStringFromSelector(_cmd), [self.rotateSlider floatValue]);
+    } while (NO);
+}
+
 - (void)textFeildDidEndEditing:(NSNotification *)notification {
     do {
         if (!notification) {
             break;
         }
+    } while (NO);
+}
+
+#pragma mark - NSComboBoxDelegate
+- (void)comboBoxSelectionDidChange:(NSNotification *)notification {
+    do {
+        if (!notification) {
+            break;
+        }
+        if (notification.object != self.cropComboBox) {
+            break;
+        }
+        NSLog(@"%@ %@ %ld %@", [self className], NSStringFromSelector(_cmd), (long)[self.cropComboBox indexOfSelectedItem], [self.cropComboBox objectValueOfSelectedItem]);
     } while (NO);
 }
 

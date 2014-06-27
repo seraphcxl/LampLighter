@@ -27,6 +27,9 @@
 @property (assign, nonatomic, readonly, getter = isEdited) BOOL edited;
 
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage;
+- (void)resetEditableImage:(DCEditableImage *)editableImage;
+
+- (void)reset;
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 

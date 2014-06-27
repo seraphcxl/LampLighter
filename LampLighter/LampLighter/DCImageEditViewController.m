@@ -8,6 +8,7 @@
 
 #import "DCImageEditViewController.h"
 #import "DCEditableImage.h"
+#import <Tourbillon/NSMutableDictionary+GCDThreadSafe.h>
 
 @interface DCImageEditViewController () {
 }
@@ -18,7 +19,7 @@
 @property (strong, nonatomic) DCEditableImage *currentImg;
 
 - (NSString *)getEditToolGUID:(DCImageEditTool *)imageEditTool;
-- (void)saveEditableImage;
+- (void)saveEditableImage:(BOOL)showDlg;
 
 @end
 
@@ -36,7 +37,7 @@
     if (self) {
         // Initialization code here.
         self.scaleType = DCEditImageScaleType_Fitin;
-        self.editToolDict = [NSMutableDictionary dictionary];
+        self.editToolDict = [[NSMutableDictionary dictionary] threadSafe_init];
         self.currentImg = nil;
     }
     return self;
@@ -44,9 +45,9 @@
 
 - (void)dealloc {
     do {
-        [self saveEditableImage];
+        [self saveEditableImage:NO];
         
-        [self.editToolDict removeAllObjects];
+        [self.editToolDict threadSafe_removeAllObjects];
         self.editToolDict = nil;
         self.currentImg = nil;
     } while (NO);
@@ -65,7 +66,7 @@
             break;
         }
         
-        [self saveEditableImage];
+        [self saveEditableImage:NO];
         
         self.currentImg = editableImage;
     } while (NO);
@@ -107,22 +108,16 @@
     return result;
 }
 
-- (BOOL)activeEditTool:(DCImageEditTool *)imageEditTool {
-    BOOL result = NO;
-    do {
-        if (!imageEditTool) {
-            break;
-        }
-        result = YES;
-    } while (NO);
-    return result;
-}
-
 - (BOOL)activeEditToolByClassName:(NSString *)imageEditToolClassName {
     BOOL result = NO;
     do {
-        if (!imageEditToolClassName) {
-            break;
+        if (imageEditToolClassName) {
+            DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:imageEditToolClassName];
+            if (!tool) {
+                break;
+            }
+            tool.visiable = YES;
+        } else {
         }
         result = YES;
     } while (NO);
@@ -141,10 +136,10 @@
     return result;
 }
 
-- (void)saveEditableImage {
+- (void)saveEditableImage:(BOOL)showDlg {
     do {
         BOOL isEdited = NO;
-        NSArray *editToolAry = [self.editToolDict allValues];
+        NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
         for (DCImageEditTool *tool in editToolAry) {
             if ([tool isEdited]) {
                 isEdited = YES;
@@ -152,7 +147,13 @@
             }
         }
         if (isEdited) {
-            // need ask for save edited image.
+            BOOL needSave = YES;
+            if (showDlg) {
+                // need ask for save edited image.
+            }
+            if (needSave) {
+                // do save
+            }
         }
     } while (NO);
 }
@@ -186,7 +187,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool drawWithContext:context inRect:bounds];
             }
@@ -202,7 +203,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool mouseDown:theEvent];
             }
@@ -217,7 +218,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool rightMouseDown:theEvent];
             }
@@ -232,7 +233,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool otherMouseDown:theEvent];
             }
@@ -247,7 +248,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool mouseUp:theEvent];
             }
@@ -262,7 +263,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool rightMouseUp:theEvent];
             }
@@ -277,7 +278,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool otherMouseUp:theEvent];
             }
@@ -292,7 +293,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool mouseMoved:theEvent];
             }
@@ -307,7 +308,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool mouseDragged:theEvent];
             }
@@ -322,7 +323,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool scrollWheel:theEvent];
             }
@@ -337,7 +338,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool rightMouseDragged:theEvent];
             }
@@ -352,7 +353,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool otherMouseDragged:theEvent];
             }
@@ -367,7 +368,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool mouseEntered:theEvent];
             }
@@ -382,7 +383,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool mouseExited:theEvent];
             }
@@ -397,7 +398,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool keyDown:theEvent];
             }
@@ -412,7 +413,7 @@
         }
         
         if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict objectForKey:self.activeEditToolGUID];
+            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
                 [editTool keyUp:theEvent];
             }
