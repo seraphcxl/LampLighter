@@ -28,6 +28,8 @@
 @property (weak) IBOutlet NSButton *saveBtn;
 @property (weak) IBOutlet NSButton *resetBtn;
 
+@property (strong, nonatomic) NSMutableArray *openImageIOSupportedTypes;
+
 - (IBAction)openImage:(id)sender;
 - (IBAction)saveImage:(id)sender;
 - (IBAction)resetCurrentImage:(id)sender;

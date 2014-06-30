@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		892784441960F678000D18E4 /* Tourbillon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8927843B1960F658000D18E4 /* Tourbillon.framework */; };
 		892EB259195BF906004CE94A /* DCImageEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB251195BF906004CE94A /* DCImageEditView.m */; };
 		892EB25A195BF906004CE94A /* DCImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB253195BF906004CE94A /* DCImageEditViewController.m */; };
 		892EB25B195BF906004CE94A /* DCImageCropTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB255195BF906004CE94A /* DCImageCropTool.m */; };
 		892EB25C195BF906004CE94A /* DCImageEditTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB256195BF906004CE94A /* DCImageEditTool.m */; };
 		892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB258195BF906004CE94A /* DCImageRotateTool.m */; };
 		892EB25F195BF916004CE94A /* DCImageEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892EB25E195BF916004CE94A /* DCImageEditViewController.xib */; };
-		8970BF75195D54DD00CC4357 /* Tourbillon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8970BF74195D54DD00CC4357 /* Tourbillon.framework */; };
 		89B0A6A7195BB80B0092FC97 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B0A6A6195BB80B0092FC97 /* Cocoa.framework */; };
 		89B0A6B1195BB80B0092FC97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6AF195BB80B0092FC97 /* InfoPlist.strings */; };
 		89B0A6B3195BB80B0092FC97 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6B2195BB80B0092FC97 /* main.m */; };
@@ -29,6 +29,41 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8927843A1960F658000D18E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89E137401925B11000A3EFB7;
+			remoteInfo = Tourbillon;
+		};
+		8927843C1960F658000D18E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89E137571925B11000A3EFB7;
+			remoteInfo = TourbillonTests;
+		};
+		8927843E1960F658000D18E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89E137721925B13D00A3EFB7;
+			remoteInfo = "Tourbillon-iOS";
+		};
+		892784401960F658000D18E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89E137801925B13D00A3EFB7;
+			remoteInfo = "Tourbillon-iOSTests";
+		};
+		892784421960F672000D18E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89E1373F1925B11000A3EFB7;
+			remoteInfo = Tourbillon;
+		};
 		89B0A6C8195BB80C0092FC97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 89B0A69B195BB80B0092FC97 /* Project object */;
@@ -39,6 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		892784331960F658000D18E4 /* Tourbillon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tourbillon.xcodeproj; path = ../../Tourbillon/Tourbillon.xcodeproj; sourceTree = "<group>"; };
 		892EB24F195BF906004CE94A /* DCImageEditTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditTool.h; sourceTree = "<group>"; };
 		892EB250195BF906004CE94A /* DCImageEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditView.h; sourceTree = "<group>"; };
 		892EB251195BF906004CE94A /* DCImageEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditView.m; sourceTree = "<group>"; };
@@ -50,7 +86,6 @@
 		892EB257195BF906004CE94A /* DCImageRotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageRotateTool.h; sourceTree = "<group>"; };
 		892EB258195BF906004CE94A /* DCImageRotateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageRotateTool.m; sourceTree = "<group>"; };
 		892EB25E195BF916004CE94A /* DCImageEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DCImageEditViewController.xib; sourceTree = "<group>"; };
-		8970BF74195D54DD00CC4357 /* Tourbillon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tourbillon.framework; path = LampLighter/Tourbillon.framework; sourceTree = "<group>"; };
 		89B0A6A3195BB80B0092FC97 /* LampLighter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LampLighter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89B0A6A6195BB80B0092FC97 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		89B0A6A9195BB80B0092FC97 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -79,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8970BF75195D54DD00CC4357 /* Tourbillon.framework in Frameworks */,
+				892784441960F678000D18E4 /* Tourbillon.framework in Frameworks */,
 				89B0A6A7195BB80B0092FC97 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,9 +131,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		892784341960F658000D18E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8927843B1960F658000D18E4 /* Tourbillon.framework */,
+				8927843D1960F658000D18E4 /* TourbillonTests.xctest */,
+				8927843F1960F658000D18E4 /* libTourbillon-iOS.a */,
+				892784411960F658000D18E4 /* Tourbillon-iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		89B0A69A195BB80B0092FC97 = {
 			isa = PBXGroup;
 			children = (
+				892784331960F658000D18E4 /* Tourbillon.xcodeproj */,
 				89B0A6AC195BB80B0092FC97 /* LampLighter */,
 				89B0A6CA195BB80C0092FC97 /* LampLighterTests */,
 				89B0A6A5195BB80B0092FC97 /* Frameworks */,
@@ -118,7 +165,6 @@
 		89B0A6A5195BB80B0092FC97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8970BF74195D54DD00CC4357 /* Tourbillon.framework */,
 				89B0A6A6195BB80B0092FC97 /* Cocoa.framework */,
 				89B0A6C5195BB80C0092FC97 /* XCTest.framework */,
 				89B0A6A8195BB80B0092FC97 /* Other Frameworks */,
@@ -205,6 +251,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				892784431960F672000D18E4 /* PBXTargetDependency */,
 			);
 			name = LampLighter;
 			productName = LampLighter;
@@ -255,6 +302,12 @@
 			mainGroup = 89B0A69A195BB80B0092FC97;
 			productRefGroup = 89B0A6A4195BB80B0092FC97 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 892784341960F658000D18E4 /* Products */;
+					ProjectRef = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				89B0A6A2195BB80B0092FC97 /* LampLighter */,
@@ -262,6 +315,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8927843B1960F658000D18E4 /* Tourbillon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Tourbillon.framework;
+			remoteRef = 8927843A1960F658000D18E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8927843D1960F658000D18E4 /* TourbillonTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TourbillonTests.xctest;
+			remoteRef = 8927843C1960F658000D18E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8927843F1960F658000D18E4 /* libTourbillon-iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libTourbillon-iOS.a";
+			remoteRef = 8927843E1960F658000D18E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		892784411960F658000D18E4 /* Tourbillon-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Tourbillon-iOSTests.xctest";
+			remoteRef = 892784401960F658000D18E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		89B0A6A1195BB80B0092FC97 /* Resources */ = {
@@ -313,6 +397,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		892784431960F672000D18E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Tourbillon;
+			targetProxy = 892784421960F672000D18E4 /* PBXContainerItemProxy */;
+		};
 		89B0A6C9195BB80C0092FC97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 89B0A6A2195BB80B0092FC97 /* LampLighter */;
@@ -429,12 +518,10 @@
 		89B0A6D5195BB80C0092FC97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LampLighter",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LampLighter/LampLighter-Prefix.pch";
 				INFOPLIST_FILE = "LampLighter/LampLighter-Info.plist";
@@ -446,12 +533,10 @@
 		89B0A6D6195BB80C0092FC97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/LampLighter",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LampLighter/LampLighter-Prefix.pch";
 				INFOPLIST_FILE = "LampLighter/LampLighter-Info.plist";

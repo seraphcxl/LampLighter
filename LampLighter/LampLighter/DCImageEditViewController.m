@@ -8,7 +8,7 @@
 
 #import "DCImageEditViewController.h"
 #import "DCEditableImage.h"
-#import <Tourbillon/NSMutableDictionary+GCDThreadSafe.h>
+#import "Tourbillon/NSMutableDictionary+GCDThreadSafe.h"
 
 @interface DCImageEditViewController () {
 }
