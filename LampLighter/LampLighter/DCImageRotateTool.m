@@ -8,6 +8,8 @@
 
 #import "DCImageRotateTool.h"
 
+NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
+
 @implementation DCImageRotateTool
 
 @synthesize rotation = _rotation;
@@ -28,6 +30,9 @@
         }
         _rotation = r;
         // display
+        if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
+            [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:_rotation], kImageEditPragma_Rotation, nil]];
+        }
     } while (NO);
 }
 

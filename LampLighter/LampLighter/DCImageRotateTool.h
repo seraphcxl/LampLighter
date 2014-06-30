@@ -8,6 +8,8 @@
 
 #import "DCImageEditTool.h"
 
+extern NSString *kImageEditPragma_Rotation;
+
 @interface DCImageRotateTool : DCImageEditTool
 
 @property (assign, nonatomic) CGFloat rotation;

@@ -22,6 +22,17 @@
 @synthesize visiable = _visiable;
 @synthesize edited = _edited;
 
++ (NSString *)getImageEditToolGUID:(Class)imageEditToolClass {
+    NSString *result = nil;
+    do {
+        if (!imageEditToolClass) {
+            break;
+        }
+        result = [imageEditToolClass description];
+    } while (NO);
+    return result;
+}
+
 #pragma mark - Lifecycle
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage {
     self = [super init];
@@ -41,6 +52,10 @@
             [self reset];
         }
     } while (NO);
+}
+
+- (NSString *)imageEditToolDescription {
+    return [self className];
 }
 
 - (void)reset {

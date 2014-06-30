@@ -101,6 +101,8 @@
     }
     self = [super init];
     if (self) {
+        self.url = [sourceUrl copy];
+        
         self.rotation = 0.0;
         self.scaleX = 1.0;
         self.scaleY = 1.0;

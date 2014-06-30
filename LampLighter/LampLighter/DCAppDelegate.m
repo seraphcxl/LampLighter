@@ -12,6 +12,8 @@
 #import "DCImageCropTool.h"
 #import "DCImageRotateTool.h"
 
+#import "DCEditableImage.h"
+
 @interface DCAppDelegate () {
 }
 
@@ -56,6 +58,8 @@
         [self.cropComboBox selectItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:DCImageCropType_Custom]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFeildDidEndEditing:) name: NSControlTextDidEndEditingNotification object:nil];
+        
+        [self.imageEditVC showHideInfo:YES];
         
     } while (NO);
 
@@ -130,6 +134,14 @@
         if (!sender) {
             break;
         }
+        
+        if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
+            // hide
+            [self.imageEditVC activeEditToolByClass:nil];
+        } else {
+            // show
+            [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
+        }
     } while (NO);
 }
 
@@ -137,6 +149,14 @@
     do {
         if (!sender) {
             break;
+        }
+        
+        if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
+            // hide
+            [self.imageEditVC activeEditToolByClass:nil];
+        } else {
+            // show
+            [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
         }
     } while (NO);
 }
@@ -147,6 +167,10 @@
             break;
         }
         NSLog(@"%@ %@%f", [self className], NSStringFromSelector(_cmd), [self.rotateSlider floatValue]);
+        if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
+            DCImageRotateTool *rotateTool = (DCImageRotateTool *)[self.imageEditVC activeEditTool];
+            [rotateTool setRotation:[self.rotateSlider floatValue]];
+        }
     } while (NO);
 }
 
@@ -155,6 +179,14 @@
     do {
         if (!notification) {
             break;
+        }
+        if (notification.object == self.degreeTextField) {
+            if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
+                CGFloat rotation = [self.degreeTextField floatValue];
+                [self.rotateSlider setFloatValue:rotation];
+                DCImageRotateTool *rotateTool = (DCImageRotateTool *)[self.imageEditVC activeEditTool];
+                [rotateTool setRotation:rotation];
+            }
         }
     } while (NO);
 }
@@ -216,7 +248,15 @@
 - (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSOKButton) {
 		if ([[panel URLs] count] > 0) {
-			;
+			NSURL *url = [[panel URLs] objectAtIndex:0];
+            DCEditableImage *img = [[DCEditableImage alloc] initWithURL:url];
+            [self.imageEditVC resetCurrentImage:img];
+            
+            DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
+            DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
+            
+            [self.imageEditVC addEditTool:rotateTool];
+            [self.imageEditVC addEditTool:cropTool];
 		}
 	}
 }

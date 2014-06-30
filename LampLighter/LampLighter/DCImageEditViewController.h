@@ -21,6 +21,12 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 @interface DCImageEditViewController : NSViewController <DCImageEditToolActionDelegate, DCImageEditViewDrawDelegate> {
 }
 
+@property (weak) IBOutlet NSTextField *imageEditToolDescriptionTextField;
+@property (weak) IBOutlet NSTextField *zoomDescriptionTextField;
+@property (weak) IBOutlet NSTextField *rotationDescriptionTextField;
+@property (weak) IBOutlet NSTextField *cropDescriptionTextField;
+@property (weak) IBOutlet NSTextField *imageURLTextField;
+
 @property (strong, nonatomic, readonly) NSString *activeEditToolGUID;
 @property (strong, nonatomic, readonly) NSMutableDictionary *editToolDict;
 @property (assign, nonatomic, readonly) DCEditImageScaleType scaleType;
@@ -31,6 +37,10 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 - (void)resetScaleType:(DCEditImageScaleType)scaleType;
 
 - (BOOL)addEditTool:(DCImageEditTool *)imageEditTool;
-- (BOOL)activeEditToolByClassName:(NSString *)imageEditToolClassName;
+- (BOOL)activeEditToolByClass:(Class)imageEditToolClass;
+- (DCImageEditTool *)activeEditTool;
+
+- (void)refresh;
+- (void)showHideInfo:(BOOL)show;
 
 @end

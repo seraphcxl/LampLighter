@@ -8,6 +8,9 @@
 
 #import "DCImageEditViewController.h"
 #import "DCEditableImage.h"
+#import "DCImageRotateTool.h"
+#import "DCImageCropTool.h"
+
 #import "Tourbillon/NSMutableDictionary+GCDThreadSafe.h"
 
 @interface DCImageEditViewController () {
@@ -18,8 +21,8 @@
 @property (assign, nonatomic) DCEditImageScaleType scaleType;
 @property (strong, nonatomic) DCEditableImage *currentImg;
 
-- (NSString *)getEditToolGUID:(DCImageEditTool *)imageEditTool;
 - (void)saveEditableImage:(BOOL)showDlg;
+- (void)cleanEidtTools;
 
 @end
 
@@ -47,7 +50,7 @@
     do {
         [self saveEditableImage:NO];
         
-        [self.editToolDict threadSafe_removeAllObjects];
+        [self cleanEidtTools];
         self.editToolDict = nil;
         self.currentImg = nil;
     } while (NO);
@@ -56,6 +59,17 @@
 - (void)loadView {
     do {
         [super loadView];
+        
+        if ([self.view class] == [DCImageEditView class]) {
+            DCImageEditView *imageEditView = (DCImageEditView *)self.view;
+            imageEditView.drawDelegate = self;
+        }
+        
+        [self.imageEditToolDescriptionTextField setHidden:YES];
+        [self.zoomDescriptionTextField setHidden:YES];
+        [self.rotationDescriptionTextField setHidden:YES];
+        [self.cropDescriptionTextField setHidden:YES];
+        [self.imageURLTextField setHidden:YES];
     } while (NO);
 }
 
@@ -68,8 +82,16 @@
         
         [self saveEditableImage:NO];
         
+        [self cleanEidtTools];
+        
         self.currentImg = editableImage;
+        
+        NSString *urlStr = [[self.currentImg url] absoluteString];
+        if (urlStr) {
+            [self.imageURLTextField setStringValue:urlStr];
+        }
     } while (NO);
+    [self refresh];
 }
 
 - (void)resetScaleType:(DCEditImageScaleType)scaleType {
@@ -95,6 +117,7 @@
         }
         self.scaleType = scaleType;
     } while (NO);
+    [self refresh];
 }
 
 - (BOOL)addEditTool:(DCImageEditTool *)imageEditTool {
@@ -103,39 +126,84 @@
         if (!imageEditTool) {
             break;
         }
+        
+        NSString *guid = [DCImageEditTool getImageEditToolGUID:[imageEditTool class]];
+        if ([self.editToolDict threadSafe_objectForKey:guid]) {
+            NSAssert(0, @"Image edit tool already in VC.");
+        } else {
+            imageEditTool.visiable = NO;
+            [self.editToolDict threadSafe_setObject:imageEditTool forKey:guid];
+            imageEditTool.actionDelegate = self;
+        }
+        
         result = YES;
     } while (NO);
     return result;
 }
 
-- (BOOL)activeEditToolByClassName:(NSString *)imageEditToolClassName {
+- (BOOL)activeEditToolByClass:(Class)imageEditToolClass {
     BOOL result = NO;
     do {
-        if (imageEditToolClassName) {
-            DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:imageEditToolClassName];
-            if (!tool) {
+        if (imageEditToolClass) {
+            NSString *guid = [DCImageEditTool getImageEditToolGUID:[imageEditToolClass class]];
+            
+            if ([guid isEqualToString:self.activeEditToolGUID]) {
                 break;
+            } else {
+                DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
+                if (tool) {
+                    tool.visiable = NO;
+                }
+                
+                tool = [self.editToolDict threadSafe_objectForKey:guid];
+                if (tool) {
+                    tool.visiable = YES;
+                    [self.imageEditToolDescriptionTextField setStringValue:[tool imageEditToolDescription]];
+                }
+                self.activeEditToolGUID = guid;
             }
-            tool.visiable = YES;
         } else {
+            DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
+            if (tool) {
+                tool.visiable = NO;
+            }
+            self.activeEditToolGUID = nil;
+            [self.imageEditToolDescriptionTextField setStringValue:@""];
         }
         result = YES;
     } while (NO);
+    [self refresh];
     return result;
+}
+
+- (DCImageEditTool *)activeEditTool {
+    DCImageEditTool *result = nil;
+    do {
+        if (!self.activeEditToolGUID) {
+            break;
+        }
+        result = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
+    } while (NO);
+    return result;
+}
+
+- (void)refresh {
+    do {
+        [self.view setNeedsDisplay:YES];
+    } while (NO);
+}
+
+- (void)showHideInfo:(BOOL)show {
+    do {
+        [self.imageEditToolDescriptionTextField setHidden:!show];
+        [self.zoomDescriptionTextField setHidden:!show];
+        [self.rotationDescriptionTextField setHidden:!show];
+        [self.cropDescriptionTextField setHidden:!show];
+        [self.imageURLTextField setHidden:!show];
+    } while (NO);
 }
 
 #pragma mark - Private
-- (NSString *)getEditToolGUID:(DCImageEditTool *)imageEditTool {
-    NSString *result = nil;
-    do {
-        if (!imageEditTool) {
-            break;
-        }
-        result = [imageEditTool className];
-    } while (NO);
-    return result;
-}
-
 - (void)saveEditableImage:(BOOL)showDlg {
     do {
         BOOL isEdited = NO;
@@ -158,12 +226,33 @@
     } while (NO);
 }
 
+- (void)cleanEidtTools {
+    do {
+        self.activeEditToolGUID = nil;
+        
+        NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
+        for (DCImageEditTool *tool in editToolAry) {
+            tool.actionDelegate = nil;
+        }
+        
+        [self.editToolDict threadSafe_removeAllObjects];
+    } while (NO);
+}
+
 #pragma mark - DCImageEditToolActionDelegate
 - (void)imageEditTool:(DCImageEditTool *)tool valueChanged:(NSDictionary *)infoDict {
     do {
         if (!tool || !infoDict) {
             break;
         }
+        
+        NSNumber *rotateNum = [infoDict objectForKey:kImageEditPragma_Rotation];
+        if (rotateNum) {
+            [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%@", rotateNum]];
+            [self.currentImg setRotation:[rotateNum floatValue]];
+        }
+        
+        [self refresh];
     } while (NO);
 }
 

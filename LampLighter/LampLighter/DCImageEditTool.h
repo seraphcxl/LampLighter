@@ -26,8 +26,12 @@
 @property (assign, atomic) BOOL visiable;
 @property (assign, nonatomic, readonly, getter = isEdited) BOOL edited;
 
++ (NSString *)getImageEditToolGUID:(Class)imageEditToolClass;
+
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage;
 - (void)resetEditableImage:(DCEditableImage *)editableImage;
+
+- (NSString *)imageEditToolDescription;
 
 - (void)reset;
 

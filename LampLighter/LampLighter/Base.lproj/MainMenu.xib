@@ -678,34 +678,43 @@
         </menu>
         <window title="LampLighter" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="335" y="298" width="640" height="480"/>
+            <rect key="contentRect" x="335" y="298" width="840" height="480"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
-            <value key="minSize" type="size" width="640" height="480"/>
-            <value key="maxSize" type="size" width="800" height="600"/>
+            <value key="minSize" type="size" width="840" height="480"/>
+            <value key="maxSize" type="size" width="1000" height="600"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
+                <rect key="frame" x="0.0" y="0.0" width="840" height="480"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" id="brN-Kh-jlB">
-                        <rect key="frame" x="97" y="19" width="64" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="0b8-WS-jGw">
+                    <customView id="YJF-xK-uCV">
+                        <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </customView>
+                    <button verticalHuggingPriority="750" id="RUM-RN-tLv">
+                        <rect key="frame" x="683" y="432" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8c-tC-qLq">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="Qgy-QW-5Wd">
-                        <rect key="frame" x="167" y="15" width="28" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="circular" id="p8s-uU-f5v"/>
+                        </buttonCell>
                         <connections>
-                            <action selector="setRotateSliderValue:" target="Voe-Tx-rLC" id="4ce-dD-lUz"/>
+                            <action selector="openImage:" target="Voe-Tx-rLC" id="dnZ-3i-mwa"/>
                         </connections>
-                    </slider>
+                    </button>
+                    <button verticalHuggingPriority="750" id="ioT-QU-4GB">
+                        <rect key="frame" x="683" y="399" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y3H-Qb-paG">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="saveImage:" target="Voe-Tx-rLC" id="YXv-6M-mgp"/>
+                        </connections>
+                    </button>
                     <button verticalHuggingPriority="750" id="pqw-t3-qWh">
-                        <rect key="frame" x="552" y="13" width="74" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="683" y="366" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fp6-3B-o3L">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -717,46 +726,37 @@ Gw
                             <action selector="resetCurrentImage:" target="Voe-Tx-rLC" id="b0a-si-Opl"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="ioT-QU-4GB">
-                        <rect key="frame" x="483" y="13" width="69" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y3H-Qb-paG">
+                    <button verticalHuggingPriority="750" id="3JR-VT-Tev">
+                        <rect key="frame" x="683" y="333" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Fitin" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="we4-qp-TFI">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                         </buttonCell>
                         <connections>
-                            <action selector="saveImage:" target="Voe-Tx-rLC" id="YXv-6M-mgp"/>
+                            <action selector="resetCurrentImage:" target="Voe-Tx-rLC" id="rj8-oG-sSu"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="RUM-RN-tLv">
-                        <rect key="frame" x="409" y="13" width="74" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8c-tC-qLq">
+                    <button verticalHuggingPriority="750" id="vPY-L0-Szj">
+                        <rect key="frame" x="683" y="300" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Actual" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hky-Aj-dk6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                         </buttonCell>
                         <connections>
-                            <action selector="openImage:" target="Voe-Tx-rLC" id="dnZ-3i-mwa"/>
+                            <action selector="resetCurrentImage:" target="Voe-Tx-rLC" id="Xxe-7p-lqN"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="Ucf-QJ-A1K">
-                        <rect key="frame" x="195" y="13" width="71" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Crop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KVF-cI-Mig">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="showHideCropTool:" target="Voe-Tx-rLC" id="zuW-ZL-ekQ"/>
-                        </connections>
-                    </button>
-                    <customView id="YJF-xK-uCV">
-                        <rect key="frame" x="0.0" y="50" width="640" height="430"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </customView>
                     <button verticalHuggingPriority="750" id="nRe-t8-pAA">
-                        <rect key="frame" x="14" y="13" width="81" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="683" y="267" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Rotate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2uC-og-30I">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -765,9 +765,37 @@ Gw
                             <action selector="showHideRotateTool:" target="Voe-Tx-rLC" id="FyV-N9-7Fi"/>
                         </connections>
                     </button>
+                    <textField verticalHuggingPriority="750" id="brN-Kh-jlB">
+                        <rect key="frame" x="689" y="244" width="96" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="0b8-WS-jGw">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="Qgy-QW-5Wd">
+                        <rect key="frame" x="687" y="209" width="28" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" continuous="YES" alignment="left" maxValue="360" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="circular" id="p8s-uU-f5v"/>
+                        <connections>
+                            <action selector="setRotateSliderValue:" target="Voe-Tx-rLC" id="4ce-dD-lUz"/>
+                        </connections>
+                    </slider>
+                    <button verticalHuggingPriority="750" id="Ucf-QJ-A1K">
+                        <rect key="frame" x="683" y="164" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Crop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KVF-cI-Mig">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="showHideCropTool:" target="Voe-Tx-rLC" id="zuW-ZL-ekQ"/>
+                        </connections>
+                    </button>
                     <comboBox verticalHuggingPriority="750" id="Sm6-wm-z92">
-                        <rect key="frame" x="268" y="17" width="128" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="689" y="127" width="128" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <comboBoxCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="cVe-ba-zij">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
