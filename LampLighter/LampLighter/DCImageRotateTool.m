@@ -10,14 +10,78 @@
 
 NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
 
+const CGFloat kDCImageRotateTool_BaseRadius = 64.0f;
+const CGFloat kDCImageRotateTool_ArcLength = kDCImageRotateTool_BaseRadius;
+const CGFloat kDCImageRotateTool_BaseLineLength = kDCImageRotateTool_BaseRadius * 2;
+const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadius * 3;
+
+@interface DCImageRotateTool () {
+}
+
+@property (assign, nonatomic) NSPoint handleLocation;
+
+@end
+
 @implementation DCImageRotateTool
 
 @synthesize rotation = _rotation;
+@synthesize handleLocation = _handleLocation;
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.rotation = 0.0f;
+        self.handleLocation = NSMakePoint(0.0f, 0.0f);
+    }
+    return self;
+}
 
 #pragma mark - Public
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
-        ;
+        NSPoint center = NSMakePoint(bounds.origin.x + bounds.size.width / 2.0f, bounds.origin.y + bounds.size.height / 2.0f);
+        
+        
+        CGContextSetLineWidth(context, 2.0f);
+        // BaseLine
+        [[NSColor magentaColor] set];
+        CGContextMoveToPoint(context, center.x, center.y);
+        NSPoint baseLineLocation = NSMakePoint(center.x, (center.y + kDCImageRotateTool_BaseLineLength > bounds.size.height ? bounds.size.height : center.y + kDCImageRotateTool_BaseLineLength));
+        CGContextAddLineToPoint(context, baseLineLocation.x, baseLineLocation.y);
+        CGContextStrokePath(context);
+        // HandleLine
+        [[NSColor purpleColor] set];
+        CGContextMoveToPoint(context, center.x, center.y);
+        
+        CGFloat radian = DEGREES_TO_RADIANS(self.rotation);
+        NSPoint handleLineLocation = NSMakePoint(0.0f, 0.0f);
+        
+        handleLineLocation.x = center.x - sinf(radian) * kDCImageRotateTool_HandleLineLength;
+        if (handleLineLocation.x < 0.0f) {
+            handleLineLocation.x = 0.0f;
+        }
+        if (handleLineLocation.x > bounds.size.width) {
+            handleLineLocation.x = bounds.size.width;
+        }
+        
+        handleLineLocation.y = center.y + cosf(radian) * kDCImageRotateTool_HandleLineLength;
+        if (handleLineLocation.y < 0.0f) {
+            handleLineLocation.y = 0.0f;
+        }
+        if (handleLineLocation.y > bounds.size.height) {
+            handleLineLocation.y = bounds.size.height;
+        }
+
+        CGContextAddLineToPoint(context, handleLineLocation.x, handleLineLocation.y);
+        CGContextStrokePath(context);
+        // Arc
+        [[NSColor orangeColor] set];
+        if (self.rotation < 360.0f) {
+            CGContextAddArc(context, center.x, center.y, kDCImageRotateTool_ArcLength, 0.0f + M_PI_2, radian + M_PI_2, 0);
+            CGContextStrokePath(context);
+        }
+        
+        // Handle
     } while (NO);
 }
 
@@ -28,8 +92,8 @@ NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
         if (r < 0.0f) {
             r += 360.0f;
         }
-        _rotation = r;
-        // display
+        _rotation = 360.0f - r;
+        
         if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
             [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:_rotation], kImageEditPragma_Rotation, nil]];
         }

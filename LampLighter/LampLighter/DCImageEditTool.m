@@ -35,7 +35,7 @@
 
 #pragma mark - Lifecycle
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage {
-    self = [super init];
+    self = [self init];
     if (self) {
         if (editableImage) {
             self.currentImg = editableImage;

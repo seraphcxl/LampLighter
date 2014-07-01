@@ -43,4 +43,6 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 - (void)refresh;
 - (void)showHideInfo:(BOOL)show;
 
+- (void)addImageEditViewToView:(NSView *)view;
+
 @end

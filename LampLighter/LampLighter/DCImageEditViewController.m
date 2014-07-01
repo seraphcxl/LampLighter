@@ -203,6 +203,23 @@
     } while (NO);
 }
 
+- (void)addImageEditViewToView:(NSView *)view {
+    do {
+        if (!view) {
+            break;
+        }
+        [self.view removeFromSuperview];
+        
+        self.view.frame = view.bounds;
+        
+        [view addSubview:self.view];
+        
+        self.view.nextResponder = self;
+        self.nextResponder = view;
+        
+    } while (NO);
+}
+
 #pragma mark - Private
 - (void)saveEditableImage:(BOOL)showDlg {
     do {

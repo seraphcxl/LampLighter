@@ -362,7 +362,7 @@
         // Changing the order of operations will markedly change the results.
         [self translateWithContext:context];
         [self rotateWithContext:context inRect:bounds];
-        [self rotateWithContext:context inRect:bounds];
+        [self scaleWithContext:context inRect:bounds];
     } while (NO);
 }
 

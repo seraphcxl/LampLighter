@@ -46,8 +46,7 @@
         [self.mainView.layer setBackgroundColor:color];
         CGColorRelease(color);
         
-        self.imageEditVC.view.frame = self.imageEditView.bounds;
-        [self.imageEditView addSubview:self.imageEditVC.view];
+        [self.imageEditVC addImageEditViewToView:self.imageEditView];
         
         self.cropComboBox.delegate = self;
         
