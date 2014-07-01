@@ -10,12 +10,19 @@
 #import "DCImageEditTool.h"
 #import "DCImageEditView.h"
 
-@class DCEditableImage;
-
 typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
     DCEditImageScaleType_Fitin,
     DCEditImageScaleType_Zoomable,
 };
+
+@class DCEditableImage;
+@class DCImageEditViewController;
+
+@protocol DCImageEditVCSavingDelegate <NSObject>
+
+- (BOOL)imageEditViewController:(DCImageEditViewController *)imageEditVC canSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti;
+
+@end
 
 @interface DCImageEditViewController : NSViewController <DCImageEditToolActionDelegate, DCImageEditViewDrawDelegate> {
 }
@@ -26,6 +33,7 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 @property (weak) IBOutlet NSTextField *cropDescriptionTextField;
 @property (weak) IBOutlet NSTextField *imageURLTextField;
 
+@property (weak, nonatomic) id<DCImageEditVCSavingDelegate> savingDelegate;
 @property (strong, nonatomic, readonly) NSString *activeEditToolGUID;
 @property (strong, nonatomic, readonly) NSMutableDictionary *editToolDict;
 @property (assign, nonatomic, readonly) DCEditImageScaleType scaleType;

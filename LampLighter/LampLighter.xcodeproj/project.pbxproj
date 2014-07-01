@@ -26,7 +26,7 @@
 		89B0A6CF195BB80C0092FC97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6CD195BB80C0092FC97 /* InfoPlist.strings */; };
 		89B0A6D1195BB80C0092FC97 /* LampLighterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */; };
 		89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */; };
-		89BD8931196260110034BA8A /* seal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89BD8930196260110034BA8A /* seal.jpg */; };
+		89CA257D1962F10400471681 /* PrettyGirl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89CA257C1962F10400471681 /* PrettyGirl.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +108,7 @@
 		89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LampLighterTests.m; sourceTree = "<group>"; };
 		89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCEditableImage.m; sourceTree = "<group>"; };
 		89B0A6E6195BB84E0092FC97 /* DCEditableImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCEditableImage.h; sourceTree = "<group>"; };
-		89BD8930196260110034BA8A /* seal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = seal.jpg; path = ../../../../../../../Users/chenxiaoliang/Documents/seal.jpg; sourceTree = "<group>"; };
+		89CA257C1962F10400471681 /* PrettyGirl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PrettyGirl.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +204,7 @@
 				89B0A6B9195BB80B0092FC97 /* DCAppDelegate.m */,
 				89B0A6BB195BB80C0092FC97 /* MainMenu.xib */,
 				89B0A6BE195BB80C0092FC97 /* Images.xcassets */,
-				89BD8930196260110034BA8A /* seal.jpg */,
+				89CA257C1962F10400471681 /* PrettyGirl.jpg */,
 				89B0A6AD195BB80B0092FC97 /* Supporting Files */,
 			);
 			path = LampLighter;
@@ -356,10 +356,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				89B0A6B1195BB80B0092FC97 /* InfoPlist.strings in Resources */,
+				89CA257D1962F10400471681 /* PrettyGirl.jpg in Resources */,
 				89B0A6BF195BB80C0092FC97 /* Images.xcassets in Resources */,
 				892EB25F195BF916004CE94A /* DCImageEditViewController.xib in Resources */,
 				89B0A6B7195BB80B0092FC97 /* Credits.rtf in Resources */,
-				89BD8931196260110034BA8A /* seal.jpg in Resources */,
 				89B0A6BD195BB80C0092FC97 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

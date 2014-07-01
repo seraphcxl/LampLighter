@@ -94,7 +94,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         }
         _rotation = 360.0f - r;
         
-        if (_rotation > 0.0f || _rotation < 0.0f) {
+        if ((_rotation > 0.0f || _rotation < 0.0f) && (_rotation > 360.0f || _rotation < 360.0f)) {
             [self setEdited:YES];
         } else {
             [self setEdited:NO];

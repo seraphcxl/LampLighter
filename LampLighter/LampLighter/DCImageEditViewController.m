@@ -15,7 +15,7 @@
 #import "Tourbillon/DCImageUtility.h"
 
 const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
-const CGFloat kImageEditor_ZoomRatio_Min = 0.1f;
+const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
 
 @interface DCImageEditViewController () {
 }
@@ -33,6 +33,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.1f;
 
 @implementation DCImageEditViewController
 
+@synthesize savingDelegate = _savingDelegate;
 @synthesize activeEditToolGUID = _activeEditToolGUID;
 @synthesize editToolDict = _editToolDict;
 @synthesize scaleType = _scaleType;
@@ -54,7 +55,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.1f;
 - (void)dealloc {
     do {
         [self saveEditableImageWithAlarm:NO as:nil type:nil];
-        
+        self.savingDelegate = nil;
         [self cleanEditTools];
         self.editToolDict = nil;
         self.currentImg = nil;
@@ -85,7 +86,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.1f;
             break;
         }
         
-        [self saveEditableImageWithAlarm:NO as:nil type:nil];
+        [self saveEditableImageWithAlarm:YES as:nil type:nil];
         
         [self cleanEditTools];
         
@@ -275,18 +276,24 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.1f;
             }
         }
         if (isEdited) {
+            if (!destURL) {
+                destURL = [self.currentImg url];
+            }
+            if (!type) {
+                type = [self.currentImg uti];
+            }
+            
             BOOL needSave = YES;
             if (showDlg) {
                 // need ask for save edited image.
+                if (self.savingDelegate && [self.savingDelegate respondsToSelector:@selector(imageEditViewController:canSaveImage:toURL:withUTI:)]) {
+                    needSave = [self.savingDelegate imageEditViewController:self canSaveImage:self.currentImg toURL:destURL withUTI:type];
+                } else {
+                    needSave = NO;
+                }
             }
             if (needSave) {
                 // do save
-                if (!destURL) {
-                    destURL = [self.currentImg url];
-                }
-                if (!type) {
-                    type = [self.currentImg uti];
-                }
                 [self.currentImg saveAs:destURL type:type];
             }
         }

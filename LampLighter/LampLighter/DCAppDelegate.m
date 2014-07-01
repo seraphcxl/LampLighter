@@ -64,7 +64,7 @@
         [self.imageEditVC showHideInfo:YES];
         
         // Load sample image
-        self.imageURL = [[NSBundle mainBundle] URLForImageResource:@"seal"];
+        self.imageURL = [[NSBundle mainBundle] URLForImageResource:@"PrettyGirl"];
         DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
         [self.imageEditVC resetCurrentImage:img];
         

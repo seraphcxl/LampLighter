@@ -34,9 +34,9 @@
 - (void)fixupImageOrientation;
 
 - (void)calcEditedImageSize;
-
+- (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale;
 - (void)drawRawDataWithContext:(CGContextRef)context inRect:(CGRect)bounds;
-- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds;
+- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale;
 - (void)rotateWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 - (void)scaleWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 - (void)translateWithContext:(CGContextRef)context;
@@ -175,15 +175,15 @@
             break;
         }
         
-        int bitmapContextWidth = (int)(self.editedImageSize.width + 1.0f);
-        int bitmapContextHeight = (int)(self.editedImageSize.height + 1.0f);
+        int bitmapContextWidth = (int)(self.editedImageSize.width + 0.5);
+        int bitmapContextHeight = (int)(self.editedImageSize.height + 0.5);
         
         bitmapContext = CGBitmapContextCreate(NULL, bitmapContextWidth, bitmapContextHeight, 8, 0, CGImageGetColorSpace(_image), kCGImageAlphaPremultipliedFirst);
         if (!bitmapContext) {
             break;
         }
         
-        [self drawWithContext:bitmapContext inRect:CGRectMake(0.0, 0.0, bitmapContextWidth, bitmapContextHeight)];
+        [self drawWithContext:bitmapContext inRect:CGRectMake(0.0, 0.0, bitmapContextWidth, bitmapContextHeight) includeTranslate:YES includeScale:NO];
         
         imageIOImage = CGBitmapContextCreateImage(bitmapContext);
         if (!imageIOImage) {
@@ -225,10 +225,7 @@
         if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
         }
-        CGContextSaveGState(context);
-        [self applyTransformationWithContext:context inRect:bounds];
-        [self drawRawDataWithContext:context inRect:bounds];
-        CGContextRestoreGState(context);
+        [self drawWithContext:context inRect:bounds includeTranslate:YES includeScale:YES];
     } while (NO);
 }
 
@@ -351,6 +348,18 @@
     } while (NO);
 }
 
+- (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale {
+    do {
+        if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
+            break;
+        }
+        CGContextSaveGState(context);
+        [self applyTransformationWithContext:context inRect:bounds includeTranslate:isIncludeTranslate includeScale:isIncludeScale];
+        [self drawRawDataWithContext:context inRect:bounds];
+        CGContextRestoreGState(context);
+    } while (NO);
+}
+
 - (void)drawRawDataWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
         if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
@@ -373,7 +382,7 @@
     } while (NO);
 }
 
-- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds {
+- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale {
     do {
         if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
@@ -388,9 +397,13 @@
         // (translation), then rotate our axies so that our image appears at an angle (rotation), and finally
         // scale our axies so that our image has a different size (scale).
         // Changing the order of operations will markedly change the results.
-        [self translateWithContext:context];
+        if (isIncludeTranslate) {
+            [self translateWithContext:context];
+        }
         [self rotateWithContext:context inRect:bounds];
-        [self scaleWithContext:context inRect:bounds];
+        if (isIncludeScale) {
+            [self scaleWithContext:context inRect:bounds];
+        }
     } while (NO);
 }
 
