@@ -7,6 +7,7 @@
 //
 
 #import "DCImageRotateTool.h"
+#import "NSColor+Extended.h"
 
 NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
 
@@ -44,13 +45,13 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         
         CGContextSetLineWidth(context, 2.0f);
         // BaseLine
-        [[NSColor magentaColor] set];
+        [[NSColor maraschinoColor] set];
         CGContextMoveToPoint(context, center.x, center.y);
         NSPoint baseLineLocation = NSMakePoint(center.x, (center.y + kDCImageRotateTool_BaseLineLength > bounds.size.height ? bounds.size.height : center.y + kDCImageRotateTool_BaseLineLength));
         CGContextAddLineToPoint(context, baseLineLocation.x, baseLineLocation.y);
         CGContextStrokePath(context);
         // HandleLine
-        [[NSColor purpleColor] set];
+        [[NSColor aquaColor] set];
         CGContextMoveToPoint(context, center.x, center.y);
         
         CGFloat radian = DEGREES_TO_RADIANS(self.rotation);
@@ -75,7 +76,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         CGContextAddLineToPoint(context, handleLineLocation.x, handleLineLocation.y);
         CGContextStrokePath(context);
         // Arc
-        [[NSColor orangeColor] set];
+        [[NSColor maroonColor] set];
         if (self.rotation < 360.0f) {
             CGContextAddArc(context, center.x, center.y, kDCImageRotateTool_ArcLength, 0.0f + M_PI_2, radian + M_PI_2, 0);
             CGContextStrokePath(context);

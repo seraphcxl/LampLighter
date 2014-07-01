@@ -24,7 +24,7 @@
     if (self) {
         // Initialization code here.
         [self setWantsLayer:YES];
-        CGColorRef color = CGColorCreateGenericRGB(0.5, 1, 1, 1);
+        CGColorRef color = CGColorCreateGenericRGB(0.67, 0.67, 0.67, 1);
         [self.layer setBackgroundColor:color];
         CGColorRelease(color);
     }
@@ -36,7 +36,7 @@
     if (self) {
         // Initialization code here.
         [self setWantsLayer:YES];
-        CGColorRef color = CGColorCreateGenericRGB(0.5, 1, 1, 1);
+        CGColorRef color = CGColorCreateGenericRGB(0.67, 0.67, 0.67, 1);
         [self.layer setBackgroundColor:color];
         CGColorRelease(color);
     }
