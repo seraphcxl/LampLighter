@@ -18,12 +18,14 @@
 }
 
 @property (strong, nonatomic) DCImageEditViewController *imageEditVC;
+@property (strong, nonatomic) NSURL *imageURL;
 
 - (void)textFeildDidEndEditing:(NSNotification *)notification;
 - (void)createOpenTypesArray;
 - (NSArray *)extensionsForUTI:(CFStringRef)uti;
 - (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)cleanEditTools;
 
 @end
 
@@ -31,6 +33,7 @@
 
 @synthesize imageEditVC = _imageEditVC;
 @synthesize openImageIOSupportedTypes = _openImageIOSupportedTypes;
+@synthesize imageURL = _imageURL;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
     do {
@@ -60,6 +63,19 @@
         
         [self.imageEditVC showHideInfo:YES];
         
+        // Load sample image
+        self.imageURL = [[NSBundle mainBundle] URLForImageResource:@"seal"];
+        DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
+        [self.imageEditVC resetCurrentImage:img];
+        
+        DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
+        DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
+        
+        [self.imageEditVC addEditTool:rotateTool];
+        [self.imageEditVC addEditTool:cropTool];
+        
+        [self.imageEditVC fitin];
+        
     } while (NO);
 
 }
@@ -72,6 +88,8 @@
         
         [self.imageEditVC.view removeFromSuperview];
         self.imageEditVC = nil;
+        
+        self.imageURL = nil;
     } while (NO);
 }
 
@@ -112,7 +130,7 @@
         NSSavePanel * panel = [NSSavePanel savePanel];
         [panel setCanSelectHiddenExtension:YES];
 //        [panel setRequiredFileType:@"png"];
-        [panel setAllowedFileTypes:@[@"pang"]];
+        [panel setAllowedFileTypes:@[self.imageEditVC.currentImg.uti]];
         [panel setAllowsOtherFileTypes:NO];
         [panel setTreatsFilePackagesAsDirectories:YES];
         
@@ -125,6 +143,18 @@
         if (!sender) {
             break;
         }
+        DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
+        [self.imageEditVC resetCurrentImage:img];
+        
+        DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
+        DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
+        
+        [self.imageEditVC addEditTool:rotateTool];
+        [self.imageEditVC addEditTool:cropTool];
+        
+        [self.imageEditVC fitin];
+        
+        [self cleanEditTools];
     } while (NO);
 }
 
@@ -137,9 +167,19 @@
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
+            [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+            [self.imageEditVC fitin];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
+            
+            if (self.fitinLockBtn.state) {
+                [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+            } else {
+                [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+            }
+            
+            [self.imageEditVC fitin];
         }
     } while (NO);
 }
@@ -153,9 +193,12 @@
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
+            [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+            [self.imageEditVC fitin];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
+            [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
         }
     } while (NO);
 }
@@ -169,7 +212,49 @@
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
             DCImageRotateTool *rotateTool = (DCImageRotateTool *)[self.imageEditVC activeEditTool];
             [rotateTool setRotation:[self.rotateSlider floatValue]];
+            
+            [self.degreeTextField setStringValue:[NSString stringWithFormat:@"%f", rotateTool.rotation]];
         }
+    } while (NO);
+}
+
+- (IBAction)actionFitin:(id)sender {
+    do {
+        if (!sender || sender != self.fitinBtn) {
+            break;
+        }
+        [self.imageEditVC actual];
+        [self.imageEditVC fitin];
+        [self.imageEditVC refresh];
+    } while (NO);
+}
+
+- (IBAction)actionActual:(id)sender {
+    do {
+        if (!sender || sender != self.actualBtn) {
+            break;
+        }
+        [self.imageEditVC actual];
+        [self.imageEditVC refresh];
+    } while (NO);
+}
+
+- (IBAction)actionLockFitin:(id)sender {
+    do {
+        if (!sender || sender != self.fitinLockBtn) {
+            break;
+        }
+        NSInteger state = self.fitinLockBtn.state;
+        if (state) {
+            [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+        } else {
+            if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
+                [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+            } else if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
+                [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+            }
+        }
+        [self.imageEditVC refresh];
     } while (NO);
 }
 
@@ -181,7 +266,7 @@
         }
         if (notification.object == self.degreeTextField) {
             if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
-                CGFloat rotation = [self.degreeTextField floatValue];
+                CGFloat rotation = 360.0f - [self.degreeTextField floatValue];
                 [self.rotateSlider setFloatValue:rotation];
                 DCImageRotateTool *rotateTool = (DCImageRotateTool *)[self.imageEditVC activeEditTool];
                 [rotateTool setRotation:rotation];
@@ -247,8 +332,8 @@
 - (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSOKButton) {
 		if ([[panel URLs] count] > 0) {
-			NSURL *url = [[panel URLs] objectAtIndex:0];
-            DCEditableImage *img = [[DCEditableImage alloc] initWithURL:url];
+			self.imageURL = [[panel URLs] objectAtIndex:0];
+            DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
             [self.imageEditVC resetCurrentImage:img];
             
             DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
@@ -256,14 +341,26 @@
             
             [self.imageEditVC addEditTool:rotateTool];
             [self.imageEditVC addEditTool:cropTool];
+            
+            [self.imageEditVC fitin];
+            
+            [self cleanEditTools];
 		}
 	}
 }
 
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSOKButton) {
-		;
+        [self.imageEditVC saveImageAs:[panel URL]];
 	}
+}
+
+- (void)cleanEditTools {
+    do {
+        [self.rotateSlider setFloatValue:0.0f];
+        [self.degreeTextField setStringValue:@"0"];
+        [self.cropComboBox selectItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:DCImageCropType_Custom]];
+    } while (NO);
 }
 
 #pragma mark - NSComboBoxDelegate

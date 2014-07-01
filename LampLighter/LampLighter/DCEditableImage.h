@@ -12,6 +12,7 @@
 }
 
 @property (strong, nonatomic, readonly) NSURL *url;
+@property (strong, nonatomic, readonly) NSString *uti;
 
 @property (assign, nonatomic, readonly) CGFloat rotation;
 

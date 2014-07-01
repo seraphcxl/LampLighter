@@ -24,7 +24,7 @@
 @property (assign, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
 @property (assign, atomic) BOOL visiable;
-@property (assign, nonatomic, readonly, getter = isEdited) BOOL edited;
+@property (assign, nonatomic, getter = isEdited) BOOL edited;
 
 + (NSString *)getImageEditToolGUID:(Class)imageEditToolClass;
 

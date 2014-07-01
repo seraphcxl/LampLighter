@@ -23,10 +23,13 @@
 
 @property (weak) IBOutlet NSButton *cropBtn;
 @property (weak) IBOutlet NSComboBox *cropComboBox;
+@property (weak) IBOutlet NSButton *fitinBtn;
+@property (weak) IBOutlet NSButton *actualBtn;
 
 @property (weak) IBOutlet NSButton *openBtn;
 @property (weak) IBOutlet NSButton *saveBtn;
 @property (weak) IBOutlet NSButton *resetBtn;
+@property (weak) IBOutlet NSButton *fitinLockBtn;
 
 @property (strong, nonatomic) NSMutableArray *openImageIOSupportedTypes;
 
@@ -37,5 +40,8 @@
 - (IBAction)showHideRotateTool:(id)sender;
 - (IBAction)showHideCropTool:(id)sender;
 - (IBAction)setRotateSliderValue:(id)sender;
+- (IBAction)actionFitin:(id)sender;
+- (IBAction)actionActual:(id)sender;
+- (IBAction)actionLockFitin:(id)sender;
 
 @end

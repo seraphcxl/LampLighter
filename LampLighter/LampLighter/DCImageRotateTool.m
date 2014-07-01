@@ -94,6 +94,12 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         }
         _rotation = 360.0f - r;
         
+        if (_rotation > 0.0f || _rotation < 0.0f) {
+            [self setEdited:YES];
+        } else {
+            [self setEdited:NO];
+        }
+        
         if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
             [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:_rotation], kImageEditPragma_Rotation, nil]];
         }

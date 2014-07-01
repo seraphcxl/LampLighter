@@ -12,6 +12,10 @@
 #import "DCImageCropTool.h"
 
 #import "Tourbillon/NSMutableDictionary+GCDThreadSafe.h"
+#import "Tourbillon/DCImageUtility.h"
+
+const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
+const CGFloat kImageEditor_ZoomRatio_Min = 0.1f;
 
 @interface DCImageEditViewController () {
 }
@@ -21,8 +25,9 @@
 @property (assign, nonatomic) DCEditImageScaleType scaleType;
 @property (strong, nonatomic) DCEditableImage *currentImg;
 
-- (void)saveEditableImage:(BOOL)showDlg;
-- (void)cleanEidtTools;
+- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
+- (void)cleanEditTools;
+- (void)getImageInfo;
 
 @end
 
@@ -48,9 +53,9 @@
 
 - (void)dealloc {
     do {
-        [self saveEditableImage:NO];
+        [self saveEditableImageWithAlarm:NO as:nil type:nil];
         
-        [self cleanEidtTools];
+        [self cleanEditTools];
         self.editToolDict = nil;
         self.currentImg = nil;
     } while (NO);
@@ -80,9 +85,9 @@
             break;
         }
         
-        [self saveEditableImage:NO];
+        [self saveEditableImageWithAlarm:NO as:nil type:nil];
         
-        [self cleanEidtTools];
+        [self cleanEditTools];
         
         self.currentImg = editableImage;
         
@@ -102,14 +107,12 @@
         switch (scaleType) {
             case DCEditImageScaleType_Fitin:
             {
+                [self fitin];
             }
                 break;
-            case DCEditImageScaleType_Actual:
+            case DCEditImageScaleType_Zoomable:
             {
-            }
-                break;
-            case DCEditImageScaleType_Zoom:
-            {
+                [self actual];
             }
                 break;
             default:
@@ -158,7 +161,6 @@
                 tool = [self.editToolDict threadSafe_objectForKey:guid];
                 if (tool) {
                     tool.visiable = YES;
-                    [self.imageEditToolDescriptionTextField setStringValue:[tool imageEditToolDescription]];
                 }
                 self.activeEditToolGUID = guid;
             }
@@ -168,7 +170,6 @@
                 tool.visiable = NO;
             }
             self.activeEditToolGUID = nil;
-            [self.imageEditToolDescriptionTextField setStringValue:@""];
         }
         result = YES;
     } while (NO);
@@ -189,6 +190,10 @@
 
 - (void)refresh {
     do {
+        if (self.scaleType == DCEditImageScaleType_Fitin) {
+            [self fitin];
+        }
+        [self getImageInfo];
         [self.view setNeedsDisplay:YES];
     } while (NO);
 }
@@ -220,8 +225,46 @@
     } while (NO);
 }
 
+- (void)fitin {
+    do {
+        if (!self.currentImg || !self.view) {
+            break;
+        }
+        NSSize fitinSize = [DCImageUtility fitSize:self.currentImg.editedImageSize inSize:self.view.bounds.size];
+        CGFloat ratio = fitinSize.width / self.currentImg.editedImageSize.width;
+        if (ratio < kImageEditor_ZoomRatio_Min) {
+            ratio = kImageEditor_ZoomRatio_Min;
+        }
+        if (ratio > kImageEditor_ZoomRatio_Max) {
+            ratio = kImageEditor_ZoomRatio_Max;
+        }
+        [self.currentImg setScaleX:ratio Y:ratio];
+    } while (NO);
+}
+
+- (void)actual {
+    do {
+        if (!self.currentImg) {
+            break;
+        }
+        [self.currentImg setScaleX:1.0f Y:1.0f];
+    } while (NO);
+}
+
+- (BOOL)saveImageAs:(NSURL *)destURL {
+    BOOL result = NO;
+    do {
+        if (!destURL) {
+            break;
+        }
+        result = [self saveEditableImageWithAlarm:NO as:destURL type:nil];
+    } while (NO);
+    return result;
+}
+
 #pragma mark - Private
-- (void)saveEditableImage:(BOOL)showDlg {
+- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
+    BOOL result = NO;
     do {
         BOOL isEdited = NO;
         NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
@@ -238,12 +281,21 @@
             }
             if (needSave) {
                 // do save
+                if (!destURL) {
+                    destURL = [self.currentImg url];
+                }
+                if (!type) {
+                    type = [self.currentImg uti];
+                }
+                [self.currentImg saveAs:destURL type:type];
             }
         }
+        result = YES;
     } while (NO);
+    return result;
 }
 
-- (void)cleanEidtTools {
+- (void)cleanEditTools {
     do {
         self.activeEditToolGUID = nil;
         
@@ -256,6 +308,27 @@
     } while (NO);
 }
 
+- (void)getImageInfo {
+    do {
+        if (!self.currentImg) {
+            break;
+        }
+        
+        DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
+        NSString *imageEditToolDescription = @"";
+        if (tool) {
+            imageEditToolDescription = [tool imageEditToolDescription];
+        }
+        [self.imageEditToolDescriptionTextField setStringValue:imageEditToolDescription];
+        
+        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", (int)(self.currentImg.scaleX * 100)]];
+        
+        [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentImg.rotation]];
+
+//        [self.cropDescriptionTextField setHidden:!show];
+    } while (NO);
+}
+
 #pragma mark - DCImageEditToolActionDelegate
 - (void)imageEditTool:(DCImageEditTool *)tool valueChanged:(NSDictionary *)infoDict {
     do {
@@ -265,7 +338,6 @@
         
         NSNumber *rotateNum = [infoDict objectForKey:kImageEditPragma_Rotation];
         if (rotateNum) {
-            [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%@", rotateNum]];
             [self.currentImg setRotation:[rotateNum floatValue]];
         }
         

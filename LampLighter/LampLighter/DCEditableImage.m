@@ -7,6 +7,9 @@
 //
 
 #import "DCEditableImage.h"
+#import "DCImageRotateTool.h"
+
+#import "Tourbillon/NSURL+UTTypeSupport.h"
 
 @interface DCEditableImage () {
     CGImageRef _image;
@@ -14,6 +17,7 @@
 }
 
 @property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) NSString *uti;
 
 @property (assign, nonatomic) CGFloat rotation;
 
@@ -42,6 +46,7 @@
 @implementation DCEditableImage
 
 @synthesize url = _url;
+@synthesize uti = _uti;
 @synthesize rotation = _rotation;
 @synthesize scaleX = _scaleX;
 @synthesize scaleY = _scaleY;
@@ -102,6 +107,7 @@
     self = [super init];
     if (self) {
         self.url = [sourceUrl copy];
+        self.uti = [self.url getUTType];
         
         self.rotation = 0.0;
         self.scaleX = 1.0;
@@ -127,6 +133,8 @@
             CFRelease(_properties);
             _properties = nil;
         }
+        self.uti = nil;
+        self.url = nil;
     } while (NO);
 }
 
@@ -134,6 +142,8 @@
 - (void)setRotation:(CGFloat)rotation {
     do {
         _rotation = rotation;
+        
+        [self calcEditedImageSize];
     } while (NO);
 }
 
@@ -164,12 +174,16 @@
         if (!imageDest) {
             break;
         }
-        bitmapContext = CGBitmapContextCreate(NULL, self.editedImageSize.width, self.editedImageSize.height, 8, 0, CGImageGetColorSpace(_image),kCGImageAlphaPremultipliedFirst);
+        
+        int bitmapContextWidth = (int)(self.editedImageSize.width + 1.0f);
+        int bitmapContextHeight = (int)(self.editedImageSize.height + 1.0f);
+        
+        bitmapContext = CGBitmapContextCreate(NULL, bitmapContextWidth, bitmapContextHeight, 8, 0, CGImageGetColorSpace(_image), kCGImageAlphaPremultipliedFirst);
         if (!bitmapContext) {
             break;
         }
         
-        [self drawWithContext:bitmapContext inRect:CGRectMake(0.0, 0.0, self.editedImageSize.width, self.editedImageSize.height)];
+        [self drawWithContext:bitmapContext inRect:CGRectMake(0.0, 0.0, bitmapContextWidth, bitmapContextHeight)];
         
         imageIOImage = CGBitmapContextCreateImage(bitmapContext);
         if (!imageIOImage) {
@@ -189,6 +203,7 @@
         } else {
             CGImageDestinationAddImage(imageDest, imageIOImage, _properties);
         }
+        result = CGImageDestinationFinalize(imageDest);
     } while (NO);
     if (imageIOImage) {
         CGImageRelease(imageIOImage);
@@ -319,7 +334,20 @@
 
 - (void)calcEditedImageSize {
     do {
-        ;
+        CGFloat editWith = self.originImageSize.width;
+        CGFloat editHeight = self.originImageSize.height;
+        CGFloat rotation = self.rotation;
+        while (rotation > 90.0f) {
+            rotation -= 180.0f;
+            if (rotation < 0.0f) {
+                rotation = 0 - rotation;
+            }
+        }
+        CGFloat radian = DEGREES_TO_RADIANS(rotation);
+        CGFloat sinFloat = sinf(radian);
+        CGFloat cosFloat = cosf(radian);
+        self.editedImageSize = NSMakeSize((editWith * cosFloat + editHeight * sinFloat), (editWith * sinFloat + editHeight * cosFloat));
+        
     } while (NO);
 }
 

@@ -14,8 +14,7 @@
 
 typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
     DCEditImageScaleType_Fitin,
-    DCEditImageScaleType_Actual,
-    DCEditImageScaleType_Zoom,
+    DCEditImageScaleType_Zoomable,
 };
 
 @interface DCImageEditViewController : NSViewController <DCImageEditToolActionDelegate, DCImageEditViewDrawDelegate> {
@@ -44,5 +43,10 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 - (void)showHideInfo:(BOOL)show;
 
 - (void)addImageEditViewToView:(NSView *)view;
+
+- (void)fitin;
+- (void)actual;
+
+- (BOOL)saveImageAs:(NSURL *)destURL;
 
 @end
