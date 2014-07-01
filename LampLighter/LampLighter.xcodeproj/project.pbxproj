@@ -27,7 +27,6 @@
 		89B0A6D1195BB80C0092FC97 /* LampLighterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */; };
 		89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */; };
 		89CA25831962F32900471681 /* Beauty.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89CA25821962F32900471681 /* Beauty.jpg */; };
-		89CA25861962F88200471681 /* NSColor+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CA25851962F88200471681 /* NSColor+Extended.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,8 +109,6 @@
 		89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCEditableImage.m; sourceTree = "<group>"; };
 		89B0A6E6195BB84E0092FC97 /* DCEditableImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCEditableImage.h; sourceTree = "<group>"; };
 		89CA25821962F32900471681 /* Beauty.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Beauty.jpg; sourceTree = "<group>"; };
-		89CA25841962F88200471681 /* NSColor+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Extended.h"; sourceTree = "<group>"; };
-		89CA25851962F88200471681 /* NSColor+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Extended.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,8 +187,6 @@
 		89B0A6AC195BB80B0092FC97 /* LampLighter */ = {
 			isa = PBXGroup;
 			children = (
-				89CA25841962F88200471681 /* NSColor+Extended.h */,
-				89CA25851962F88200471681 /* NSColor+Extended.m */,
 				89B0A6E6195BB84E0092FC97 /* DCEditableImage.h */,
 				89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */,
 				892EB24F195BF906004CE94A /* DCImageEditTool.h */,
@@ -392,7 +387,6 @@
 				892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */,
 				89B0A6BA195BB80B0092FC97 /* DCAppDelegate.m in Sources */,
 				892EB259195BF906004CE94A /* DCImageEditView.m in Sources */,
-				89CA25861962F88200471681 /* NSColor+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

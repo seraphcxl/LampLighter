@@ -7,7 +7,7 @@
 //
 
 #import "DCImageRotateTool.h"
-#import "NSColor+Extended.h"
+#import "Tourbillon/NSColor+DCColorful.h"
 
 NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
 
