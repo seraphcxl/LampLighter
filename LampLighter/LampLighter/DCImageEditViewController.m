@@ -83,8 +83,8 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         [self.zoomDescriptionTextField setHidden:YES];
         [self.rotationDescriptionTextField setHidden:YES];
         [self.cropDescriptionTextField setHidden:YES];
+        [self.imageEditedSizeTextField setHidden:YES];
         [self.imageURLTextField setHidden:YES];
-        
     } while (NO);
 }
 
@@ -224,6 +224,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         [self.zoomDescriptionTextField setHidden:!show];
         [self.rotationDescriptionTextField setHidden:!show];
         [self.cropDescriptionTextField setHidden:!show];
+        [self.imageEditedSizeTextField setHidden:!show];
         [self.imageURLTextField setHidden:!show];
     } while (NO);
 }
@@ -377,6 +378,8 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", (int)(self.currentImg.scaleX * 100 + 0.5)]];
         
         [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentImg.rotation]];
+        
+        [self.imageEditedSizeTextField setStringValue:[NSString stringWithFormat:@"%d x %d", (int)(self.currentImg.editedImageSize.width + 0.5), (int)(self.currentImg.editedImageSize.height + 0.5)]];
 
 //        [self.cropDescriptionTextField setHidden:!show];
     } while (NO);

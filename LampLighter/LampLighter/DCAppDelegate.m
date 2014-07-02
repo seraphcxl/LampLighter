@@ -81,6 +81,10 @@
 
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+    return YES;
+}
+
 - (void)applicationWillTerminate:(NSNotification *)notification {
     do {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -192,10 +196,12 @@
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
+            [self.fitinLockBtn setState:0];
             [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
+            [self.fitinLockBtn setState:1];
             [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
         }
     } while (NO);
@@ -376,6 +382,7 @@
         [self.rotateSlider setFloatValue:0.0f];
         [self.degreeTextField setStringValue:@"0"];
         [self.cropComboBox selectItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:DCImageCropType_Custom]];
+        [self.fitinLockBtn setState:0];
     } while (NO);
 }
 

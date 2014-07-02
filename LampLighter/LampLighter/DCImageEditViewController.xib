@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="cropDescriptionTextField" destination="V5e-dI-262" id="21D-Za-q76"/>
                 <outlet property="imageEditToolDescriptionTextField" destination="0aB-er-dYK" id="x3F-Pq-UDz"/>
+                <outlet property="imageEditedSizeTextField" destination="Xnf-8Y-ao4" id="EaP-JN-YkD"/>
                 <outlet property="imageURLTextField" destination="SrC-hi-KPP" id="SX7-VV-fTx"/>
                 <outlet property="rotationDescriptionTextField" destination="iVo-vP-mc8" id="oVZ-Ot-p4R"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="D9t-ee-fVL"/>
@@ -30,7 +31,7 @@
                     </textFieldCell>
                 </textField>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="iVo-vP-mc8">
-                    <rect key="frame" x="558" y="443" width="64" height="17"/>
+                    <rect key="frame" x="565" y="418" width="64" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" placeholderString="360" id="3hh-G4-Ees">
                         <font key="font" metaFont="system"/>
@@ -39,7 +40,7 @@
                     </textFieldCell>
                 </textField>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="c21-6L-OFt">
-                    <rect key="frame" x="358" y="443" width="64" height="17"/>
+                    <rect key="frame" x="433" y="443" width="64" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="100%" id="y7A-eI-NaI">
                         <font key="font" metaFont="system"/>
@@ -48,9 +49,18 @@
                     </textFieldCell>
                 </textField>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="V5e-dI-262">
-                    <rect key="frame" x="426" y="443" width="128" height="17"/>
+                    <rect key="frame" x="501" y="393" width="128" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="640 x 480" id="HyL-67-sRg">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Xnf-8Y-ao4">
+                    <rect key="frame" x="501" y="443" width="128" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="640 x 480" id="s4s-cS-dE3">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

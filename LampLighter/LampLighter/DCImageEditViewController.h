@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 @property (weak) IBOutlet NSTextField *rotationDescriptionTextField;
 @property (weak) IBOutlet NSTextField *cropDescriptionTextField;
 @property (weak) IBOutlet NSTextField *imageURLTextField;
+@property (weak) IBOutlet NSTextField *imageEditedSizeTextField;
 
 @property (weak, nonatomic) id<DCImageEditVCSavingDelegate> savingDelegate;
 @property (strong, nonatomic, readonly) NSString *activeEditToolGUID;
