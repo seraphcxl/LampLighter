@@ -11,11 +11,15 @@
 #import "DCImageRotateTool.h"
 #import "DCImageCropTool.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "Tourbillon/NSMutableDictionary+GCDThreadSafe.h"
 #import "Tourbillon/DCImageUtility.h"
 
 const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
 const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
+
+const CGFloat kImageEditor_ZoomStep = 0.25f;
 
 @interface DCImageEditViewController () {
 }
@@ -256,6 +260,8 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
             ratio = kImageEditor_ZoomRatio_Max;
         }
         [self.currentImg setScaleX:ratio Y:ratio];
+        
+        [self refresh];
     } while (NO);
 }
 
@@ -265,6 +271,8 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
             break;
         }
         [self.currentImg setScaleX:1.0f Y:1.0f];
+        
+        [self refresh];
     } while (NO);
 }
 
@@ -378,9 +386,9 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
         if (self.scaleType == DCEditImageScaleType_Zoomable) {
             CGFloat ratio = self.currentImg.scaleX;
             if (isZoomIn) {
-                ratio -= 0.1f;
+                ratio -= kImageEditor_ZoomStep;
             } else {
-                ratio += 0.1f;
+                ratio += kImageEditor_ZoomStep;
             }
             if (ratio < kImageEditor_ZoomRatio_Min) {
                 ratio = kImageEditor_ZoomRatio_Min;

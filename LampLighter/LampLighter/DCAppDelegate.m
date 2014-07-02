@@ -77,8 +77,6 @@
         [self.imageEditVC addEditTool:cropTool];
         
         [self.imageEditVC fitin];
-        
-        [self.imageEditVC refresh];
     } while (NO);
 
 }
@@ -172,7 +170,6 @@
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
             [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
-            [self.imageEditVC fitin];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
@@ -182,8 +179,6 @@
             } else {
                 [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
             }
-            
-            [self.imageEditVC fitin];
         }
     } while (NO);
 }
@@ -198,7 +193,6 @@
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
             [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
-            [self.imageEditVC fitin];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
@@ -229,7 +223,6 @@
         }
         [self.imageEditVC actual];
         [self.imageEditVC fitin];
-        [self.imageEditVC refresh];
     } while (NO);
 }
 
@@ -239,7 +232,6 @@
             break;
         }
         [self.imageEditVC actual];
-        [self.imageEditVC refresh];
     } while (NO);
 }
 
@@ -367,8 +359,6 @@
             [self.imageEditVC addEditTool:cropTool];
             
             [self.imageEditVC fitin];
-            
-            [self.imageEditVC refresh];
             
             [self cleanEditTools];
 		}
