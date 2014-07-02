@@ -264,6 +264,24 @@
     } while (NO);
 }
 
+- (IBAction)actionStepZoomOut:(id)sender {
+    do {
+        if (!sender || sender != self.stepZoomOutBtn) {
+            break;
+        }
+        [self.imageEditVC stepZoomOut];
+    } while (NO);
+}
+
+- (IBAction)actionStepZoomIn:(id)sender {
+    do {
+        if (!sender || sender != self.stepZoomInBtn) {
+            break;
+        }
+        [self.imageEditVC stepZoomIn];
+    } while (NO);
+}
+
 #pragma mark - Private
 - (void)textFeildDidEndEditing:(NSNotification *)notification {
     do {

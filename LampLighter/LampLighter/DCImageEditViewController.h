@@ -58,4 +58,7 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 
 - (BOOL)saveImageAs:(NSURL *)destURL;
 
+- (void)stepZoomIn;
+- (void)stepZoomOut;
+
 @end

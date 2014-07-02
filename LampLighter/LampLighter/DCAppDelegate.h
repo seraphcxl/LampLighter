@@ -30,6 +30,8 @@
 @property (weak) IBOutlet NSButton *saveBtn;
 @property (weak) IBOutlet NSButton *resetBtn;
 @property (weak) IBOutlet NSButton *fitinLockBtn;
+@property (weak) IBOutlet NSButton *stepZoomOutBtn;
+@property (weak) IBOutlet NSButton *stepZoomInBtn;
 
 @property (strong, nonatomic) NSMutableArray *openImageIOSupportedTypes;
 
@@ -43,5 +45,7 @@
 - (IBAction)actionFitin:(id)sender;
 - (IBAction)actionActual:(id)sender;
 - (IBAction)actionLockFitin:(id)sender;
+- (IBAction)actionStepZoomOut:(id)sender;
+- (IBAction)actionStepZoomIn:(id)sender;
 
 @end

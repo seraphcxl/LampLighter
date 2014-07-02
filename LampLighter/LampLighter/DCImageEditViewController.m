@@ -29,6 +29,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
 - (void)cleanEditTools;
 - (void)getImageInfo;
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
+- (void)stepZoom:(BOOL)isZoomIn;
 
 @end
 
@@ -278,6 +279,18 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
     return result;
 }
 
+- (void)stepZoomIn {
+    do {
+        [self stepZoom:YES];
+    } while (NO);
+}
+
+- (void)stepZoomOut {
+    do {
+        [self stepZoom:NO];
+    } while (NO);
+}
+
 #pragma mark - Private
 - (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
     BOOL result = NO;
@@ -357,6 +370,27 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
             break;
         }
         [self refresh];
+    } while (NO);
+}
+
+- (void)stepZoom:(BOOL)isZoomIn {
+    do {
+        if (self.scaleType == DCEditImageScaleType_Zoomable) {
+            CGFloat ratio = self.currentImg.scaleX;
+            if (isZoomIn) {
+                ratio -= 0.1f;
+            } else {
+                ratio += 0.1f;
+            }
+            if (ratio < kImageEditor_ZoomRatio_Min) {
+                ratio = kImageEditor_ZoomRatio_Min;
+            }
+            if (ratio > kImageEditor_ZoomRatio_Max) {
+                ratio = kImageEditor_ZoomRatio_Max;
+            }
+            [self.currentImg setScaleX:ratio Y:ratio];
+            [self refresh];
+        }
     } while (NO);
 }
 
