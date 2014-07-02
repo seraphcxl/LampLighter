@@ -78,6 +78,7 @@
         
         [self.imageEditVC fitin];
         
+        [self.imageEditVC refresh];
     } while (NO);
 
 }
@@ -348,6 +349,8 @@
             [self.imageEditVC addEditTool:cropTool];
             
             [self.imageEditVC fitin];
+            
+            [self.imageEditVC refresh];
             
             [self cleanEditTools];
 		}

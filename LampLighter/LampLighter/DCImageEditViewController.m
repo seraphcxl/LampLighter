@@ -15,7 +15,7 @@
 #import "Tourbillon/DCImageUtility.h"
 
 const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
-const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
+const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
 
 @interface DCImageEditViewController () {
 }
@@ -343,7 +343,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
         }
         [self.imageEditToolDescriptionTextField setStringValue:imageEditToolDescription];
         
-        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", (int)(self.currentImg.scaleX * 100)]];
+        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", (int)(self.currentImg.scaleX * 100 + 0.5)]];
         
         [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentImg.rotation]];
 
@@ -536,6 +536,25 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
             if (editTool) {
                 [editTool scrollWheel:theEvent];
             }
+        }
+        
+        // Zoom
+        if (self.scaleType == DCEditImageScaleType_Zoomable) {
+//            CGFloat ratio = self.currentImg.scaleX;
+//            if (theEvent.deltaY < 0.0f) {
+//                ratio += 0.01f;
+//            } else if (theEvent.deltaY > 0.0f) {
+//                ratio -= 0.01f;
+//            }
+            CGFloat ratio = self.currentImg.scaleX - theEvent.deltaY * 0.02f;
+            if (ratio < kImageEditor_ZoomRatio_Min) {
+                ratio = kImageEditor_ZoomRatio_Min;
+            }
+            if (ratio > kImageEditor_ZoomRatio_Max) {
+                ratio = kImageEditor_ZoomRatio_Max;
+            }
+            [self.currentImg setScaleX:ratio Y:ratio];
+            [self refresh];
         }
     } while (NO);
 }
