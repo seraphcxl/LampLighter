@@ -53,6 +53,7 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 
 - (void)addImageEditViewToView:(NSView *)view;
 
+- (NSSize)fitinSize;
 - (void)fitin;
 - (void)actual;
 

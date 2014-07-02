@@ -34,6 +34,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 - (void)getImageInfo;
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
 - (void)stepZoom:(BOOL)isZoomIn;
+- (void)_refresh;
 
 @end
 
@@ -141,7 +142,6 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         }
         self.scaleType = scaleType;
     } while (NO);
-    [self refresh];
 }
 
 - (BOOL)addEditTool:(DCImageEditTool *)imageEditTool {
@@ -214,8 +214,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         if (self.scaleType == DCEditImageScaleType_Fitin) {
             [self fitin];
         }
-        [self getImageInfo];
-        [self.view setNeedsDisplay:YES];
+        [self _refresh];
     } while (NO);
 }
 
@@ -246,12 +245,23 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
     } while (NO);
 }
 
+- (NSSize)fitinSize {
+    NSSize result = NSMakeSize(0.0f, 0.0f);
+    do {
+        if (!self.currentImg || !self.view) {
+            break;
+        }
+        result = [DCImageUtility fitSize:self.currentImg.editedImageSize inSize:self.view.bounds.size];
+    } while (NO);
+    return result;
+}
+
 - (void)fitin {
     do {
         if (!self.currentImg || !self.view) {
             break;
         }
-        NSSize fitinSize = [DCImageUtility fitSize:self.currentImg.editedImageSize inSize:self.view.bounds.size];
+        NSSize fitinSize = [self fitinSize];
         CGFloat ratio = fitinSize.width / self.currentImg.editedImageSize.width;
         if (ratio < kImageEditor_ZoomRatio_Min) {
             ratio = kImageEditor_ZoomRatio_Min;
@@ -261,7 +271,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         }
         [self.currentImg setScaleX:ratio Y:ratio];
         
-        [self refresh];
+        [self _refresh];
     } while (NO);
 }
 
@@ -272,7 +282,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         }
         [self.currentImg setScaleX:1.0f Y:1.0f];
         
-        [self refresh];
+        [self _refresh];
     } while (NO);
 }
 
@@ -397,8 +407,15 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
                 ratio = kImageEditor_ZoomRatio_Max;
             }
             [self.currentImg setScaleX:ratio Y:ratio];
-            [self refresh];
+            [self _refresh];
         }
+    } while (NO);
+}
+
+- (void)_refresh {
+    do {
+        [self getImageInfo];
+        [self.view setNeedsDisplay:YES];
     } while (NO);
 }
 
@@ -596,7 +613,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
                 ratio = kImageEditor_ZoomRatio_Max;
             }
             [self.currentImg setScaleX:ratio Y:ratio];
-            [self refresh];
+            [self _refresh];
         }
     } while (NO);
 }
