@@ -28,6 +28,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
 - (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
 - (void)cleanEditTools;
 - (void)getImageInfo;
+- (void)imageEditorViewDidResized:(NSNotification *)notification;
 
 @end
 
@@ -48,6 +49,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
         self.scaleType = DCEditImageScaleType_Fitin;
         self.editToolDict = [[NSMutableDictionary dictionary] threadSafe_init];
         self.currentImg = nil;
+        self.scaleType = DCEditImageScaleType_Zoomable;
     }
     return self;
 }
@@ -76,6 +78,19 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
         [self.rotationDescriptionTextField setHidden:YES];
         [self.cropDescriptionTextField setHidden:YES];
         [self.imageURLTextField setHidden:YES];
+        
+    } while (NO);
+}
+
+- (void)viewCtrlWillAppear {
+    do {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageEditorViewDidResized:) name:NSViewFrameDidChangeNotification object:nil];
+    } while (NO);
+}
+
+- (void)viewCtrlWillDisappear {
+    do {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     } while (NO);
 }
 
@@ -113,7 +128,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
                 break;
             case DCEditImageScaleType_Zoomable:
             {
-                [self actual];
+//                [self actual];
             }
                 break;
             default:
@@ -333,6 +348,15 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.01f;
         [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentImg.rotation]];
 
 //        [self.cropDescriptionTextField setHidden:!show];
+    } while (NO);
+}
+
+- (void)imageEditorViewDidResized:(NSNotification *)notification {
+    do {
+        if (!notification || notification.object != self.view) {
+            break;
+        }
+        [self refresh];
     } while (NO);
 }
 

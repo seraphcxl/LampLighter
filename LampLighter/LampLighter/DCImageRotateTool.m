@@ -76,7 +76,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         CGContextAddLineToPoint(context, handleLineLocation.x, handleLineLocation.y);
         CGContextStrokePath(context);
         // Arc
-        [[NSColor maroonColor] set];
+        [[NSColor mochaColor] set];
         if (self.rotation < 360.0f) {
             CGContextAddArc(context, center.x, center.y, kDCImageRotateTool_ArcLength, 0.0f + M_PI_2, radian + M_PI_2, 0);
             CGContextStrokePath(context);

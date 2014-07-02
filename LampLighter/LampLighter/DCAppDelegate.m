@@ -45,9 +45,11 @@
     do {
         // Insert code here to initialize your application
         [self.mainView setWantsLayer:YES];
-        CGColorRef color = CGColorCreateGenericRGB(0.5, 0.5, 1, 1);
+        CGColorRef color = CGColorCreateGenericRGB(0.34, 0.34, 0.34, 1);
         [self.mainView.layer setBackgroundColor:color];
         CGColorRelease(color);
+        
+        [self.imageEditVC viewCtrlWillAppear];
         
         [self.imageEditVC addImageEditViewToView:self.imageEditView];
         
@@ -86,6 +88,7 @@
         
         self.cropComboBox.delegate = nil;
         
+        [self.imageEditVC viewCtrlWillDisappear];
         [self.imageEditVC.view removeFromSuperview];
         self.imageEditVC = nil;
         
@@ -252,6 +255,8 @@
                 [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
             } else if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
                 [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+            } else {
+                [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
             }
         }
         [self.imageEditVC refresh];
