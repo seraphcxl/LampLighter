@@ -38,6 +38,8 @@
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
     do {
         self.imageEditVC = [[DCImageEditViewController alloc] initWithNibName:@"DCImageEditViewController" bundle:nil];
+        self.imageEditVC.allowDragImage = YES;
+        self.imageEditVC.allowZoomImage = YES;
     } while (NO);
 }
 
@@ -173,15 +175,15 @@
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
-            [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+            [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
             
             if (self.fitinLockBtn.state) {
-                [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+                [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
             } else {
-                [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+                [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
             }
         }
     } while (NO);
@@ -197,12 +199,12 @@
             // hide
             [self.imageEditVC activeEditToolByClass:nil];
             [self.fitinLockBtn setState:0];
-            [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+            [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
             [self.fitinLockBtn setState:1];
-            [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+            [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
         }
     } while (NO);
 }
@@ -248,14 +250,14 @@
         }
         NSInteger state = self.fitinLockBtn.state;
         if (state) {
-            [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+            [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
         } else {
             if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
-                [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+                [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
             } else if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
-                [self.imageEditVC resetScaleType:DCEditImageScaleType_Fitin];
+                [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
             } else {
-                [self.imageEditVC resetScaleType:DCEditImageScaleType_Zoomable];
+                [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
             }
         }
         [self.imageEditVC refresh];

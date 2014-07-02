@@ -26,8 +26,9 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 
 @property (strong, nonatomic) NSString *activeEditToolGUID;
 @property (strong, nonatomic) NSMutableDictionary *editToolDict;
-@property (assign, nonatomic) DCEditImageScaleType scaleType;
+@property (assign, nonatomic) DCEditImageActionType actionType;
 @property (strong, nonatomic) DCEditableImage *currentImg;
+@property (assign, nonatomic) BOOL canDragImage;
 
 - (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
 - (void)cleanEditTools;
@@ -43,8 +44,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 @synthesize savingDelegate = _savingDelegate;
 @synthesize activeEditToolGUID = _activeEditToolGUID;
 @synthesize editToolDict = _editToolDict;
-@synthesize scaleType = _scaleType;
+@synthesize actionType = _actionType;
 @synthesize currentImg = _currentImg;
+@synthesize canDragImage = _canDragImage;
+@synthesize allowDragImage = _allowDragImage;
+@synthesize allowZoomImage = _allowZoomImage;
 
 #pragma mark - Lifecycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,10 +56,13 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        self.scaleType = DCEditImageScaleType_Fitin;
+        self.actionType = DCEditImageActionType_Fitin;
         self.editToolDict = [[NSMutableDictionary dictionary] threadSafe_init];
         self.currentImg = nil;
-        self.scaleType = DCEditImageScaleType_Zoomable;
+        self.actionType = DCEditImageActionType_Freestyle;
+        self.canDragImage = NO;
+        self.allowDragImage = NO;
+        self.allowZoomImage = NO;
     }
     return self;
 }
@@ -121,18 +128,18 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
     [self refresh];
 }
 
-- (void)resetScaleType:(DCEditImageScaleType)scaleType {
+- (void)resetScaleType:(DCEditImageActionType)actionType {
     do {
-        if (self.scaleType == scaleType) {
+        if (self.actionType == actionType) {
             break;
         }
-        switch (scaleType) {
-            case DCEditImageScaleType_Fitin:
+        switch (actionType) {
+            case DCEditImageActionType_Fitin:
             {
                 [self fitin];
             }
                 break;
-            case DCEditImageScaleType_Zoomable:
+            case DCEditImageActionType_Freestyle:
             {
 //                [self actual];
             }
@@ -140,7 +147,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             default:
                 break;
         }
-        self.scaleType = scaleType;
+        self.actionType = actionType;
     } while (NO);
 }
 
@@ -211,7 +218,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 
 - (void)refresh {
     do {
-        if (self.scaleType == DCEditImageScaleType_Fitin) {
+        if (self.actionType == DCEditImageActionType_Fitin) {
             [self fitin];
         }
         [self _refresh];
@@ -271,7 +278,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             ratio = kImageEditor_ZoomRatio_Max;
         }
         [self.currentImg setScaleX:ratio Y:ratio];
-        
+        [self.currentImg setTranslateX:0.0f Y:0.0f];
         [self _refresh];
     } while (NO);
 }
@@ -282,7 +289,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         [self.currentImg setScaleX:1.0f Y:1.0f];
-        
+        [self.currentImg setTranslateX:0.0f Y:0.0f];
         [self _refresh];
     } while (NO);
 }
@@ -396,7 +403,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 
 - (void)stepZoom:(BOOL)isZoomIn {
     do {
-        if (self.scaleType == DCEditImageScaleType_Zoomable) {
+        if (self.actionType == DCEditImageActionType_Freestyle && self.allowZoomImage) {
             CGFloat ratio = self.currentImg.scaleX;
             if (isZoomIn) {
                 ratio -= kImageEditor_ZoomStep;
@@ -479,6 +486,16 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
                 [editTool mouseDown:theEvent];
             }
         }
+        
+        // Move
+        BOOL canDragImage = NO;
+        if (self.actionType == DCEditImageActionType_Freestyle && self.allowDragImage) {
+            NSPoint loc = theEvent.locationInWindow;
+            if (NSPointInRect(loc, self.currentImg.visiableRect)) {
+                canDragImage = YES;
+            }
+        }
+        self.canDragImage = canDragImage;
     } while (NO);
 }
 
@@ -524,6 +541,9 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
                 [editTool mouseUp:theEvent];
             }
         }
+        
+        // Move
+        self.canDragImage = NO;
     } while (NO);
 }
 
@@ -584,6 +604,16 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
                 [editTool mouseDragged:theEvent];
             }
         }
+        
+        // Move
+        if (self.actionType == DCEditImageActionType_Freestyle) {
+            if (self.canDragImage) {
+                CGFloat translateX = self.currentImg.translateX + theEvent.deltaX;
+                CGFloat translateY = self.currentImg.translateY - theEvent.deltaY;
+                [self.currentImg setTranslateX:translateX Y:translateY];
+                [self _refresh];
+            }
+        }
     } while (NO);
 }
 
@@ -601,7 +631,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         }
         
         // Zoom
-        if (self.scaleType == DCEditImageScaleType_Zoomable) {
+        if (self.actionType == DCEditImageActionType_Freestyle && self.allowZoomImage) {
 //            CGFloat ratio = self.currentImg.scaleX;
 //            if (theEvent.deltaY < 0.0f) {
 //                ratio += 0.01f;

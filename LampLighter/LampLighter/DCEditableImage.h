@@ -25,6 +25,8 @@
 @property (assign, nonatomic, readonly) CGSize originImageSize;
 @property (assign, nonatomic, readonly) CGSize editedImageSize;
 
+@property (assign, nonatomic, readonly) CGRect visiableRect;
+
 - (instancetype)initWithURL:(NSURL *)sourceUrl;
 
 - (void)setRotation:(CGFloat)rotation;

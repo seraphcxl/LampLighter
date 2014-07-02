@@ -7,6 +7,7 @@
 //
 
 #import "DCImageRotateTool.h"
+#import "DCEditableImage.h"
 #import "Tourbillon/NSColor+DCColorful.h"
 
 NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
@@ -38,10 +39,14 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 }
 
 #pragma mark - Public
+- (NSString *)imageEditToolDescription {
+    return @"Rotate";
+}
+
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
-        NSPoint center = NSMakePoint(bounds.origin.x + bounds.size.width / 2.0f, bounds.origin.y + bounds.size.height / 2.0f);
-        
+        CGRect imageVisiableRect = self.currentImg.visiableRect;
+        NSPoint center = NSMakePoint(imageVisiableRect.origin.x + imageVisiableRect.size.width / 2.0f, imageVisiableRect.origin.y + imageVisiableRect.size.height / 2.0f);
         
         CGContextSetLineWidth(context, 2.0f);
         // BaseLine

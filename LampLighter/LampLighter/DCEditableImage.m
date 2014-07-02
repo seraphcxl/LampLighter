@@ -30,10 +30,13 @@
 @property (assign, nonatomic) CGSize originImageSize;
 @property (assign, nonatomic) CGSize editedImageSize;
 
+@property (assign, nonatomic) CGRect visiableRect;
+
 - (NSInteger)getImageOrientation;
 - (void)fixupImageOrientation;
 
 - (void)calcEditedImageSize;
+- (void)calcVisiableRectInRect:(CGRect)bounds;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale;
 - (void)drawRawDataWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 - (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale;
@@ -54,6 +57,7 @@
 @synthesize translateY = _translateY;
 @synthesize originImageSize = _originImageSize;
 @synthesize editedImageSize = _editedImageSize;
+@synthesize visiableRect = _visiableRect;
 
 #pragma mark - Lifecycle
 - (instancetype)initWithURL:(NSURL *)sourceUrl {
@@ -117,6 +121,8 @@
         
         self.originImageSize = NSMakeSize(width, height);
         self.editedImageSize = self.originImageSize;
+        
+        self.visiableRect = NSMakeRect(0.0f, 0.0f, width, height);
         
         [self fixupImageOrientation];
     }
@@ -348,6 +354,17 @@
     } while (NO);
 }
 
+- (void)calcVisiableRectInRect:(CGRect)bounds {
+    do {
+        CGFloat visiableWith = self.editedImageSize.width * self.scaleX;
+        CGFloat visiableHeight = self.editedImageSize.height * self.scaleY;
+        
+        NSPoint center = NSMakePoint(bounds.origin.x + bounds.size.width / 2.0f, bounds.origin.y + bounds.size.height / 2.0f);
+        
+        self.visiableRect = NSMakeRect(center.x - visiableWith / 2.0f + self.translateX, center.y - visiableHeight / 2.0f + self.translateY, visiableWith, visiableHeight);
+    } while (NO);
+}
+
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale {
     do {
         if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
@@ -387,6 +404,9 @@
         if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
         }
+        
+        [self calcVisiableRectInRect:bounds];
+        
         // Whenever you do multiple CTM changes, you have to be very careful with order.
         // Changing the order of your CTM changes changes the outcome of the drawing operation.
         // For example, if you scale a context by 2.0 along the x-axis, and then translate

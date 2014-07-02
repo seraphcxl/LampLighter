@@ -10,6 +10,13 @@
 
 CGSize DCImageCropRatioAry[] = {{0, 0}, {1, 1}, {2, 3}, {3, 5}, {5, 7}, {4, 3}, {3, 4}, {16, 9}, {9, 16}, {16, 10}, {10, 16}, {210, 297}};
 
+@interface DCImageCropTool () {
+}
+
+@property (assign, nonatomic) DCImageCropType type;
+
+@end
+
 @implementation DCImageCropTool
 
 #pragma mark - Public
@@ -85,6 +92,10 @@ CGSize DCImageCropRatioAry[] = {{0, 0}, {1, 1}, {2, 3}, {3, 5}, {5, 7}, {4, 3}, 
         }
     } while (NO);
     return result;
+}
+
+- (NSString *)imageEditToolDescription {
+    return @"Crop";
 }
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {

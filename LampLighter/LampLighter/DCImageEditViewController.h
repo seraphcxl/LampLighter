@@ -11,9 +11,9 @@
 #import "DCImageEditView.h"
 #import "Tourbillon/NSViewController+ViewLogic.h"
 
-typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
-    DCEditImageScaleType_Fitin,
-    DCEditImageScaleType_Zoomable,
+typedef NS_ENUM(NSUInteger, DCEditImageActionType) {
+    DCEditImageActionType_Fitin,
+    DCEditImageActionType_Freestyle,
 };
 
 @class DCEditableImage;
@@ -38,12 +38,14 @@ typedef NS_ENUM(NSUInteger, DCEditImageScaleType) {
 @property (weak, nonatomic) id<DCImageEditVCSavingDelegate> savingDelegate;
 @property (strong, nonatomic, readonly) NSString *activeEditToolGUID;
 @property (strong, nonatomic, readonly) NSMutableDictionary *editToolDict;
-@property (assign, nonatomic, readonly) DCEditImageScaleType scaleType;
+@property (assign, nonatomic, readonly) DCEditImageActionType actionType;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
+@property (assign, nonatomic) BOOL allowDragImage;
+@property (assign, nonatomic) BOOL allowZoomImage;
 
 - (void)resetCurrentImage:(DCEditableImage *)editableImage;
 
-- (void)resetScaleType:(DCEditImageScaleType)scaleType;
+- (void)resetScaleType:(DCEditImageActionType)actionType;
 
 - (BOOL)addEditTool:(DCImageEditTool *)imageEditTool;
 - (BOOL)activeEditToolByClass:(Class)imageEditToolClass;
