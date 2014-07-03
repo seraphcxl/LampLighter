@@ -7,6 +7,7 @@
 //
 
 #import "DCImageCropTool.h"
+#import "DCEditableImage.h"
 #import "DCImageCropTool+ActionList.h"
 
 CGSize DCImageCropRatioAry[] = {{0, 0}, {1, 1}, {2, 3}, {3, 5}, {5, 7}, {4, 3}, {3, 4}, {16, 9}, {9, 16}, {16, 10}, {10, 16}, {210, 297}};
@@ -127,8 +128,59 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 }
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
+    CGColorRef maskColor = NULL;
     do {
-        ;
+        if (self.cropRect.size.width == 0 && self.cropRect.size.height == 0) {
+            [self resetCropRect];
+        }
+        
+        maskColor = CGColorCreateGenericRGB(DC_RGB256(0.0f), DC_RGB256(64.0f), DC_RGB256(128.0f), 0.5);
+        CGContextSetFillColorWithColor(context, maskColor);
+        // TopLeftRect
+        NSRect topLectRect = NSMakeRect(0.0f, self.cropRect.origin.y, self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y);
+        CGContextFillRect(context, topLectRect);
+        // BottomLeftRect
+        NSRect bottomLeftRect = NSMakeRect(0.0f, 0.0f, self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y);
+        CGContextFillRect(context, bottomLeftRect);
+        // TopRightRect
+        NSRect topRightRect = NSMakeRect(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height, bounds.size.width - self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y - self.cropRect.size.height);
+        CGContextFillRect(context, topRightRect);
+        // BottomRightRect
+        NSRect bottomRightRect = NSMakeRect(self.cropRect.origin.x + self.cropRect.size.width, 0.0f, bounds.size.width - self.cropRect.origin.x - self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
+        CGContextFillRect(context, bottomRightRect);
+    } while (NO);
+    if (maskColor) {
+        CGColorRelease(maskColor);
+        maskColor = NULL;
+    }
+}
+
+- (void)active {
+    do {
+        [super active];
+    } while (NO);
+}
+
+- (void)deactive {
+    do {
+        self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        [super deactive];
+    } while (NO);
+}
+
+- (void)imageEditorViewDidResized:(NSNotification *)notification {
+    do {
+        self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
+    } while (NO);
+}
+
+- (void)resetCropRect {
+    do {
+        if (!self.currentImg) {
+            break;
+        }
+        self.cropRect = self.currentImg.visiableRect;
     } while (NO);
 }
 

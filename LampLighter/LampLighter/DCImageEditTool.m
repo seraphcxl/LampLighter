@@ -12,6 +12,7 @@
 }
 
 @property (strong, nonatomic) DCEditableImage *currentImg;
+@property (assign, nonatomic) BOOL actived;
 
 @end
 
@@ -19,7 +20,7 @@
 
 @synthesize actionDelegate = _actionDelegate;
 @synthesize currentImg = _currentImg;
-@synthesize visiable = _visiable;
+@synthesize actived = _actived;
 @synthesize edited = _edited;
 
 + (NSString *)getImageEditToolGUID:(Class)imageEditToolClass {
@@ -67,6 +68,24 @@
 }
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
+    do {
+        ;
+    } while (NO);
+}
+
+- (void)active {
+    do {
+        self.actived = YES;
+    } while (NO);
+}
+
+- (void)deactive {
+    do {
+        self.actived = NO;
+    } while (NO);
+}
+
+- (void)imageEditorViewDidResized:(NSNotification *)notification {
     do {
         ;
     } while (NO);

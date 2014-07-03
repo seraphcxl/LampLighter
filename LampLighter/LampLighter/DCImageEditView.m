@@ -11,6 +11,8 @@
 @interface DCImageEditView () {
 }
 
+- (void)fillBackgroundColor;
+
 @end
 
 @implementation DCImageEditView
@@ -23,10 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        [self setWantsLayer:YES];
-        CGColorRef color = CGColorCreateGenericRGB(0.67, 0.67, 0.67, 1);
-        [self.layer setBackgroundColor:color];
-        CGColorRelease(color);
+        [self fillBackgroundColor];
     }
     return self;
 }
@@ -35,10 +34,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Initialization code here.
-        [self setWantsLayer:YES];
-        CGColorRef color = CGColorCreateGenericRGB(0.67, 0.67, 0.67, 1);
-        [self.layer setBackgroundColor:color];
-        CGColorRelease(color);
+        [self fillBackgroundColor];
     }
     return self;
 }
@@ -52,6 +48,19 @@
     
     if (self.drawDelegate && [self.drawDelegate respondsToSelector:@selector(imageEditView:drawWithContext:inRect:)]) {
         [self.drawDelegate imageEditView:self drawWithContext:ctx inRect:NSRectToCGRect(self.bounds)];
+    }
+}
+
+- (void)fillBackgroundColor {
+    CGColorRef color = NULL;
+    do {
+        color = CGColorCreateGenericRGB(0.75, 0.75, 0.75, 1);
+        [self setWantsLayer:YES];
+        [self.layer setBackgroundColor:color];
+    } while (NO);
+    if (color) {
+        CGColorRelease(color);
+        color = NULL;
     }
 }
 

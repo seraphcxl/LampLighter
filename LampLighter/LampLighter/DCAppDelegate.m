@@ -203,8 +203,15 @@
         } else {
             // show
             [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
+            
             [self.fitinLockBtn setState:1];
             [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
+            
+//            DCImageEditTool *tool = [self.imageEditVC activeEditTool];
+//            if ([tool isKindOfClass:[DCImageCropTool class]]) {
+//                DCImageCropTool *cropTool = (DCImageCropTool *)tool;
+//                [cropTool resetCropRect];
+//            }
         }
     } while (NO);
 }

@@ -23,7 +23,7 @@
 
 @property (assign, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
-@property (assign, atomic) BOOL visiable;
+@property (assign, nonatomic, readonly) BOOL actived;
 @property (assign, nonatomic, getter = isEdited) BOOL edited;
 
 + (NSString *)getImageEditToolGUID:(Class)imageEditToolClass;
@@ -36,5 +36,10 @@
 - (void)reset;
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds;
+
+- (void)active;
+- (void)deactive;
+
+- (void)imageEditorViewDidResized:(NSNotification *)notification;
 
 @end

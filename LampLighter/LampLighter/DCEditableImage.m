@@ -61,7 +61,7 @@
 - (instancetype)initWithURL:(NSURL *)sourceUrl {
     DCFunctionPerformanceTimingBegin
     BOOL readSourceDone = NO;
-    CGImageSourceRef imageSrc = nil;
+    CGImageSourceRef imageSrc = NULL;
     NSInteger width = 0;
     NSInteger height = 0;
     do {
@@ -99,11 +99,11 @@
     if (!readSourceDone) {
         if (_image) {
             CGImageRelease(_image);
-            _image = nil;
+            _image = NULL;
         }
         if (_properties) {
             CFRelease(_properties);
-            _properties = nil;
+            _properties = NULL;
         }
         return nil;
     }
@@ -134,11 +134,11 @@
     do {
         if (_image) {
             CGImageRelease(_image);
-            _image = nil;
+            _image = NULL;
         }
         if (_properties) {
             CFRelease(_properties);
-            _properties = nil;
+            _properties = NULL;
         }
         self.uti = nil;
         self.url = nil;
@@ -169,10 +169,11 @@
 }
 
 - (BOOL)saveAs:(NSURL *)destURL type:(NSString *)type {
+    DCFunctionPerformanceTimingBegin
     BOOL result = NO;
-    CGImageDestinationRef imageDest = nil;
-    CGContextRef bitmapContext = nil;
-    CGImageRef imageIOImage = nil;
+    CGImageDestinationRef imageDest = NULL;
+    CGContextRef bitmapContext = NULL;
+    CGImageRef imageIOImage = NULL;
     do {
         if (!destURL || !type || !_image || !_properties) {
             break;
@@ -214,16 +215,18 @@
     } while (NO);
     if (imageIOImage) {
         CGImageRelease(imageIOImage);
-        imageIOImage = nil;
+        imageIOImage = NULL;
     }
     if (bitmapContext) {
         CGContextRelease(bitmapContext);
-        bitmapContext = nil;
+        bitmapContext = NULL;
     }
     if (imageDest) {
         CFRelease(imageDest);
-        imageDest = nil;
+        imageDest = NULL;
     }
+    NSString *msg = [NSString stringWithFormat:@"%@ %@ %@ %@", [self className], NSStringFromSelector(_cmd), destURL, type];
+    DCFunctionPerformanceTimingEnd(msg)
     return result;
 }
 
@@ -256,7 +259,7 @@
 }
 
 - (void)fixupImageOrientation {
-    CGContextRef context = nil;
+    CGContextRef context = NULL;
     do {
         if (!_image) {
             break;
@@ -332,7 +335,7 @@
     } while (NO);
     if (context) {
         CFRelease(context);
-        context = nil;
+        context = NULL;
     }
 }
 

@@ -52,4 +52,6 @@ extern CGSize DCImageCropRatioAry[];
 @property (assign, nonatomic, readonly) DCImageCropType type;
 @property (assign, atomic) NSUInteger anchorRadius;
 
+- (void)resetCropRect;
+
 @end

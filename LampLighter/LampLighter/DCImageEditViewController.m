@@ -159,7 +159,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         if ([self.editToolDict threadSafe_objectForKey:guid]) {
             NSAssert(0, @"Image edit tool already in VC.");
         } else {
-            imageEditTool.visiable = NO;
+            [imageEditTool deactive];
             [self.editToolDict threadSafe_setObject:imageEditTool forKey:guid];
             imageEditTool.actionDelegate = self;
         }
@@ -180,19 +180,19 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             } else {
                 DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
                 if (tool) {
-                    tool.visiable = NO;
+                    [tool deactive];
                 }
                 
                 tool = [self.editToolDict threadSafe_objectForKey:guid];
                 if (tool) {
-                    tool.visiable = YES;
+                    [tool active];
                 }
                 self.activeEditToolGUID = guid;
             }
         } else {
             DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (tool) {
-                tool.visiable = NO;
+                [tool deactive];
             }
             self.activeEditToolGUID = nil;
         }
@@ -394,6 +394,9 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         if (!notification || notification.object != self.view) {
             break;
         }
+        
+        [[self activeEditTool] imageEditorViewDidResized:notification];
+        
         [self refresh];
     } while (NO);
 }
@@ -463,7 +466,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
+            if (editTool && editTool.actived) {
                 [editTool drawWithContext:context inRect:bounds];
             }
         }
