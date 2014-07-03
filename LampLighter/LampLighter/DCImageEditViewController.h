@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "DCImageEditTool.h"
 #import "DCImageEditView.h"
-#import "Tourbillon/NSViewController+ViewLogic.h"
 
 typedef NS_ENUM(NSUInteger, DCEditImageActionType) {
     DCEditImageActionType_Fitin,

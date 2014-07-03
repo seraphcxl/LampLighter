@@ -15,6 +15,7 @@
 		892EB25C195BF906004CE94A /* DCImageEditTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB256195BF906004CE94A /* DCImageEditTool.m */; };
 		892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB258195BF906004CE94A /* DCImageRotateTool.m */; };
 		892EB25F195BF916004CE94A /* DCImageEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892EB25E195BF916004CE94A /* DCImageEditViewController.xib */; };
+		89347B291964F37700BCD74C /* DCImageCropTool+ActionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */; };
 		89B0A6A7195BB80B0092FC97 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B0A6A6195BB80B0092FC97 /* Cocoa.framework */; };
 		89B0A6B1195BB80B0092FC97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6AF195BB80B0092FC97 /* InfoPlist.strings */; };
 		89B0A6B3195BB80B0092FC97 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6B2195BB80B0092FC97 /* main.m */; };
@@ -89,6 +90,8 @@
 		892EB257195BF906004CE94A /* DCImageRotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageRotateTool.h; sourceTree = "<group>"; };
 		892EB258195BF906004CE94A /* DCImageRotateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageRotateTool.m; sourceTree = "<group>"; };
 		892EB25E195BF916004CE94A /* DCImageEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DCImageEditViewController.xib; sourceTree = "<group>"; };
+		89347B271964F37700BCD74C /* DCImageCropTool+ActionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DCImageCropTool+ActionList.h"; sourceTree = "<group>"; };
+		89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DCImageCropTool+ActionList.m"; sourceTree = "<group>"; };
 		89B0A6A3195BB80B0092FC97 /* LampLighter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LampLighter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89B0A6A6195BB80B0092FC97 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		89B0A6A9195BB80B0092FC97 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -197,6 +200,8 @@
 				892EB256195BF906004CE94A /* DCImageEditTool.m */,
 				892EB254195BF906004CE94A /* DCImageCropTool.h */,
 				892EB255195BF906004CE94A /* DCImageCropTool.m */,
+				89347B271964F37700BCD74C /* DCImageCropTool+ActionList.h */,
+				89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */,
 				892EB257195BF906004CE94A /* DCImageRotateTool.h */,
 				892EB258195BF906004CE94A /* DCImageRotateTool.m */,
 				892EB250195BF906004CE94A /* DCImageEditView.h */,
@@ -386,6 +391,7 @@
 				892EB25C195BF906004CE94A /* DCImageEditTool.m in Sources */,
 				892EB25A195BF906004CE94A /* DCImageEditViewController.m in Sources */,
 				89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */,
+				89347B291964F37700BCD74C /* DCImageCropTool+ActionList.m in Sources */,
 				892EB25B195BF906004CE94A /* DCImageCropTool.m in Sources */,
 				89B0A6B3195BB80B0092FC97 /* main.m in Sources */,
 				892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */,

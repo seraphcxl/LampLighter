@@ -9,8 +9,6 @@
 #import "DCEditableImage.h"
 #import "DCImageRotateTool.h"
 
-#import "Tourbillon/NSURL+UTTypeSupport.h"
-
 @interface DCEditableImage () {
     CGImageRef _image;
     CFDictionaryRef _properties;
@@ -61,6 +59,7 @@
 
 #pragma mark - Lifecycle
 - (instancetype)initWithURL:(NSURL *)sourceUrl {
+    DCFunctionPerformanceTimingBegin
     BOOL readSourceDone = NO;
     CGImageSourceRef imageSrc = nil;
     NSInteger width = 0;
@@ -126,6 +125,8 @@
         
         [self fixupImageOrientation];
     }
+    NSString *msg = [NSString stringWithFormat:@"%@ %@%@", [self className], NSStringFromSelector(_cmd), sourceUrl];
+    DCFunctionPerformanceTimingEnd(msg)
     return self;
 }
 

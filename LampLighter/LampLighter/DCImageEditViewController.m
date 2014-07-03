@@ -13,9 +13,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "Tourbillon/NSMutableDictionary+GCDThreadSafe.h"
-#import "Tourbillon/DCImageUtility.h"
-
 const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
 const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
 

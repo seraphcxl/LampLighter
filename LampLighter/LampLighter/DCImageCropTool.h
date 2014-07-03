@@ -25,6 +25,24 @@ typedef NS_ENUM(NSUInteger, DCImageCropType) {
     DCImageCropType_Count,
 };
 
+typedef NS_ENUM(NSUInteger, DCImageCropMouseHitLocation) {
+    DCImageCropMouseHitLoc_Outside,
+    DCImageCropMouseHitLoc_Inside,
+    DCImageCropMouseHitLoc_TopLeft,
+    DCImageCropMouseHitLoc_BottomLeft,
+    DCImageCropMouseHitLoc_TopRight,
+    DCImageCropMouseHitLoc_BottomRight,
+    DCImageCropMouseHitLoc_TopCenter,
+    DCImageCropMouseHitLoc_BottomCenter,
+    DCImageCropMouseHitLoc_LeftCenter,
+    DCImageCropMouseHitLoc_RightCenter,
+    
+    DCImageCropMouseHitLoc_Count,
+};
+
+extern NSString *kImageEditPragma_CropMouseHitLocationX;
+extern NSString *kImageEditPragma_CropMouseHitLocationY;
+
 extern CGSize DCImageCropRatioAry[];
 
 @interface DCImageCropTool : DCImageEditTool
@@ -32,5 +50,6 @@ extern CGSize DCImageCropRatioAry[];
 + (NSString *)descriptionForImageCropType:(DCImageCropType)type;
 
 @property (assign, nonatomic, readonly) DCImageCropType type;
+@property (assign, atomic) NSUInteger anchorRadius;
 
 @end
