@@ -12,8 +12,6 @@
 
 CGSize DCImageCropRatioAry[] = {{0, 0}, {1, 1}, {2, 3}, {3, 5}, {5, 7}, {4, 3}, {3, 4}, {16, 9}, {9, 16}, {16, 10}, {10, 16}, {210, 297}};
 
-const NSUInteger kImageEditor_Crop_DefaultAnchorRadius = 8;
-
 NSString *kImageEditPragma_CropMouseHitLocationX = @"ImageEditPragma_CropMouseHitLocationX";
 NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHitLocationY";
 
@@ -26,13 +24,10 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 // Corner anchor
 @property (assign, nonatomic) NSRect cropRect;
 
-- (NSRect)createRectForAnchorByCenterPoint:(NSPoint)center;
-
 @end
 
 @implementation DCImageCropTool
 
-@synthesize anchorRadius = _anchorRadius;
 @synthesize type = _type;
 @synthesize mouseHitLocation = _mouseHitLocation;
 @synthesize cropRect = _cropRect;
@@ -40,7 +35,6 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 - (id)init {
     self = [super init];
     if (self) {
-        self.anchorRadius = kImageEditor_Crop_DefaultAnchorRadius;
         self.type = DCImageCropType_Custom;
         self.mouseHitLocation = DCImageCropMouseHitLoc_Outside;
         self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
@@ -129,29 +123,89 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     CGColorRef maskColor = NULL;
+    CGColorRef cropRectColor = NULL;
+    CGColorRef cornerAnchorColor = NULL;
+    CGColorRef centerAnchorColor = NULL;
     do {
         if (self.cropRect.size.width == 0 && self.cropRect.size.height == 0) {
             [self resetCropRect];
         }
         
-        maskColor = CGColorCreateGenericRGB(DC_RGB256(0.0f), DC_RGB256(64.0f), DC_RGB256(128.0f), 0.5);
+        CGFloat leftX = self.cropRect.origin.x;
+        CGFloat middleX = self.cropRect.origin.x + self.cropRect.size.width / 2.0f;
+        CGFloat rightX = self.cropRect.origin.x + self.cropRect.size.width;
+        
+        CGFloat topY = self.cropRect.origin.y + self.cropRect.size.height;
+        CGFloat centerY = self.cropRect.origin.y + self.cropRect.size.height / 2.0f;
+        CGFloat bottomY = self.cropRect.origin.y;
+        
+        // Mask
+        maskColor = CGColorCreateGenericRGB(DC_RGB256(0.0f), DC_RGB256(64.0f), DC_RGB256(128.0f), 0.5f);
         CGContextSetFillColorWithColor(context, maskColor);
         // TopLeftRect
-        NSRect topLectRect = NSMakeRect(0.0f, self.cropRect.origin.y, self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y);
+        NSRect topLectRect = NSMakeRect(0.0f, bottomY, self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y);
         CGContextFillRect(context, topLectRect);
         // BottomLeftRect
         NSRect bottomLeftRect = NSMakeRect(0.0f, 0.0f, self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y);
         CGContextFillRect(context, bottomLeftRect);
         // TopRightRect
-        NSRect topRightRect = NSMakeRect(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height, bounds.size.width - self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y - self.cropRect.size.height);
+        NSRect topRightRect = NSMakeRect(leftX, topY, bounds.size.width - self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y - self.cropRect.size.height);
         CGContextFillRect(context, topRightRect);
         // BottomRightRect
-        NSRect bottomRightRect = NSMakeRect(self.cropRect.origin.x + self.cropRect.size.width, 0.0f, bounds.size.width - self.cropRect.origin.x - self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
+        NSRect bottomRightRect = NSMakeRect(rightX, 0.0f, bounds.size.width - self.cropRect.origin.x - self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
         CGContextFillRect(context, bottomRightRect);
+        // CropRect
+        cropRectColor = CGColorCreateGenericRGB(DC_RGB256(128.0f), DC_RGB256(64.0f), DC_RGB256(0.0f), 1.0f);
+        CGContextSetLineWidth(context, 2.0);
+        CGContextSetStrokeColorWithColor(context, cropRectColor);
+        CGContextAddRect(context, self.cropRect);
+        CGContextStrokePath(context);
+        // Corner anchor
+        cornerAnchorColor = CGColorCreateGenericRGB(DC_RGB256(255.0f), DC_RGB256(102.0f), DC_RGB256(102.0f), 1.0f);
+        CGContextSetFillColorWithColor(context, cornerAnchorColor);
+        // TopLeftAnchor
+        NSPoint topLeftAnchor = NSMakePoint(leftX, topY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:topLeftAnchor]);
+        // BottomLeftAnchor
+        NSPoint bottomLeftAnchor = NSMakePoint(leftX, bottomY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomLeftAnchor]);
+        // TopRightAnchor
+        NSPoint topRightAnchor = NSMakePoint(rightX, topY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:topRightAnchor]);
+        // BottomRightAnchor
+        NSPoint bottomRightAnchor = NSMakePoint(rightX, bottomY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomRightAnchor]);
+        // Center anchor
+        centerAnchorColor = CGColorCreateGenericRGB(DC_RGB256(255.0f), DC_RGB256(255.0f), DC_RGB256(0.0f), 1.0f);
+        CGContextSetFillColorWithColor(context, centerAnchorColor);
+        // TopCenterAnchor
+        NSPoint topCenterAnchor = NSMakePoint(middleX, topY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:topCenterAnchor]);
+        // BottomCenterAnchor
+        NSPoint bottomCenterAnchor = NSMakePoint(middleX, bottomY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomCenterAnchor]);
+        // LeftCenterAnchor
+        NSPoint leftCenterAnchor = NSMakePoint(leftX, centerY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:leftCenterAnchor]);
+        // RightCenterAnchor
+        NSPoint rightCenterAnchor = NSMakePoint(rightX, centerY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:rightCenterAnchor]);
     } while (NO);
     if (maskColor) {
         CGColorRelease(maskColor);
         maskColor = NULL;
+    }
+    if (cropRectColor) {
+        CGColorRelease(cropRectColor);
+        cropRectColor = NULL;
+    }
+    if (cornerAnchorColor) {
+        CGColorRelease(cornerAnchorColor);
+        cornerAnchorColor = NULL;
+    }
+    if (centerAnchorColor) {
+        CGColorRelease(centerAnchorColor);
+        centerAnchorColor = NULL;
     }
 }
 
@@ -185,13 +239,10 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 }
 
 #pragma mark - Private
-- (NSRect)createRectForAnchorByCenterPoint:(NSPoint)center {
-    NSUInteger diameter = self.anchorRadius * 2;
-    return NSMakeRect(center.x - self.anchorRadius, center.y - self.anchorRadius, diameter, diameter);
-}
 
-#pragma mark - NSResponder
-- (void)mouseDown:(NSEvent *)theEvent {
+#pragma mark - Responder
+- (BOOL)handleMouseDown:(NSEvent *)theEvent {
+    BOOL result = NO;
     do {
         if (!theEvent) {
             break;
@@ -201,42 +252,42 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         
         do {
             NSPoint topLeft = NSMakePoint(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height);
-            if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:topLeft])) {
+            if ([self isMouseHitLocation:loc inAnchor:topLeft]) {
                 self.mouseHitLocation = DCImageCropMouseHitLoc_TopLeft;
                 break;
             } else {
                 NSPoint bottomLeft = self.cropRect.origin;
-                if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:bottomLeft])) {
+                if ([self isMouseHitLocation:loc inAnchor:bottomLeft]) {
                     self.mouseHitLocation = DCImageCropMouseHitLoc_BottomLeft;
                     break;
                 } else {
                     NSPoint topRight = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
-                    if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:topRight])) {
+                    if ([self isMouseHitLocation:loc inAnchor:topRight]) {
                         self.mouseHitLocation = DCImageCropMouseHitLoc_TopRight;
                         break;
                     } else {
                         NSPoint bottomRight = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y);
-                        if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:bottomRight])) {
+                        if ([self isMouseHitLocation:loc inAnchor:bottomRight]) {
                             self.mouseHitLocation = DCImageCropMouseHitLoc_BottomRight;
                             break;
                         } else {
                             NSPoint topCenter = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width / 2.0f, self.cropRect.origin.y + self.cropRect.size.height);
-                            if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:topCenter])) {
+                            if ([self isMouseHitLocation:loc inAnchor:topCenter]) {
                                 self.mouseHitLocation = DCImageCropMouseHitLoc_TopCenter;
                                 break;
                             } else {
                                 NSPoint bottomCenter = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width / 2.0f, self.cropRect.origin.y);
-                                if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:bottomCenter])) {
+                                if ([self isMouseHitLocation:loc inAnchor:bottomCenter]) {
                                     self.mouseHitLocation = DCImageCropMouseHitLoc_BottomCenter;
                                     break;
                                 } else {
                                     NSPoint leftCenter = NSMakePoint(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height / 2.0f);
-                                    if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:leftCenter])) {
+                                    if ([self isMouseHitLocation:loc inAnchor:leftCenter]) {
                                         self.mouseHitLocation = DCImageCropMouseHitLoc_LeftCenter;
                                         break;
                                     } else {
                                         NSPoint rightCenter = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height / 2.0f);
-                                        if (NSPointInRect(loc, [self createRectForAnchorByCenterPoint:rightCenter])) {
+                                        if ([self isMouseHitLocation:loc inAnchor:rightCenter]) {
                                             self.mouseHitLocation = DCImageCropMouseHitLoc_RightCenter;
                                             break;
                                         } else if (NSPointInRect(loc, self.cropRect)) {
@@ -254,60 +305,39 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
                 }
             }
         } while (NO);
-        
-    } while (NO);
-}
-
-- (void)rightMouseDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
+        if (self.mouseHitLocation != DCImageCropMouseHitLoc_Outside) {
+            result = YES;
         }
     } while (NO);
+    return result;
 }
 
-- (void)otherMouseDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleRightMouseDown:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
+- (BOOL)handleMouseUp:(NSEvent *)theEvent {
+    BOOL result = NO;
     do {
         if (!theEvent) {
             break;
         }
         self.mouseHitLocation = DCImageCropMouseHitLoc_Outside;
+        result = YES;
     } while (NO);
+    return result;
 }
 
-- (void)rightMouseUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleRightMouseUp:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)otherMouseUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseMoved:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseMoved:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
-}
-
-- (void)mouseDragged:(NSEvent *)theEvent {
+- (BOOL)handleMouseDragged:(NSEvent *)theEvent {
+    BOOL result = NO;
     NSPoint loc = NSMakePoint(0.0f, 0.0f);
     do {
         if (!theEvent) {
@@ -367,66 +397,38 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
             default:
                 break;
         }
+        if (self.mouseHitLocation != DCImageCropMouseHitLoc_Outside) {
+            result = YES;
+        }
     } while (NO);
     if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
         [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:loc.x], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:loc.y], kImageEditPragma_CropMouseHitLocationY, nil]];
     }
+    return result;
 }
 
-- (void)scrollWheel:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleScrollWheel:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)rightMouseDragged:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleRightMouseDragged:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)otherMouseDragged:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseEntered:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseExited:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseExited:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleKeyDown:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)keyDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
-}
-
-- (void)keyUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleKeyUp:(NSEvent *)theEvent {
+    return NO;
 }
 
 @end

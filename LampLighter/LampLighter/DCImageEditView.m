@@ -54,7 +54,7 @@
 - (void)fillBackgroundColor {
     CGColorRef color = NULL;
     do {
-        color = CGColorCreateGenericRGB(0.75, 0.75, 0.75, 1);
+        color = CGColorCreateGenericRGB(DC_RGB256(179.0f), DC_RGB256(179.0f), DC_RGB256(179.0f), 1.0f);
         [self setWantsLayer:YES];
         [self.layer setBackgroundColor:color];
     } while (NO);

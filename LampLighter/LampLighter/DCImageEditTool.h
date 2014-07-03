@@ -18,13 +18,16 @@
 
 @end
 
-@interface DCImageEditTool : NSResponder {
+@interface DCImageEditTool : NSObject {
+@protected
+    CGFloat _anchorRadiusSqrt;
 }
 
 @property (assign, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
 @property (assign, nonatomic, readonly) BOOL actived;
 @property (assign, nonatomic, getter = isEdited) BOOL edited;
+@property (assign, nonatomic) NSUInteger anchorRadius;
 
 + (NSString *)getImageEditToolGUID:(Class)imageEditToolClass;
 
@@ -41,5 +44,21 @@
 - (void)deactive;
 
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
+
+- (NSRect)createRectForAnchorByCenterPoint:(NSPoint)center;
+- (BOOL)isMouseHitLocation:(NSPoint)loc inAnchor:(NSPoint)anchor;
+
+- (BOOL)handleMouseDown:(NSEvent *)theEvent;
+- (BOOL)handleRightMouseDown:(NSEvent *)theEvent;
+- (BOOL)handleMouseUp:(NSEvent *)theEvent;
+- (BOOL)handleRightMouseUp:(NSEvent *)theEvent;
+- (BOOL)handleMouseMoved:(NSEvent *)theEvent;
+- (BOOL)handleMouseDragged:(NSEvent *)theEvent;
+- (BOOL)handleScrollWheel:(NSEvent *)theEvent;
+- (BOOL)handleRightMouseDragged:(NSEvent *)theEvent;
+- (BOOL)handleMouseEntered:(NSEvent *)theEvent;
+- (BOOL)handleMouseExited:(NSEvent *)theEvent;
+- (BOOL)handleKeyDown:(NSEvent *)theEvent;
+- (BOOL)handleKeyUp:(NSEvent *)theEvent;
 
 @end

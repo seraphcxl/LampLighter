@@ -8,6 +8,8 @@
 
 #import "DCImageEditTool.h"
 
+const NSUInteger kImageEditor_DefaultAnchorRadius = 6;
+
 @interface DCImageEditTool () {
 }
 
@@ -22,6 +24,7 @@
 @synthesize currentImg = _currentImg;
 @synthesize actived = _actived;
 @synthesize edited = _edited;
+@synthesize anchorRadius = _anchorRadius;
 
 + (NSString *)getImageEditToolGUID:(Class)imageEditToolClass {
     NSString *result = nil;
@@ -40,12 +43,24 @@
     if (self) {
         if (editableImage) {
             self.currentImg = editableImage;
+            self.anchorRadius = kImageEditor_DefaultAnchorRadius;
+            _anchorRadiusSqrt = sqrtf(self.anchorRadius);
         }
     }
     return self;
 }
 
 #pragma mark - Public
+- (void)setAnchorRadius:(NSUInteger)anchorRadius {
+    do {
+        if (anchorRadius == 0) {
+            break;
+        }
+        _anchorRadius = anchorRadius;
+        _anchorRadiusSqrt = sqrtf(_anchorRadius);
+    } while (NO);
+}
+
 - (void)resetEditableImage:(DCEditableImage *)editableImage {
     do {
         if (editableImage) {
@@ -90,5 +105,73 @@
         ;
     } while (NO);
 }
+
+- (NSRect)createRectForAnchorByCenterPoint:(NSPoint)center {
+    NSUInteger diameter = self.anchorRadius * 2;
+    return NSMakeRect(center.x - self.anchorRadius, center.y - self.anchorRadius, diameter, diameter);
+}
+
+- (BOOL)isMouseHitLocation:(NSPoint)loc inAnchor:(NSPoint)anchor {
+    BOOL result = NO;
+    do {
+        CGFloat tmp = sqrtf(loc.x - anchor.x) + sqrtf(loc.y - anchor.y);
+        if (tmp > _anchorRadiusSqrt) {
+            ;
+        } else {
+            result = YES;
+        }
+    } while (NO);
+    return result;
+}
+
+#pragma mark - Responder
+- (BOOL)handleMouseDown:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleRightMouseDown:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleMouseUp:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleRightMouseUp:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleMouseMoved:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleMouseDragged:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleScrollWheel:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleRightMouseDragged:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleMouseEntered:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleMouseExited:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleKeyDown:(NSEvent *)theEvent {
+    return NO;
+}
+
+- (BOOL)handleKeyUp:(NSEvent *)theEvent {
+    return NO;
+}
+
 
 @end

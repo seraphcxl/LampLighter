@@ -47,6 +47,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         CGRect imageVisiableRect = self.currentImg.visiableRect;
         NSPoint center = NSMakePoint(imageVisiableRect.origin.x + imageVisiableRect.size.width / 2.0f, imageVisiableRect.origin.y + imageVisiableRect.size.height / 2.0f);
         
+        // Line
         CGContextSetLineWidth(context, 2.0f);
         // BaseLine
         [[NSColor maraschinoColor] set];
@@ -79,14 +80,14 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 
         CGContextAddLineToPoint(context, handleLineLocation.x, handleLineLocation.y);
         CGContextStrokePath(context);
+        // Handle
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:handleLineLocation]);
         // Arc
         [[NSColor mochaColor] set];
         if (self.rotation < 360.0f) {
             CGContextAddArc(context, center.x, center.y, kDCImageRotateTool_ArcLength, 0.0f + M_PI_2, radian + M_PI_2, 0);
             CGContextStrokePath(context);
         }
-        
-        // Handle
     } while (NO);
 }
 
@@ -111,125 +112,53 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
     } while (NO);
 }
 
-#pragma mark - NSResponder
-- (void)mouseDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+#pragma mark - Responder
+- (BOOL)handleMouseDown:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)rightMouseDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleRightMouseDown:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)otherMouseDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseUp:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleRightMouseUp:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)rightMouseUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseMoved:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)otherMouseUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseDragged:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseMoved:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleScrollWheel:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleRightMouseDragged:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)scrollWheel:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseEntered:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)rightMouseDragged:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleMouseExited:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)otherMouseDragged:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleKeyDown:(NSEvent *)theEvent {
+    return NO;
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
-}
-
-- (void)mouseExited:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
-}
-
-- (void)keyDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
-}
-
-- (void)keyUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-    } while (NO);
+- (BOOL)handleKeyUp:(NSEvent *)theEvent {
+    return NO;
 }
 
 @end

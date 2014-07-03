@@ -480,22 +480,27 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool mouseDown:theEvent];
+                handled = [editTool handleMouseDown:theEvent];
             }
         }
         
-        // Move
-        BOOL canDragImage = NO;
-        if (self.actionType == DCEditImageActionType_Freestyle && self.allowDragImage) {
-            NSPoint loc = theEvent.locationInWindow;
-            if (NSPointInRect(loc, self.currentImg.visiableRect)) {
-                canDragImage = YES;
+        if (!handled) {
+            // Move
+            BOOL canDragImage = NO;
+            if (self.actionType == DCEditImageActionType_Freestyle && self.allowDragImage) {
+                NSPoint loc = theEvent.locationInWindow;
+                if (NSPointInRect(loc, self.currentImg.visiableRect)) {
+                    canDragImage = YES;
+                }
             }
+            self.canDragImage = canDragImage;
         }
-        self.canDragImage = canDragImage;
+        
+        
     } while (NO);
 }
 
@@ -505,25 +510,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool rightMouseDown:theEvent];
-            }
-        }
-    } while (NO);
-}
-
-- (void)otherMouseDown:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-        
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                [editTool otherMouseDown:theEvent];
+                handled = [editTool handleRightMouseDown:theEvent];
             }
         }
     } while (NO);
@@ -535,10 +526,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool mouseUp:theEvent];
+                handled = [editTool handleMouseUp:theEvent];
             }
         }
         
@@ -553,25 +545,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool rightMouseUp:theEvent];
-            }
-        }
-    } while (NO);
-}
-
-- (void)otherMouseUp:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-        
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                [editTool otherMouseUp:theEvent];
+                handled = [editTool handleRightMouseUp:theEvent];
             }
         }
     } while (NO);
@@ -583,10 +561,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool mouseMoved:theEvent];
+                handled = [editTool handleMouseMoved:theEvent];
             }
         }
     } while (NO);
@@ -598,20 +577,23 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool mouseDragged:theEvent];
+                handled = [editTool handleMouseDragged:theEvent];
             }
         }
         
-        // Move
-        if (self.actionType == DCEditImageActionType_Freestyle) {
-            if (self.canDragImage) {
-                CGFloat translateX = self.currentImg.translateX + theEvent.deltaX;
-                CGFloat translateY = self.currentImg.translateY - theEvent.deltaY;
-                [self.currentImg setTranslateX:translateX Y:translateY];
-                [self _refresh];
+        if (!handled) {
+            // Move
+            if (self.actionType == DCEditImageActionType_Freestyle) {
+                if (self.canDragImage) {
+                    CGFloat translateX = self.currentImg.translateX + theEvent.deltaX;
+                    CGFloat translateY = self.currentImg.translateY - theEvent.deltaY;
+                    [self.currentImg setTranslateX:translateX Y:translateY];
+                    [self _refresh];
+                }
             }
         }
     } while (NO);
@@ -623,30 +605,33 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool scrollWheel:theEvent];
+                handled = [editTool handleScrollWheel:theEvent];
             }
         }
         
-        // Zoom
-        if (self.actionType == DCEditImageActionType_Freestyle && self.allowZoomImage) {
-//            CGFloat ratio = self.currentImg.scaleX;
-//            if (theEvent.deltaY < 0.0f) {
-//                ratio += 0.01f;
-//            } else if (theEvent.deltaY > 0.0f) {
-//                ratio -= 0.01f;
-//            }
-            CGFloat ratio = self.currentImg.scaleX - theEvent.deltaY * 0.02f;
-            if (ratio < kImageEditor_ZoomRatio_Min) {
-                ratio = kImageEditor_ZoomRatio_Min;
+        if (!handled) {
+            // Zoom
+            if (self.actionType == DCEditImageActionType_Freestyle && self.allowZoomImage) {
+                //            CGFloat ratio = self.currentImg.scaleX;
+                //            if (theEvent.deltaY < 0.0f) {
+                //                ratio += 0.01f;
+                //            } else if (theEvent.deltaY > 0.0f) {
+                //                ratio -= 0.01f;
+                //            }
+                CGFloat ratio = self.currentImg.scaleX - theEvent.deltaY * 0.02f;
+                if (ratio < kImageEditor_ZoomRatio_Min) {
+                    ratio = kImageEditor_ZoomRatio_Min;
+                }
+                if (ratio > kImageEditor_ZoomRatio_Max) {
+                    ratio = kImageEditor_ZoomRatio_Max;
+                }
+                [self.currentImg setScaleX:ratio Y:ratio];
+                [self _refresh];
             }
-            if (ratio > kImageEditor_ZoomRatio_Max) {
-                ratio = kImageEditor_ZoomRatio_Max;
-            }
-            [self.currentImg setScaleX:ratio Y:ratio];
-            [self _refresh];
         }
     } while (NO);
 }
@@ -657,25 +642,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool rightMouseDragged:theEvent];
-            }
-        }
-    } while (NO);
-}
-
-- (void)otherMouseDragged:(NSEvent *)theEvent {
-    do {
-        if (!theEvent) {
-            break;
-        }
-        
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                [editTool otherMouseDragged:theEvent];
+                handled = [editTool handleRightMouseDragged:theEvent];
             }
         }
     } while (NO);
@@ -687,10 +658,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool mouseEntered:theEvent];
+                handled = [editTool handleMouseEntered:theEvent];
             }
         }
     } while (NO);
@@ -702,10 +674,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool mouseExited:theEvent];
+                handled = [editTool handleMouseExited:theEvent];
             }
         }
     } while (NO);
@@ -717,10 +690,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool keyDown:theEvent];
+                handled = [editTool handleKeyDown:theEvent];
             }
         }
     } while (NO);
@@ -732,10 +706,11 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         
+        BOOL handled = NO;
         if (self.activeEditToolGUID) {
             DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
             if (editTool) {
-                [editTool keyUp:theEvent];
+                handled = [editTool handleKeyUp:theEvent];
             }
         }
     } while (NO);
