@@ -19,20 +19,26 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 @interface DCImageRotateTool () {
 }
 
+@property (assign, nonatomic) NSPoint centerPoint;
 @property (assign, nonatomic) NSPoint handleLocation;
+@property (assign, nonatomic) BOOL canDragHandle;
 
 @end
 
 @implementation DCImageRotateTool
 
 @synthesize rotation = _rotation;
+@synthesize centerPoint = _centerPoint;
 @synthesize handleLocation = _handleLocation;
+@synthesize canDragHandle = _canDragHandle;
 
 - (id)init {
     self = [super init];
     if (self) {
         self.rotation = 0.0f;
+        self.centerPoint = NSMakePoint(0.0f, 0.0f);
         self.handleLocation = NSMakePoint(0.0f, 0.0f);
+        self.canDragHandle = NO;
     }
     return self;
 }
@@ -45,24 +51,24 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
         CGRect imageVisiableRect = self.currentImg.visiableRect;
-        NSPoint center = NSMakePoint(imageVisiableRect.origin.x + imageVisiableRect.size.width / 2.0f, imageVisiableRect.origin.y + imageVisiableRect.size.height / 2.0f);
+        self.centerPoint = NSMakePoint(imageVisiableRect.origin.x + imageVisiableRect.size.width / 2.0f, imageVisiableRect.origin.y + imageVisiableRect.size.height / 2.0f);
         
         // Line
         CGContextSetLineWidth(context, 2.0f);
         // BaseLine
         [[NSColor maraschinoColor] set];
-        CGContextMoveToPoint(context, center.x, center.y);
-        NSPoint baseLineLocation = NSMakePoint(center.x, (center.y + kDCImageRotateTool_BaseLineLength > bounds.size.height ? bounds.size.height : center.y + kDCImageRotateTool_BaseLineLength));
+        CGContextMoveToPoint(context, self.centerPoint.x, self.centerPoint.y);
+        NSPoint baseLineLocation = NSMakePoint(self.centerPoint.x, (self.centerPoint.y + kDCImageRotateTool_BaseLineLength > bounds.size.height ? bounds.size.height : self.centerPoint.y + kDCImageRotateTool_BaseLineLength));
         CGContextAddLineToPoint(context, baseLineLocation.x, baseLineLocation.y);
         CGContextStrokePath(context);
         // HandleLine
         [[NSColor aquaColor] set];
-        CGContextMoveToPoint(context, center.x, center.y);
+        CGContextMoveToPoint(context, self.centerPoint.x, self.centerPoint.y);
         
         CGFloat radian = DEGREES_TO_RADIANS(self.rotation);
         NSPoint handleLineLocation = NSMakePoint(0.0f, 0.0f);
         
-        handleLineLocation.x = center.x - sinf(radian) * kDCImageRotateTool_HandleLineLength;
+        handleLineLocation.x = self.centerPoint.x - sinf(radian) * kDCImageRotateTool_HandleLineLength;
         if (handleLineLocation.x < 0.0f) {
             handleLineLocation.x = 0.0f;
         }
@@ -70,14 +76,15 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
             handleLineLocation.x = bounds.size.width;
         }
         
-        handleLineLocation.y = center.y + cosf(radian) * kDCImageRotateTool_HandleLineLength;
+        handleLineLocation.y = self.centerPoint.y + cosf(radian) * kDCImageRotateTool_HandleLineLength;
         if (handleLineLocation.y < 0.0f) {
             handleLineLocation.y = 0.0f;
         }
         if (handleLineLocation.y > bounds.size.height) {
             handleLineLocation.y = bounds.size.height;
         }
-
+        
+        self.handleLocation = handleLineLocation;
         CGContextAddLineToPoint(context, handleLineLocation.x, handleLineLocation.y);
         CGContextStrokePath(context);
         // Handle
@@ -85,9 +92,12 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         // Arc
         [[NSColor mochaColor] set];
         if (self.rotation < 360.0f) {
-            CGContextAddArc(context, center.x, center.y, kDCImageRotateTool_ArcLength, 0.0f + M_PI_2, radian + M_PI_2, 0);
+            CGContextAddArc(context, self.centerPoint.x, self.centerPoint.y, kDCImageRotateTool_ArcLength, 0.0f + M_PI_2, radian + M_PI_2, 0);
             CGContextStrokePath(context);
         }
+        // HandlePoint
+//        [[NSColor redColor] set];
+//        CGContextFillRect(context, NSMakeRect(handleLineLocation.x, handleLineLocation.y, 1, 1));
     } while (NO);
 }
 
@@ -114,7 +124,20 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 
 #pragma mark - Responder
 - (BOOL)handleMouseDown:(NSEvent *)theEvent {
-    return NO;
+    BOOL result = NO;
+    do {
+        if (!theEvent) {
+            break;
+        }
+        
+        NSPoint loc = theEvent.locationInWindow;
+        if ([self isMouseHitLocation:loc inAnchor:self.handleLocation]) {
+            self.canDragHandle = YES;
+            result = YES;
+        }
+        
+    } while (NO);
+    return result;
 }
 
 - (BOOL)handleRightMouseDown:(NSEvent *)theEvent {
@@ -122,6 +145,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 }
 
 - (BOOL)handleMouseUp:(NSEvent *)theEvent {
+    self.canDragHandle = NO;
     return NO;
 }
 
@@ -134,7 +158,26 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 }
 
 - (BOOL)handleMouseDragged:(NSEvent *)theEvent {
-    return NO;
+    BOOL result = NO;
+    do {
+        if (!theEvent) {
+            break;
+        }
+        if (self.canDragHandle) {
+            NSPoint loc = theEvent.locationInWindow;
+            CGFloat degreeNow = RADIANS_TO_DEGREES(atanf((loc.y - self.centerPoint.y) / (loc.x - self.centerPoint.x)));
+            
+            if (loc.x > self.centerPoint.x) {
+                self.rotation = 90.0f - degreeNow;
+            } else {
+                self.rotation = 360.0f - (degreeNow + 90.0f);
+            }
+            
+            result = YES;
+        }
+        
+    } while (NO);
+    return result;
 }
 
 - (BOOL)handleScrollWheel:(NSEvent *)theEvent {

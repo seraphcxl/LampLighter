@@ -317,15 +317,8 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 }
 
 - (BOOL)handleMouseUp:(NSEvent *)theEvent {
-    BOOL result = NO;
-    do {
-        if (!theEvent) {
-            break;
-        }
-        self.mouseHitLocation = DCImageCropMouseHitLoc_Outside;
-        result = YES;
-    } while (NO);
-    return result;
+    self.mouseHitLocation = DCImageCropMouseHitLoc_Outside;
+    return NO;
 }
 
 - (BOOL)handleRightMouseUp:(NSEvent *)theEvent {

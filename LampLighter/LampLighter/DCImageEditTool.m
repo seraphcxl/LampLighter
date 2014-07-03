@@ -8,7 +8,7 @@
 
 #import "DCImageEditTool.h"
 
-const NSUInteger kImageEditor_DefaultAnchorRadius = 6;
+const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 
 @interface DCImageEditTool () {
 }
@@ -44,20 +44,20 @@ const NSUInteger kImageEditor_DefaultAnchorRadius = 6;
         if (editableImage) {
             self.currentImg = editableImage;
             self.anchorRadius = kImageEditor_DefaultAnchorRadius;
-            _anchorRadiusSqrt = sqrtf(self.anchorRadius);
+            _anchorRadiusSqrt = powf(_anchorRadius, 2);
         }
     }
     return self;
 }
 
 #pragma mark - Public
-- (void)setAnchorRadius:(NSUInteger)anchorRadius {
+- (void)setAnchorRadius:(CGFloat)anchorRadius {
     do {
         if (anchorRadius == 0) {
             break;
         }
         _anchorRadius = anchorRadius;
-        _anchorRadiusSqrt = sqrtf(_anchorRadius);
+        _anchorRadiusSqrt = powf(_anchorRadius, 2);
     } while (NO);
 }
 
@@ -107,14 +107,14 @@ const NSUInteger kImageEditor_DefaultAnchorRadius = 6;
 }
 
 - (NSRect)createRectForAnchorByCenterPoint:(NSPoint)center {
-    NSUInteger diameter = self.anchorRadius * 2;
+    CGFloat diameter = self.anchorRadius * 2;
     return NSMakeRect(center.x - self.anchorRadius, center.y - self.anchorRadius, diameter, diameter);
 }
 
 - (BOOL)isMouseHitLocation:(NSPoint)loc inAnchor:(NSPoint)anchor {
     BOOL result = NO;
     do {
-        CGFloat tmp = sqrtf(loc.x - anchor.x) + sqrtf(loc.y - anchor.y);
+        CGFloat tmp = powf(fabsf(loc.x - anchor.x), 2) + powf(fabsf(loc.y - anchor.y), 2);
         if (tmp > _anchorRadiusSqrt) {
             ;
         } else {

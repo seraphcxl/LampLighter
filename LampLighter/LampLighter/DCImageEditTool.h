@@ -27,7 +27,7 @@
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
 @property (assign, nonatomic, readonly) BOOL actived;
 @property (assign, nonatomic, getter = isEdited) BOOL edited;
-@property (assign, nonatomic) NSUInteger anchorRadius;
+@property (assign, nonatomic) CGFloat anchorRadius;
 
 + (NSString *)getImageEditToolGUID:(Class)imageEditToolClass;
 
