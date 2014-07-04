@@ -112,30 +112,13 @@
 - (BOOL)handleMouseDragged:(NSEvent *)theEvent {
     BOOL result = NO;
     NSPoint loc = NSMakePoint(0.0f, 0.0f);
-    CGFloat mouseHitLocX = 0.0f;
-    CGFloat mouseHitLocY = 0.0f;
+    NSPoint mouseHitLoc = NSMakePoint(0.0f, 0.0f);
     do {
         if (!theEvent || !self.currentImg) {
             break;
         }
         
         loc = theEvent.locationInWindow;
-        
-        CGFloat leftX = self.cropRect.origin.x;
-//        CGFloat middleX = self.cropRect.origin.x + self.cropRect.size.width / 2.0f;
-        CGFloat rightX = self.cropRect.origin.x + self.cropRect.size.width;
-        
-        CGFloat topY = self.cropRect.origin.y + self.cropRect.size.height;
-//        CGFloat centerY = self.cropRect.origin.y + self.cropRect.size.height / 2.0f;
-        CGFloat bottomY = self.cropRect.origin.y;
-        
-        mouseHitLocX = MAX(loc.x, self.currentImg.visiableRect.origin.x);
-        mouseHitLocX = MIN(mouseHitLocX, (self.currentImg.visiableRect.origin.x + self.currentImg.visiableRect.size.width));
-        
-        mouseHitLocY = MAX(loc.y, self.currentImg.visiableRect.origin.y);
-        mouseHitLocY = MIN(mouseHitLocY, (self.currentImg.visiableRect.origin.y + self.currentImg.visiableRect.size.height));
-        
-        NSPoint mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
         
         switch (self.mouseHitLocation) {
             case DCImageCropMouseHitLoc_Outside:
@@ -149,62 +132,49 @@
                 break;
             case DCImageCropMouseHitLoc_TopLeft:
             {
-                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
-                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopLeft andHitPoint:loc];
                 [self actionForTopLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomLeft:
             {
-                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
-                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
-                
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomLeft andHitPoint:loc];
                 [self actionForBottomLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopRight:
             {
-                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
-                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopRight andHitPoint:loc];
                 [self actionForTopRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomRight:
             {
-                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
-                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomRight andHitPoint:loc];
                 [self actionForBottomRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopCenter:
             {
-                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopCenter andHitPoint:loc];
                 [self actionForTopCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomCenter:
             {
-                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomCenter andHitPoint:loc];
                 [self actionForBottomCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_LeftCenter:
             {
-                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_LeftCenter andHitPoint:loc];
                 [self actionForLeftCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_RightCenter:
             {
-                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
-                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_RightCenter andHitPoint:loc];
                 [self actionForRightCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
@@ -216,7 +186,7 @@
         }
     } while (NO);
     if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
-        [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:mouseHitLocX], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:mouseHitLocY], kImageEditPragma_CropMouseHitLocationY, nil]];
+        [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:mouseHitLoc.x], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:mouseHitLoc.y], kImageEditPragma_CropMouseHitLocationY, nil]];
     }
     return result;
 }
@@ -243,6 +213,63 @@
 
 - (BOOL)handleKeyUp:(NSEvent *)theEvent {
     return NO;
+}
+
+- (NSPoint)calcMouseHitLocationPointBy:(DCImageCropMouseHitLocation)mouseHitLoc andHitPoint:(NSPoint)hitPoint {
+    CGFloat mouseHitLocX = 0.0f;
+    CGFloat mouseHitLocY = 0.0f;
+    do {
+        CGFloat leftX = self.cropRect.origin.x;
+        CGFloat rightX = self.cropRect.origin.x + self.cropRect.size.width;
+        
+        CGFloat topY = self.cropRect.origin.y + self.cropRect.size.height;
+        CGFloat bottomY = self.cropRect.origin.y;
+        
+        mouseHitLocX = MAX(hitPoint.x, self.currentImg.visiableRect.origin.x);
+        mouseHitLocX = MIN(mouseHitLocX, (self.currentImg.visiableRect.origin.x + self.currentImg.visiableRect.size.width));
+        
+        mouseHitLocY = MAX(hitPoint.y, self.currentImg.visiableRect.origin.y);
+        mouseHitLocY = MIN(mouseHitLocY, (self.currentImg.visiableRect.origin.y + self.currentImg.visiableRect.size.height));
+        // mouseHitLocX
+        switch (mouseHitLoc) {
+            case DCImageCropMouseHitLoc_TopLeft:
+            case DCImageCropMouseHitLoc_BottomLeft:
+            case DCImageCropMouseHitLoc_LeftCenter:
+            {
+                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
+            }
+                break;
+            case DCImageCropMouseHitLoc_TopRight:
+            case DCImageCropMouseHitLoc_BottomRight:
+            case DCImageCropMouseHitLoc_RightCenter:
+            {
+                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
+            }
+                break;
+            default:
+                break;
+        }
+        // mouseHitLocY
+        switch (self.mouseHitLocation) {
+            case DCImageCropMouseHitLoc_TopLeft:
+            case DCImageCropMouseHitLoc_TopRight:
+            case DCImageCropMouseHitLoc_TopCenter:
+            {
+                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
+            }
+                break;
+            case DCImageCropMouseHitLoc_BottomLeft:
+            case DCImageCropMouseHitLoc_BottomRight:
+            case DCImageCropMouseHitLoc_BottomCenter:
+            {
+                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
+            }
+                break;
+            default:
+                break;
+        }
+    } while (NO);
+    return NSMakePoint(mouseHitLocX, mouseHitLocY);
 }
 
 @end
