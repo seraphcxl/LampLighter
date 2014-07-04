@@ -8,6 +8,7 @@
 
 #import "DCImageCropTool+Responder.h"
 #import "DCImageCropTool+ActionList.h"
+#import "DCEditableImage.h"
 
 @implementation DCImageCropTool (Responder)
 
@@ -104,10 +105,15 @@
     BOOL result = NO;
     NSPoint loc = NSMakePoint(0.0f, 0.0f);
     do {
-        if (!theEvent) {
+        if (!theEvent || !self.currentImg) {
             break;
         }
         loc = theEvent.locationInWindow;
+        CGFloat mouseHitLocX = MAX(loc.x, self.currentImg.visiableRect.origin.x);
+        mouseHitLocX = MIN(mouseHitLocX, (self.currentImg.visiableRect.origin.x + self.currentImg.visiableRect.size.width));
+        CGFloat mouseHitLocY = MAX(loc.y, self.currentImg.visiableRect.origin.y);
+        mouseHitLocY = MIN(mouseHitLocY, (self.currentImg.visiableRect.origin.y + self.currentImg.visiableRect.size.height));
+        NSPoint mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
         switch (self.mouseHitLocation) {
             case DCImageCropMouseHitLoc_Outside:
             {
@@ -115,47 +121,47 @@
                 break;
             case DCImageCropMouseHitLoc_Inside:
             {
-                [self actionForMoveWithMouseHitLocation:loc];
+                [self actionForMoveWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopLeft:
             {
-                [self actionForTopLeftWithMouseHitLocation:loc];
+                [self actionForTopLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomLeft:
             {
-                [self actionForBottomLeftWithMouseHitLocation:loc];
+                [self actionForBottomLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopRight:
             {
-                [self actionForTopRightWithMouseHitLocation:loc];
+                [self actionForTopRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomRight:
             {
-                [self actionForBottomRightWithMouseHitLocation:loc];
+                [self actionForBottomRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopCenter:
             {
-                [self actionForTopCenterWithMouseHitLocation:loc];
+                [self actionForTopCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomCenter:
             {
-                [self actionForBottomCenterWithMouseHitLocation:loc];
+                [self actionForBottomCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_LeftCenter:
             {
-                [self actionForLeftCenterWithMouseHitLocation:loc];
+                [self actionForLeftCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_RightCenter:
             {
-                [self actionForRightCenterWithMouseHitLocation:loc];
+                [self actionForRightCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             default:

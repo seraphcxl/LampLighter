@@ -126,7 +126,7 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         }
         
         if (self.cropRect.size.width == 0 && self.cropRect.size.height == 0) {
-            [self resetCropRectInRect:self.currentImg.visiableRect];
+            [self resetCropRectInRect:self.currentImg.visiableRect withMouseHitLocation:DCImageCropMouseHitLoc_Inside andLockPoint:NSMakePoint(0.0f, 0.0f)];
         }
         
         CGFloat leftX = self.cropRect.origin.x;
@@ -230,7 +230,7 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
     } while (NO);
 }
 
-- (void)resetCropRectInRect:(NSRect)bounds {
+- (void)resetCropRectInRect:(NSRect)bounds withMouseHitLocation:(DCImageCropMouseHitLocation)location andLockPoint:(NSPoint)lockPoint {
     do {
         if (!self.currentImg) {
             break;
@@ -268,11 +268,43 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
                     cropRectWidth = bounds.size.width;
                     cropRectHeight = bounds.size.height;
                 }
-                self.cropRect = NSMakeRect(centerPoint.x - cropRectWidth / 2.0f, centerPoint.y - cropRectHeight / 2.0f, cropRectWidth, cropRectHeight);
+//                self.cropRect = NSMakeRect(centerPoint.x - cropRectWidth / 2.0f, centerPoint.y - cropRectHeight / 2.0f, cropRectWidth, cropRectHeight);
             }
                 break;
             default:
                 break;
+        }
+        
+        if (self.type != DCImageCropType_Custom) {
+            switch (location) {
+                case DCImageCropMouseHitLoc_TopLeft:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x - cropRectWidth, lockPoint.y, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_BottomLeft:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x - cropRectWidth, lockPoint.y - cropRectHeight, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_TopRight:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x, lockPoint.y, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_BottomRight:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x, lockPoint.y - cropRectHeight, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_Inside:
+                {
+                    self.cropRect = NSMakeRect(centerPoint.x - cropRectWidth / 2.0f, centerPoint.y - cropRectHeight / 2.0f, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                default:
+                    break;
+            }
         }
         
     } while (NO);
