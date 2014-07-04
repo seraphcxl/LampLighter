@@ -29,6 +29,7 @@
 		89B0A6D1195BB80C0092FC97 /* LampLighterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */; };
 		89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */; };
 		89CA25831962F32900471681 /* Beauty.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89CA25821962F32900471681 /* Beauty.jpg */; };
+		89E41BCD1966CCFE00637AB2 /* DCImageCropTool+Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,8 @@
 		89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCEditableImage.m; sourceTree = "<group>"; };
 		89B0A6E6195BB84E0092FC97 /* DCEditableImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCEditableImage.h; sourceTree = "<group>"; };
 		89CA25821962F32900471681 /* Beauty.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Beauty.jpg; sourceTree = "<group>"; };
+		89E41BCB1966CCFE00637AB2 /* DCImageCropTool+Responder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DCImageCropTool+Responder.h"; sourceTree = "<group>"; };
+		89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DCImageCropTool+Responder.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +203,8 @@
 				892EB256195BF906004CE94A /* DCImageEditTool.m */,
 				892EB254195BF906004CE94A /* DCImageCropTool.h */,
 				892EB255195BF906004CE94A /* DCImageCropTool.m */,
+				89E41BCB1966CCFE00637AB2 /* DCImageCropTool+Responder.h */,
+				89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */,
 				89347B271964F37700BCD74C /* DCImageCropTool+ActionList.h */,
 				89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */,
 				892EB257195BF906004CE94A /* DCImageRotateTool.h */,
@@ -395,6 +400,7 @@
 				892EB25B195BF906004CE94A /* DCImageCropTool.m in Sources */,
 				89B0A6B3195BB80B0092FC97 /* main.m in Sources */,
 				892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */,
+				89E41BCD1966CCFE00637AB2 /* DCImageCropTool+Responder.m in Sources */,
 				89B0A6BA195BB80B0092FC97 /* DCAppDelegate.m in Sources */,
 				892EB259195BF906004CE94A /* DCImageEditView.m in Sources */,
 			);

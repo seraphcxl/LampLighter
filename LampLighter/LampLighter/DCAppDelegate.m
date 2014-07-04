@@ -207,11 +207,11 @@
             [self.fitinLockBtn setState:1];
             [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
             
-//            DCImageEditTool *tool = [self.imageEditVC activeEditTool];
-//            if ([tool isKindOfClass:[DCImageCropTool class]]) {
-//                DCImageCropTool *cropTool = (DCImageCropTool *)tool;
-//                [cropTool resetCropRect];
-//            }
+            DCImageEditTool *tool = [self.imageEditVC activeEditTool];
+            if ([tool isKindOfClass:[DCImageCropTool class]]) {
+                DCImageCropTool *cropTool = (DCImageCropTool *)tool;
+                [cropTool resetCropType:(DCImageCropType)[self.cropComboBox indexOfSelectedItem]];
+            }
         }
     } while (NO);
 }
@@ -405,6 +405,16 @@
             break;
         }
         NSLog(@"%@ %@ %ld %@", [self className], NSStringFromSelector(_cmd), (long)[self.cropComboBox indexOfSelectedItem], [self.cropComboBox objectValueOfSelectedItem]);
+        
+        if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
+            DCImageEditTool *tool = [self.imageEditVC activeEditTool];
+            if ([tool isKindOfClass:[DCImageCropTool class]]) {
+                DCImageCropTool *cropTool = (DCImageCropTool *)tool;
+                [cropTool resetCropType:(DCImageCropType)[self.cropComboBox indexOfSelectedItem]];
+                
+                [self.imageEditVC refresh];
+            }
+        }
     } while (NO);
 }
 

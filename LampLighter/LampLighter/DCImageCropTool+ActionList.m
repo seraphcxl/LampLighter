@@ -7,6 +7,7 @@
 //
 
 #import "DCImageCropTool+ActionList.h"
+#import "DCEditableImage.h"
 
 @implementation DCImageCropTool (ActionList)
 
@@ -18,9 +19,13 @@
 
 - (void)actionForTopLeftWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
+        CGRect imageVisiableRect = self.currentImg.visiableRect;
         switch (self.type) {
             case DCImageCropType_Custom:
             {
+                if (NSPointInRect(mouseHitLoc, imageVisiableRect)) {
+                    ;
+                }
             }
                 break;
             case DCImageCropType_1x1:
