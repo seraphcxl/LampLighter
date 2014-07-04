@@ -20,263 +20,90 @@
 - (void)actionForTopLeftWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
         NSPoint bottomRight = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y);
-        [self createNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_TopLeft WithHitPoint:mouseHitLoc andLockPoint:bottomRight];
+        [self cornerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_TopLeft WithHitPoint:mouseHitLoc andLockPoint:bottomRight];
     } while (NO);
 }
 
 - (void)actionForBottomLeftWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
         NSPoint topRight = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
-        [self createNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_BottomLeft WithHitPoint:mouseHitLoc andLockPoint:topRight];
+        [self cornerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_BottomLeft WithHitPoint:mouseHitLoc andLockPoint:topRight];
     } while (NO);
 }
 
 - (void)actionForTopRightWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
         NSPoint bottomLeft = self.cropRect.origin;
-        [self createNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_TopRight WithHitPoint:mouseHitLoc andLockPoint:bottomLeft];
+        [self cornerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_TopRight WithHitPoint:mouseHitLoc andLockPoint:bottomLeft];
     } while (NO);
 }
 
 - (void)actionForBottomRightWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
         NSPoint topLeft = NSMakePoint(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height);
-        [self createNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_BottomRight WithHitPoint:mouseHitLoc andLockPoint:topLeft];
+        [self cornerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_BottomRight WithHitPoint:mouseHitLoc andLockPoint:topLeft];
     } while (NO);
 }
 
 - (void)actionForTopCenterWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
-        switch (self.type) {
-            case DCImageCropType_Custom:
-            {
-            }
-                break;
-            case DCImageCropType_1x1:
-            {
-            }
-                break;
-            case DCImageCropType_2x3:
-            {
-            }
-                break;
-            case DCImageCropType_3x5:
-            {
-            }
-                break;
-            case DCImageCropType_5x7:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_A4:
-            {
-            }
-                break;
-            default:
-                break;
-        }
+        [self centerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_TopCenter WithHitPoint:mouseHitLoc];
     } while (NO);
 }
 
 - (void)actionForBottomCenterWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
-        switch (self.type) {
-            case DCImageCropType_Custom:
-            {
-            }
-                break;
-            case DCImageCropType_1x1:
-            {
-            }
-                break;
-            case DCImageCropType_2x3:
-            {
-            }
-                break;
-            case DCImageCropType_3x5:
-            {
-            }
-                break;
-            case DCImageCropType_5x7:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_A4:
-            {
-            }
-                break;
-            default:
-                break;
-        }
+        [self centerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_BottomCenter WithHitPoint:mouseHitLoc];
     } while (NO);
 }
 
 - (void)actionForLeftCenterWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
-        switch (self.type) {
-            case DCImageCropType_Custom:
-            {
-            }
-                break;
-            case DCImageCropType_1x1:
-            {
-            }
-                break;
-            case DCImageCropType_2x3:
-            {
-            }
-                break;
-            case DCImageCropType_3x5:
-            {
-            }
-                break;
-            case DCImageCropType_5x7:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_A4:
-            {
-            }
-                break;
-            default:
-                break;
-        }
+        [self centerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_LeftCenter WithHitPoint:mouseHitLoc];
     } while (NO);
 }
 
 - (void)actionForRightCenterWithMouseHitLocation:(NSPoint)mouseHitLoc {
     do {
-        switch (self.type) {
-            case DCImageCropType_Custom:
+        [self centerAnchorCreateNewCropRectByMouseHitLocation:DCImageCropMouseHitLoc_RightCenter WithHitPoint:mouseHitLoc];
+    } while (NO);
+}
+
+- (void)cornerAnchorCreateNewCropRectByMouseHitLocation:(DCImageCropMouseHitLocation)mouseHitLoc WithHitPoint:(NSPoint)hitPoint andLockPoint:(NSPoint)lockPoint {
+    do {
+        NSRect newCropBounds = NSMakeRect(MIN(hitPoint.x, lockPoint.x), MIN(hitPoint.y, lockPoint.y), fabsf(hitPoint.x - lockPoint.x), fabsf(hitPoint.y - lockPoint.y));
+        [self resetCropRectInRect:newCropBounds withMouseHitLocation:mouseHitLoc andLockPoint:lockPoint];
+    } while (NO);
+}
+
+- (void)centerAnchorCreateNewCropRectByMouseHitLocation:(DCImageCropMouseHitLocation)mouseHitLoc WithHitPoint:(NSPoint)hitPoint {
+    do {
+        NSRect newCropBounds = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
+        switch (mouseHitLoc) {
+            case DCImageCropMouseHitLoc_TopCenter:
             {
+                newCropBounds = NSMakeRect(self.cropRect.origin.x, self.cropRect.origin.y, self.cropRect.size.width, fabsf(hitPoint.y - self.cropRect.origin.y));
             }
                 break;
-            case DCImageCropType_1x1:
+            case DCImageCropMouseHitLoc_BottomCenter:
             {
+                newCropBounds = NSMakeRect(self.cropRect.origin.x, hitPoint.y, self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height - hitPoint.y);
             }
                 break;
-            case DCImageCropType_2x3:
+            case DCImageCropMouseHitLoc_LeftCenter:
             {
+                newCropBounds = NSMakeRect(hitPoint.x, self.cropRect.origin.y, self.cropRect.origin.x + self.cropRect.size.width - hitPoint.x, self.cropRect.size.height);
             }
                 break;
-            case DCImageCropType_3x5:
+            case DCImageCropMouseHitLoc_RightCenter:
             {
-            }
-                break;
-            case DCImageCropType_5x7:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_4x3_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x9_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Portait:
-            {
-            }
-                break;
-            case DCImageCropType_16x10_Landscape:
-            {
-            }
-                break;
-            case DCImageCropType_A4:
-            {
+                newCropBounds = NSMakeRect(self.cropRect.origin.x, self.cropRect.origin.y, fabsf(hitPoint.x - self.cropRect.origin.x), self.cropRect.size.height);
             }
                 break;
             default:
                 break;
         }
-    } while (NO);
-}
-
-- (void)createNewCropRectByMouseHitLocation:(DCImageCropMouseHitLocation)mouseHitLoc WithHitPoint:(NSPoint)hitPoint andLockPoint:(NSPoint)lockPoint {
-    do {
-        NSRect newCropBounds = NSMakeRect(MIN(hitPoint.x, lockPoint.x), MIN(hitPoint.y, lockPoint.y), fabsf(hitPoint.x - lockPoint.x), fabsf(hitPoint.y - lockPoint.y));
-        [self resetCropRectInRect:newCropBounds withMouseHitLocation:mouseHitLoc andLockPoint:lockPoint];
+        [self resetCropRectInRect:newCropBounds withMouseHitLocation:mouseHitLoc andLockPoint:NSMakePoint(0.0f, 0.0f)];
     } while (NO);
 }
 

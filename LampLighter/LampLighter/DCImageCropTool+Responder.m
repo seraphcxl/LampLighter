@@ -22,43 +22,51 @@
         
         NSPoint loc = theEvent.locationInWindow;
         
+        CGFloat leftX = self.cropRect.origin.x;
+        CGFloat middleX = self.cropRect.origin.x + self.cropRect.size.width / 2.0f;
+        CGFloat rightX = self.cropRect.origin.x + self.cropRect.size.width;
+        
+        CGFloat topY = self.cropRect.origin.y + self.cropRect.size.height;
+        CGFloat centerY = self.cropRect.origin.y + self.cropRect.size.height / 2.0f;
+        CGFloat bottomY = self.cropRect.origin.y;
+        
         do {
-            NSPoint topLeft = NSMakePoint(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height);
+            NSPoint topLeft = NSMakePoint(leftX, topY);
             if ([self isMouseHitLocation:loc inAnchor:topLeft]) {
                 self.mouseHitLocation = DCImageCropMouseHitLoc_TopLeft;
                 break;
             } else {
-                NSPoint bottomLeft = self.cropRect.origin;
+                NSPoint bottomLeft = NSMakePoint(leftX, bottomY);
                 if ([self isMouseHitLocation:loc inAnchor:bottomLeft]) {
                     self.mouseHitLocation = DCImageCropMouseHitLoc_BottomLeft;
                     break;
                 } else {
-                    NSPoint topRight = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
+                    NSPoint topRight = NSMakePoint(rightX, topY);
                     if ([self isMouseHitLocation:loc inAnchor:topRight]) {
                         self.mouseHitLocation = DCImageCropMouseHitLoc_TopRight;
                         break;
                     } else {
-                        NSPoint bottomRight = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y);
+                        NSPoint bottomRight = NSMakePoint(rightX, bottomY);
                         if ([self isMouseHitLocation:loc inAnchor:bottomRight]) {
                             self.mouseHitLocation = DCImageCropMouseHitLoc_BottomRight;
                             break;
                         } else {
-                            NSPoint topCenter = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width / 2.0f, self.cropRect.origin.y + self.cropRect.size.height);
+                            NSPoint topCenter = NSMakePoint(middleX, topY);
                             if ([self isMouseHitLocation:loc inAnchor:topCenter]) {
                                 self.mouseHitLocation = DCImageCropMouseHitLoc_TopCenter;
                                 break;
                             } else {
-                                NSPoint bottomCenter = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width / 2.0f, self.cropRect.origin.y);
+                                NSPoint bottomCenter = NSMakePoint(middleX, bottomY);
                                 if ([self isMouseHitLocation:loc inAnchor:bottomCenter]) {
                                     self.mouseHitLocation = DCImageCropMouseHitLoc_BottomCenter;
                                     break;
                                 } else {
-                                    NSPoint leftCenter = NSMakePoint(self.cropRect.origin.x, self.cropRect.origin.y + self.cropRect.size.height / 2.0f);
+                                    NSPoint leftCenter = NSMakePoint(leftX, centerY);
                                     if ([self isMouseHitLocation:loc inAnchor:leftCenter]) {
                                         self.mouseHitLocation = DCImageCropMouseHitLoc_LeftCenter;
                                         break;
                                     } else {
-                                        NSPoint rightCenter = NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height / 2.0f);
+                                        NSPoint rightCenter = NSMakePoint(rightX, centerY);
                                         if ([self isMouseHitLocation:loc inAnchor:rightCenter]) {
                                             self.mouseHitLocation = DCImageCropMouseHitLoc_RightCenter;
                                             break;
@@ -104,16 +112,31 @@
 - (BOOL)handleMouseDragged:(NSEvent *)theEvent {
     BOOL result = NO;
     NSPoint loc = NSMakePoint(0.0f, 0.0f);
+    CGFloat mouseHitLocX = 0.0f;
+    CGFloat mouseHitLocY = 0.0f;
     do {
         if (!theEvent || !self.currentImg) {
             break;
         }
+        
         loc = theEvent.locationInWindow;
-        CGFloat mouseHitLocX = MAX(loc.x, self.currentImg.visiableRect.origin.x);
+        
+        CGFloat leftX = self.cropRect.origin.x;
+//        CGFloat middleX = self.cropRect.origin.x + self.cropRect.size.width / 2.0f;
+        CGFloat rightX = self.cropRect.origin.x + self.cropRect.size.width;
+        
+        CGFloat topY = self.cropRect.origin.y + self.cropRect.size.height;
+//        CGFloat centerY = self.cropRect.origin.y + self.cropRect.size.height / 2.0f;
+        CGFloat bottomY = self.cropRect.origin.y;
+        
+        mouseHitLocX = MAX(loc.x, self.currentImg.visiableRect.origin.x);
         mouseHitLocX = MIN(mouseHitLocX, (self.currentImg.visiableRect.origin.x + self.currentImg.visiableRect.size.width));
-        CGFloat mouseHitLocY = MAX(loc.y, self.currentImg.visiableRect.origin.y);
+        
+        mouseHitLocY = MAX(loc.y, self.currentImg.visiableRect.origin.y);
         mouseHitLocY = MIN(mouseHitLocY, (self.currentImg.visiableRect.origin.y + self.currentImg.visiableRect.size.height));
+        
         NSPoint mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+        
         switch (self.mouseHitLocation) {
             case DCImageCropMouseHitLoc_Outside:
             {
@@ -126,41 +149,62 @@
                 break;
             case DCImageCropMouseHitLoc_TopLeft:
             {
+                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
+                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForTopLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomLeft:
             {
+                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
+                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
+                
                 [self actionForBottomLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopRight:
             {
+                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
+                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForTopRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomRight:
             {
+                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
+                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForBottomRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopCenter:
             {
+                mouseHitLocY = MAX(mouseHitLocY, bottomY + 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForTopCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomCenter:
             {
+                mouseHitLocY = MIN(mouseHitLocY, topY - 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForBottomCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_LeftCenter:
             {
+                mouseHitLocX = MIN(mouseHitLocX, rightX - 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForLeftCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_RightCenter:
             {
+                mouseHitLocX = MAX(mouseHitLocX, leftX + 1);
+                mouseHitLoc = NSMakePoint(mouseHitLocX, mouseHitLocY);
                 [self actionForRightCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
@@ -172,7 +216,7 @@
         }
     } while (NO);
     if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
-        [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:loc.x], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:loc.y], kImageEditPragma_CropMouseHitLocationY, nil]];
+        [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:mouseHitLocX], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:mouseHitLocY], kImageEditPragma_CropMouseHitLocationY, nil]];
     }
     return result;
 }

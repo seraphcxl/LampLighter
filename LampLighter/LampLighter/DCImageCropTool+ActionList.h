@@ -20,6 +20,6 @@
 - (void)actionForLeftCenterWithMouseHitLocation:(NSPoint)mouseHitLoc;
 - (void)actionForRightCenterWithMouseHitLocation:(NSPoint)mouseHitLoc;
 
-- (void)createNewCropRectByMouseHitLocation:(DCImageCropMouseHitLocation)mouseHitLoc WithHitPoint:(NSPoint)hitPoint andLockPoint:(NSPoint)lockPoint;
-
+- (void)cornerAnchorCreateNewCropRectByMouseHitLocation:(DCImageCropMouseHitLocation)mouseHitLoc WithHitPoint:(NSPoint)hitPoint andLockPoint:(NSPoint)lockPoint;
+- (void)centerAnchorCreateNewCropRectByMouseHitLocation:(DCImageCropMouseHitLocation)mouseHitLoc WithHitPoint:(NSPoint)hitPoint;
 @end
