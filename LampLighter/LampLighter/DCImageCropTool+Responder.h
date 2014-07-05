@@ -10,6 +10,6 @@
 
 @interface DCImageCropTool (Responder)
 
-- (NSPoint)calcMouseHitLocationPointBy:(DCImageCropMouseHitLocation)mouseHitLoc andHitPoint:(NSPoint)hitPoint;
+- (NSPoint)fitinMouseHitLocationPointBy:(DCImageCropMouseHitLocation)mouseHitLoc andHitPoint:(NSPoint)hitPoint;
 
 @end

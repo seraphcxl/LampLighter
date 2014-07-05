@@ -379,13 +379,16 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         }
         [self.imageEditToolDescriptionTextField setStringValue:imageEditToolDescription];
         
-        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", (int)(self.currentImg.scaleX * 100 + 0.5)]];
+        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", DCRoundingFloatToInt(self.currentImg.scaleX * 100)]];
         
         [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentImg.rotation]];
         
-        [self.imageEditedSizeTextField setStringValue:[NSString stringWithFormat:@"%d x %d", (int)(self.currentImg.editedImageSize.width + 0.5), (int)(self.currentImg.editedImageSize.height + 0.5)]];
+        [self.imageEditedSizeTextField setStringValue:[NSString stringWithFormat:@"%d x %d", DCRoundingFloatToInt(self.currentImg.editedImageSize.width), DCRoundingFloatToInt(self.currentImg.editedImageSize.height)]];
 
-//        [self.cropDescriptionTextField setHidden:!show];
+        if ([tool isKindOfClass:[DCImageCropTool class]]) {
+            DCImageCropTool *cropTool = (DCImageCropTool *)tool;
+            [self.cropDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d x %d", DCRoundingFloatToInt(cropTool.cropRect.size.width / self.currentImg.scaleX), DCRoundingFloatToInt(cropTool.cropRect.size.height / self.currentImg.scaleX)]];
+        }
     } while (NO);
 }
 

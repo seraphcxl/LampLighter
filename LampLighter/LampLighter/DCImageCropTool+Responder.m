@@ -127,54 +127,55 @@
                 break;
             case DCImageCropMouseHitLoc_Inside:
             {
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_Inside andHitPoint:loc];
                 [self actionForMoveWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopLeft:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopLeft andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopLeft andHitPoint:loc];
                 [self actionForTopLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomLeft:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomLeft andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomLeft andHitPoint:loc];
                 [self actionForBottomLeftWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopRight:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopRight andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopRight andHitPoint:loc];
                 [self actionForTopRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomRight:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomRight andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomRight andHitPoint:loc];
                 [self actionForBottomRightWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_TopCenter:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopCenter andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopCenter andHitPoint:loc];
                 [self actionForTopCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomCenter:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomCenter andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomCenter andHitPoint:loc];
                 [self actionForBottomCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_LeftCenter:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_LeftCenter andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_LeftCenter andHitPoint:loc];
                 [self actionForLeftCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
             case DCImageCropMouseHitLoc_RightCenter:
             {
-                mouseHitLoc = [self calcMouseHitLocationPointBy:DCImageCropMouseHitLoc_RightCenter andHitPoint:loc];
+                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_RightCenter andHitPoint:loc];
                 [self actionForRightCenterWithMouseHitLocation:mouseHitLoc];
             }
                 break;
@@ -215,7 +216,7 @@
     return NO;
 }
 
-- (NSPoint)calcMouseHitLocationPointBy:(DCImageCropMouseHitLocation)mouseHitLoc andHitPoint:(NSPoint)hitPoint {
+- (NSPoint)fitinMouseHitLocationPointBy:(DCImageCropMouseHitLocation)mouseHitLoc andHitPoint:(NSPoint)hitPoint {
     CGFloat mouseHitLocX = 0.0f;
     CGFloat mouseHitLocY = 0.0f;
     do {
@@ -225,11 +226,14 @@
         CGFloat topY = self.cropRect.origin.y + self.cropRect.size.height;
         CGFloat bottomY = self.cropRect.origin.y;
         
+        // fit in current image visiable rect
         mouseHitLocX = MAX(hitPoint.x, self.currentImg.visiableRect.origin.x);
         mouseHitLocX = MIN(mouseHitLocX, (self.currentImg.visiableRect.origin.x + self.currentImg.visiableRect.size.width));
         
         mouseHitLocY = MAX(hitPoint.y, self.currentImg.visiableRect.origin.y);
         mouseHitLocY = MIN(mouseHitLocY, (self.currentImg.visiableRect.origin.y + self.currentImg.visiableRect.size.height));
+        
+        // fit in self crop rect
         // mouseHitLocX
         switch (mouseHitLoc) {
             case DCImageCropMouseHitLoc_TopLeft:

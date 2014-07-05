@@ -138,19 +138,19 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         CGFloat bottomY = self.cropRect.origin.y;
         
         // Mask
-        maskColor = CGColorCreateGenericRGB(DC_RGB256(0.0f), DC_RGB256(64.0f), DC_RGB256(128.0f), 0.5f);
+        maskColor = CGColorCreateGenericRGB(DC_RGB256(25.0f), DC_RGB256(25.0f), DC_RGB256(25.0f), 0.8f);
         CGContextSetFillColorWithColor(context, maskColor);
         // TopLeftRect
-        NSRect topLectRect = NSMakeRect(0.0f, bottomY, self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y);
+        NSRect topLectRect = DCMakeIntegerRect(0.0f, bottomY, leftX, bounds.size.height - bottomY);
         CGContextFillRect(context, topLectRect);
         // BottomLeftRect
-        NSRect bottomLeftRect = NSMakeRect(0.0f, 0.0f, self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y);
+        NSRect bottomLeftRect = DCMakeIntegerRect(0.0f, 0.0f, rightX, bottomY);
         CGContextFillRect(context, bottomLeftRect);
         // TopRightRect
-        NSRect topRightRect = NSMakeRect(leftX, topY, bounds.size.width - self.cropRect.origin.x, bounds.size.height - self.cropRect.origin.y - self.cropRect.size.height);
+        NSRect topRightRect = DCMakeIntegerRect(leftX, topY, bounds.size.width - leftX, bounds.size.height - topY);
         CGContextFillRect(context, topRightRect);
         // BottomRightRect
-        NSRect bottomRightRect = NSMakeRect(rightX, 0.0f, bounds.size.width - self.cropRect.origin.x - self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height);
+        NSRect bottomRightRect = DCMakeIntegerRect(rightX, 0.0f, bounds.size.width - rightX, topY);
         CGContextFillRect(context, bottomRightRect);
         // CropRect
         cropRectColor = CGColorCreateGenericRGB(DC_RGB256(128.0f), DC_RGB256(64.0f), DC_RGB256(0.0f), 1.0f);
@@ -212,7 +212,13 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 
 - (void)active {
     do {
+        if (!self.currentImg) {
+            break;
+        }
+        
         [super active];
+        
+        self.cropRect = self.currentImg.visiableRect;
     } while (NO);
 }
 
