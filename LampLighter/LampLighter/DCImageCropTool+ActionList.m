@@ -11,9 +11,18 @@
 
 @implementation DCImageCropTool (ActionList)
 
-- (void)actionForMoveWithMouseHitLocation:(NSPoint)mouseHitLoc {
+- (void)actionForMoveWithMouseHitLocationPointDeltaX:(CGFloat)deltaX andDeltaY:(CGFloat)deltaY {
     do {
-        ;
+        NSRect visiableRect = self.currentImg.visiableRect;
+        CGFloat newOrignX = self.cropRect.origin.x + deltaX;
+        newOrignX = MAX(visiableRect.origin.x, newOrignX);
+        newOrignX = MIN(visiableRect.origin.x + visiableRect.size.width - self.cropRect.size.width, newOrignX);
+        
+        CGFloat newOrignY = self.cropRect.origin.y - deltaY;
+        newOrignY = MAX(visiableRect.origin.y, newOrignY);
+        newOrignY = MIN(visiableRect.origin.y + visiableRect.size.height - self.cropRect.size.height, newOrignY);
+        
+        self.cropRect = NSMakeRect(newOrignX, newOrignY, self.cropRect.size.width, self.cropRect.size.height);
     } while (NO);
 }
 

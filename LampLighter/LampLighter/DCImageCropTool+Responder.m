@@ -127,8 +127,7 @@
                 break;
             case DCImageCropMouseHitLoc_Inside:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_Inside andHitPoint:loc];
-                [self actionForMoveWithMouseHitLocation:mouseHitLoc];
+                [self actionForMoveWithMouseHitLocationPointDeltaX:theEvent.deltaX andDeltaY:theEvent.deltaY];
             }
                 break;
             case DCImageCropMouseHitLoc_TopLeft:

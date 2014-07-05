@@ -10,7 +10,7 @@
 
 @interface DCImageCropTool (ActionList)
 
-- (void)actionForMoveWithMouseHitLocation:(NSPoint)mouseHitLoc;
+- (void)actionForMoveWithMouseHitLocationPointDeltaX:(CGFloat)deltaX andDeltaY:(CGFloat)deltaY;
 - (void)actionForTopLeftWithMouseHitLocation:(NSPoint)mouseHitLoc;
 - (void)actionForBottomLeftWithMouseHitLocation:(NSPoint)mouseHitLoc;
 - (void)actionForTopRightWithMouseHitLocation:(NSPoint)mouseHitLoc;
