@@ -18,6 +18,8 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
 
 const CGFloat kImageEditor_ZoomStep = 0.25f;
 
+typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, NSURL *destURL, NSString *type);
+
 @interface DCImageEditViewController () {
 }
 
@@ -27,7 +29,8 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 @property (strong, nonatomic) DCEditableImage *currentImg;
 @property (assign, nonatomic) BOOL canDragImage;
 
-- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
+- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type andBlock:(DCEditableImageSaveActionBlock)block;
+
 - (void)cleanEditTools;
 - (void)getImageInfo;
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
@@ -66,7 +69,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 
 - (void)dealloc {
     do {
-        [self saveEditableImageWithAlarm:NO as:nil type:nil];
+        [self saveEditableImageWithAlarm:YES as:nil type:nil];
         self.savingDelegate = nil;
         [self cleanEditTools];
         self.editToolDict = nil;
@@ -100,6 +103,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 
 - (void)viewCtrlWillDisappear {
     do {
+        self.savingDelegate = nil;
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     } while (NO);
 }
@@ -110,8 +114,6 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         if (!editableImage) {
             break;
         }
-        
-        [self saveEditableImageWithAlarm:YES as:nil type:nil];
         
         [self cleanEditTools];
         
@@ -291,13 +293,27 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
     } while (NO);
 }
 
-- (BOOL)saveImageAs:(NSURL *)destURL {
+- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
+    return [self saveEditableImageWithAlarm:showDlg as:destURL type:type andBlock:^BOOL(DCEditableImage *editableImage, NSURL *destURL, NSString *type) {
+        return [editableImage saveAs:destURL type:type];
+    }];
+}
+
+- (BOOL)saveCropEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
     BOOL result = NO;
     do {
-        if (!destURL) {
+        if (!self.currentImg) {
             break;
         }
-        result = [self saveEditableImageWithAlarm:NO as:destURL type:nil];
+        DCImageEditTool *tool = [self activeEditTool];
+        if (![tool isKindOfClass:[DCImageCropTool class]]) {
+            break;
+        }
+        DCImageCropTool *cropTool = (DCImageCropTool *)tool;
+        NSRect cropRect = NSMakeRect((cropTool.cropRect.origin.x - self.currentImg.visiableRect.origin.x) / self.currentImg.scaleX, (cropTool.cropRect.origin.y - self.currentImg.visiableRect.origin.y) / self.currentImg.scaleX, cropTool.cropRect.size.width / self.currentImg.scaleX, cropTool.cropRect.size.height / self.currentImg.scaleX);
+        result = [self saveEditableImageWithAlarm:showDlg as:destURL type:type andBlock:^BOOL(DCEditableImage *editableImage, NSURL *destURL, NSString *type) {
+            return [editableImage saveCrop:cropRect as:destURL type:type];
+        }];
     } while (NO);
     return result;
 }
@@ -315,9 +331,12 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
 }
 
 #pragma mark - Private
-- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
+- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type andBlock:(DCEditableImageSaveActionBlock)block {
     BOOL result = NO;
     do {
+        if (!block) {
+            break;
+        }
         BOOL isEdited = NO;
         NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
         for (DCImageEditTool *tool in editToolAry) {
@@ -327,8 +346,10 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             }
         }
         if (isEdited) {
+            BOOL needDeleteCurrentImage = NO;
             if (!destURL) {
                 destURL = [self.currentImg url];
+                needDeleteCurrentImage = YES;
             }
             if (!type) {
                 type = [self.currentImg uti];
@@ -344,11 +365,21 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
                 }
             }
             if (needSave) {
+                if (needDeleteCurrentImage) {
+                    NSError *err = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtURL:[self.currentImg url] error:&err] || err) {
+                        NSLog(@"%@", [err description]);
+                        break;
+                    }
+                }
                 // do save
-                [self.currentImg saveAs:destURL type:type];
+                result = block(self.currentImg, destURL, type);
+//                [self.currentImg saveAs:destURL type:type];
+            } else {
+                result = YES;
             }
         }
-        result = YES;
+        
     } while (NO);
     return result;
 }

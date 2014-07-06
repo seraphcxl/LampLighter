@@ -14,6 +14,8 @@
         <customObject id="Voe-Tx-rLC" customClass="DCAppDelegate">
             <connections>
                 <outlet property="actualBtn" destination="vPY-L0-Szj" id="RSR-07-WVq"/>
+                <outlet property="applyCropBtn" destination="VPw-Eb-YkI" id="Wli-zz-A1p"/>
+                <outlet property="cancelCropBtn" destination="Mjk-Ay-OgK" id="2Xm-2T-nos"/>
                 <outlet property="cropBtn" destination="Ucf-QJ-A1K" id="nLf-Vm-mpU"/>
                 <outlet property="cropComboBox" destination="Sm6-wm-z92" id="xQZ-IH-fmy"/>
                 <outlet property="degreeTextField" destination="brN-Kh-jlB" id="ctb-mD-nu9"/>
@@ -831,10 +833,35 @@ Gw
                             <action selector="showHideCropTool:" target="Voe-Tx-rLC" id="zuW-ZL-ekQ"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" id="VPw-Eb-YkI">
+                        <rect key="frame" x="642" y="137" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BOB-bV-9Tm">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionForApplyCrop:" target="Voe-Tx-rLC" id="ILQ-OZ-uZs"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="Mjk-Ay-OgK">
+                        <rect key="frame" x="738" y="137" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bdE-en-NeG">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionForCancelCrop:" target="Voe-Tx-rLC" id="LUj-66-40o"/>
+                        </connections>
+                    </button>
                     <comboBox verticalHuggingPriority="750" id="Sm6-wm-z92">
                         <rect key="frame" x="648" y="181" width="183" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <comboBoxCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="cVe-ba-zij">
+                        <comboBoxCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="7" id="cVe-ba-zij">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

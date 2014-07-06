@@ -25,6 +25,7 @@
 - (NSArray *)extensionsForUTI:(CFStringRef)uti;
 - (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)saveCropImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)cleanEditTools;
 
 @end
@@ -40,6 +41,7 @@
         self.imageEditVC = [[DCImageEditViewController alloc] initWithNibName:@"DCImageEditViewController" bundle:nil];
         self.imageEditVC.allowDragImage = YES;
         self.imageEditVC.allowZoomImage = YES;
+        self.imageEditVC.savingDelegate = self;
     } while (NO);
 }
 
@@ -148,9 +150,6 @@
 
 - (IBAction)resetCurrentImage:(id)sender {
     do {
-        if (!sender) {
-            break;
-        }
         DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
         [self.imageEditVC resetCurrentImage:img];
         
@@ -168,45 +167,36 @@
 
 - (IBAction)showHideRotateTool:(id)sender {
     do {
-        if (!sender) {
-            break;
-        }
-        
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
             // hide
-            [self.imageEditVC activeEditToolByClass:nil];
             [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
+            [self.imageEditVC activeEditToolByClass:nil];
         } else {
             // show
-            [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
-            
             if (self.fitinLockBtn.state) {
                 [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
             } else {
                 [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
             }
+            [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
         }
     } while (NO);
 }
 
 - (IBAction)showHideCropTool:(id)sender {
     do {
-        if (!sender) {
-            break;
-        }
-        
         if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
             // hide
-            [self.imageEditVC activeEditToolByClass:nil];
             [self.fitinLockBtn setState:0];
             [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
+            [self.imageEditVC activeEditToolByClass:nil];
         } else {
             // show
-            [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
-            
+            [self.imageEditVC saveEditableImageWithAlarm:YES as:nil type:nil];
+            [self resetCurrentImage:nil];
             [self.fitinLockBtn setState:1];
             [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
-            
+            [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
             DCImageEditTool *tool = [self.imageEditVC activeEditTool];
             if ([tool isKindOfClass:[DCImageCropTool class]]) {
                 DCImageCropTool *cropTool = (DCImageCropTool *)tool;
@@ -289,6 +279,40 @@
     } while (NO);
 }
 
+- (IBAction)actionForApplyCrop:(id)sender {
+    do {
+        NSSavePanel * panel = [NSSavePanel savePanel];
+        [panel setCanSelectHiddenExtension:YES];
+        [panel setAllowedFileTypes:@[self.imageEditVC.currentImg.uti]];
+        [panel setAllowsOtherFileTypes:NO];
+        [panel setTreatsFilePackagesAsDirectories:YES];
+        
+        [panel beginSheetForDirectory:nil file:@"cropped image" modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(saveCropImageDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    } while (NO);
+}
+
+- (IBAction)actionForCancelCrop:(id)sender {
+    do {
+        DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
+        [self.imageEditVC resetCurrentImage:img];
+        
+        DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
+        DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
+        
+        [self.imageEditVC addEditTool:rotateTool];
+        [self.imageEditVC addEditTool:cropTool];
+        
+        [self.imageEditVC fitin];
+        
+        [self.rotateSlider setFloatValue:0.0f];
+        [self.degreeTextField setStringValue:@"0"];
+//        [self.cropComboBox selectItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:DCImageCropType_Custom]];
+        [self.fitinLockBtn setState:0];
+        
+        [self showHideCropTool:nil];
+    } while (NO);
+}
+
 #pragma mark - Private
 - (void)textFeildDidEndEditing:(NSNotification *)notification {
     do {
@@ -363,6 +387,12 @@
 - (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSOKButton) {
 		if ([[panel URLs] count] > 0) {
+            DCImageEditTool *tool = [self.imageEditVC activeEditTool];
+            if ([tool isKindOfClass:[DCImageCropTool class]]) {
+                [self.imageEditVC saveCropEditableImageWithAlarm:YES as:nil type:nil];
+            } else {
+                [self.imageEditVC saveEditableImageWithAlarm:YES as:nil type:nil];
+            }
 			self.imageURL = [[panel URLs] objectAtIndex:0];
             DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
             [self.imageEditVC resetCurrentImage:img];
@@ -382,7 +412,13 @@
 
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSOKButton) {
-        [self.imageEditVC saveImageAs:[panel URL]];
+        [self.imageEditVC saveEditableImageWithAlarm:NO as:[panel URL] type:nil];
+	}
+}
+
+- (void)saveCropImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == NSOKButton) {
+        [self.imageEditVC saveCropEditableImageWithAlarm:NO as:[panel URL] type:nil];
 	}
 }
 
@@ -416,6 +452,12 @@
             }
         }
     } while (NO);
+}
+
+#pragma mark - DCImageEditVCSavingDelegate
+- (BOOL)imageEditViewController:(DCImageEditViewController *)imageEditVC canSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti {
+     NSLog(@"%@ %@ %@%@", [self className], NSStringFromSelector(_cmd), saveURL, uti);
+    return YES;
 }
 
 @end

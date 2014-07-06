@@ -59,7 +59,8 @@ typedef NS_ENUM(NSUInteger, DCEditImageActionType) {
 - (void)fitin;
 - (void)actual;
 
-- (BOOL)saveImageAs:(NSURL *)destURL;
+- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
+- (BOOL)saveCropEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
 
 - (void)stepZoomIn;
 - (void)stepZoomOut;

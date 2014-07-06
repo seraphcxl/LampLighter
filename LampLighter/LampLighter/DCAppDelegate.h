@@ -7,11 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "DCImageEditViewController.h"
 
 @class DCImageCropTool;
 @class DCImageRotateTool;
 
-@interface DCAppDelegate : NSObject <NSApplicationDelegate, NSTextFieldDelegate, NSComboBoxDelegate>
+@interface DCAppDelegate : NSObject <NSApplicationDelegate, NSTextFieldDelegate, NSComboBoxDelegate, DCImageEditVCSavingDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *mainView;
@@ -32,6 +33,8 @@
 @property (weak) IBOutlet NSButton *fitinLockBtn;
 @property (weak) IBOutlet NSButton *stepZoomOutBtn;
 @property (weak) IBOutlet NSButton *stepZoomInBtn;
+@property (weak) IBOutlet NSButton *applyCropBtn;
+@property (weak) IBOutlet NSButton *cancelCropBtn;
 
 @property (strong, nonatomic) NSMutableArray *openImageIOSupportedTypes;
 
@@ -47,5 +50,7 @@
 - (IBAction)actionLockFitin:(id)sender;
 - (IBAction)actionStepZoomOut:(id)sender;
 - (IBAction)actionStepZoomIn:(id)sender;
+- (IBAction)actionForApplyCrop:(id)sender;
+- (IBAction)actionForCancelCrop:(id)sender;
 
 @end

@@ -35,9 +35,9 @@
 
 - (void)calcEditedImageSize;
 - (void)calcVisiableRectInRect:(CGRect)bounds;
-- (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale;
-- (void)drawRawDataWithContext:(CGContextRef)context inRect:(CGRect)bounds;
-- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale;
+- (void)drawWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect;
+- (void)drawRawDataWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds;
+- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect;
 - (void)rotateWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 - (void)scaleWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 - (void)translateWithContext:(CGContextRef)context;
@@ -169,13 +169,21 @@
 }
 
 - (BOOL)saveAs:(NSURL *)destURL type:(NSString *)type {
+    BOOL result = NO;
+    do {
+        result = [self saveCrop:NSMakeRect(0.0f, 0.0f, self.editedImageSize.width, self.editedImageSize.height) as:destURL type:type];
+    } while (NO);
+    return result;
+}
+
+- (BOOL)saveCrop:(NSRect)cropRect as:(NSURL *)destURL type:(NSString *)type {
     DCFunctionPerformanceTimingBegin
     BOOL result = NO;
     CGImageDestinationRef imageDest = NULL;
     CGContextRef bitmapContext = NULL;
     CGImageRef imageIOImage = NULL;
     do {
-        if (!destURL || !type || !_image || !_properties) {
+        if (cropRect.size.width == 0 || cropRect.size.height == 0 || !destURL || !type || !_image || !_properties) {
             break;
         }
         imageDest = CGImageDestinationCreateWithURL((__bridge CFURLRef)(destURL), (__bridge CFStringRef)(type), 1, NULL);
@@ -183,15 +191,17 @@
             break;
         }
         
-        int bitmapContextWidth = (int)(self.editedImageSize.width + 0.5);
-        int bitmapContextHeight = (int)(self.editedImageSize.height + 0.5);
+        int orginX = DCRoundingFloatToInt(cropRect.origin.x);
+        int orginY = DCRoundingFloatToInt(cropRect.origin.y);
+        int width = DCRoundingFloatToInt(cropRect.size.width);
+        int height = DCRoundingFloatToInt(cropRect.size.height);
         
-        bitmapContext = CGBitmapContextCreate(NULL, bitmapContextWidth, bitmapContextHeight, 8, 0, CGImageGetColorSpace(_image), kCGImageAlphaPremultipliedFirst);
+        bitmapContext = CGBitmapContextCreate(NULL, width, height, 8, 0, CGImageGetColorSpace(_image), kCGImageAlphaPremultipliedFirst);
         if (!bitmapContext) {
             break;
         }
         
-        [self drawWithContext:bitmapContext inRect:CGRectMake(0.0, 0.0, bitmapContextWidth, bitmapContextHeight) includeTranslate:YES includeScale:NO];
+        [self drawWithContext:bitmapContext forSave:YES inRect:CGRectMake(orginX, orginY, width, height) allowTranslate:NO allowScale:NO allowCalcVisiableRect:NO];
         
         imageIOImage = CGBitmapContextCreateImage(bitmapContext);
         if (!imageIOImage) {
@@ -231,12 +241,27 @@
 }
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
+    CGColorRef visiableRectColor = NULL;
     do {
         if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
         }
-        [self drawWithContext:context inRect:bounds includeTranslate:YES includeScale:YES];
+        
+        [self drawWithContext:context forSave:NO inRect:bounds allowTranslate:YES allowScale:YES allowCalcVisiableRect:YES];
+        
+        // visiableRect
+        if ((int)(self.rotation) % 360 != 0) {
+            visiableRectColor = CGColorCreateGenericRGB(DC_RGB256(0.0f), DC_RGB256(128.0f), DC_RGB256(255.0f), 1.0f);
+            CGContextSetLineWidth(context, 1.0);
+            CGContextSetStrokeColorWithColor(context, visiableRectColor);
+            CGContextAddRect(context, self.visiableRect);
+            CGContextStrokePath(context);
+        }
     } while (NO);
+    if (visiableRectColor) {
+        CGColorRelease(visiableRectColor);
+        visiableRectColor = NULL;
+    }
 }
 
 #pragma mark - Private
@@ -369,19 +394,23 @@
     } while (NO);
 }
 
-- (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale {
+- (void)drawWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect {
     do {
         if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
         }
+        
         CGContextSaveGState(context);
-        [self applyTransformationWithContext:context inRect:bounds includeTranslate:isIncludeTranslate includeScale:isIncludeScale];
-        [self drawRawDataWithContext:context inRect:bounds];
+        
+        [self applyTransformationWithContext:context inRect:bounds allowTranslate:allowTranslate allowScale:allowScale allowCalcVisiableRect:allowCalcVisiableRect];
+        
+        [self drawRawDataWithContext:context forSave:isForSave inRect:bounds];
+        
         CGContextRestoreGState(context);
     } while (NO);
 }
 
-- (void)drawRawDataWithContext:(CGContextRef)context inRect:(CGRect)bounds {
+- (void)drawRawDataWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds {
     do {
         if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
@@ -393,23 +422,30 @@
         imageRect.size.width = CGImageGetWidth(_image);
         imageRect.size.height = CGImageGetHeight(_image);
         
-        // Position the image such that it is centered in the parent view.
-        // fix up for pixel boundaries
-        imageRect.origin.x = (bounds.size.width - imageRect.size.width) / 2.0f;
-        imageRect.origin.y = (bounds.size.height - imageRect.size.height) / 2.0f;
+        if (isForSave && (bounds.origin.x != 0 || bounds.origin.y != 0)) {
+            imageRect.origin.x = -bounds.origin.x;
+            imageRect.origin.y = -bounds.origin.y;
+        } else {
+            // Position the image such that it is centered in the parent view.
+            // fix up for pixel boundaries
+            imageRect.origin.x = (bounds.size.width - imageRect.size.width) / 2.0f;
+            imageRect.origin.y = (bounds.size.height - imageRect.size.height) / 2.0f;
+        }
         
         // And draw the image.
         CGContextDrawImage(context, imageRect, _image);
     } while (NO);
 }
 
-- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds includeTranslate:(BOOL)isIncludeTranslate includeScale:(BOOL)isIncludeScale {
+- (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect {
     do {
         if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
             break;
         }
         
-        [self calcVisiableRectInRect:bounds];
+        if (allowCalcVisiableRect) {
+            [self calcVisiableRectInRect:bounds];
+        }
         
         // Whenever you do multiple CTM changes, you have to be very careful with order.
         // Changing the order of your CTM changes changes the outcome of the drawing operation.
@@ -421,11 +457,13 @@
         // (translation), then rotate our axies so that our image appears at an angle (rotation), and finally
         // scale our axies so that our image has a different size (scale).
         // Changing the order of operations will markedly change the results.
-        if (isIncludeTranslate) {
+        if (allowTranslate) {
             [self translateWithContext:context];
         }
+        
         [self rotateWithContext:context inRect:bounds];
-        if (isIncludeScale) {
+        
+        if (allowScale) {
             [self scaleWithContext:context inRect:bounds];
         }
     } while (NO);

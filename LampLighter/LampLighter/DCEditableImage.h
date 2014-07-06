@@ -34,6 +34,7 @@
 - (void)setTranslateX:(CGFloat)translateX Y:(CGFloat)translateY;
 
 - (BOOL)saveAs:(NSURL *)destURL type:(NSString *)type;
+- (BOOL)saveCrop:(NSRect)cropRect as:(NSURL *)destURL type:(NSString *)type;
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds;
 

@@ -218,7 +218,9 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         
         [super active];
         
-        self.cropRect = self.currentImg.visiableRect;
+//        self.cropRect = self.currentImg.visiableRect;
+        
+        self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
     } while (NO);
 }
 
@@ -314,6 +316,26 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         }
         
     } while (NO);
+}
+
+- (BOOL)isEdited {
+    BOOL result = NO;
+    do {
+        if (!self.currentImg) {
+            break;
+        }
+        if (self.cropRect.size.width == 0 && self.cropRect.size.height == 0) {
+            break;
+        }
+        CGFloat width = self.cropRect.size.width / self.currentImg.scaleX;
+        CGFloat height = self.cropRect.size.height / self.currentImg.scaleX;
+        if (width == self.currentImg.editedImageSize.width && height == self.currentImg.editedImageSize.height) {
+            ;
+        } else {
+            result = YES;
+        }
+    } while (NO);
+    return result;
 }
 
 - (void)resetCropType:(DCImageCropType)newType {
