@@ -65,7 +65,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         [[NSColor aquaColor] set];
         CGContextMoveToPoint(context, self.centerPoint.x, self.centerPoint.y);
         
-        CGFloat radian = DEGREES_TO_RADIANS(self.rotation);
+        CGFloat radian = DC_DEGREES_TO_RADIANS(self.rotation);
         NSPoint handleLineLocation = NSMakePoint(0.0f, 0.0f);
         
         handleLineLocation.x = self.centerPoint.x - sinf(radian) * kDCImageRotateTool_HandleLineLength;
@@ -165,7 +165,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         }
         if (self.canDragHandle) {
             NSPoint loc = theEvent.locationInWindow;
-            CGFloat degreeNow = RADIANS_TO_DEGREES(atanf((loc.y - self.centerPoint.y) / (loc.x - self.centerPoint.x)));
+            CGFloat degreeNow = DC_RADIANS_TO_DEGREES(atanf((loc.y - self.centerPoint.y) / (loc.x - self.centerPoint.x)));
             
             if (loc.x > self.centerPoint.x) {
                 self.rotation = 90.0f - degreeNow;

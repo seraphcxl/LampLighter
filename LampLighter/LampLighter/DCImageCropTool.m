@@ -129,11 +129,11 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
             break;
         }
         
-        if (FloatingNumberEqualToZero(self.cropRect.size.width) && FloatingNumberEqualToZero(self.cropRect.size.height)) {
+        if (DC_FloatingNumberEqualToZero(self.cropRect.size.width) && DC_FloatingNumberEqualToZero(self.cropRect.size.height)) {
             [self resetCropRectInRect:self.currentImg.visiableRect withMouseHitLocation:DCImageCropMouseHitLoc_Inside andLockPoint:NSMakePoint(0.0f, 0.0f)];
         }
         
-        if (!FloatingNumberEqualToZero(self.scaleBeforeResize)) {
+        if (!DC_FloatingNumberEqualToZero(self.scaleBeforeResize)) {
             CGFloat originX = self.cropRect.origin.x * self.currentImg.scaleX / self.scaleBeforeResize;
             CGFloat originY = self.cropRect.origin.y * self.currentImg.scaleX / self.scaleBeforeResize;
             CGFloat sizeW = self.cropRect.size.width * self.currentImg.scaleX / self.scaleBeforeResize;
@@ -341,12 +341,12 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         if (!self.currentImg) {
             break;
         }
-        if (FloatingNumberEqualToZero(self.cropRect.size.width) && FloatingNumberEqualToZero(self.cropRect.size.height)) {
+        if (DC_FloatingNumberEqualToZero(self.cropRect.size.width) && DC_FloatingNumberEqualToZero(self.cropRect.size.height)) {
             break;
         }
         CGFloat width = self.cropRect.size.width / self.currentImg.scaleX;
         CGFloat height = self.cropRect.size.height / self.currentImg.scaleX;
-        if (FloatingNumberEqual(width, self.currentImg.editedImageSize.width) && FloatingNumberEqual(height, self.currentImg.editedImageSize.height)) {
+        if (DC_FloatingNumberEqual(width, self.currentImg.editedImageSize.width) && DC_FloatingNumberEqual(height, self.currentImg.editedImageSize.height)) {
             ;
         } else {
             result = YES;

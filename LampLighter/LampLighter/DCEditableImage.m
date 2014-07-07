@@ -184,7 +184,7 @@
     CGImageRef imageIOImage = NULL;
     CGColorSpaceRef rgbColorSpaceRef = NULL;
     do {
-        if (FloatingNumberEqualToZero(cropRect.size.width) || FloatingNumberEqualToZero(cropRect.size.height) || !destURL || !type || !_image || !_properties) {
+        if (DC_FloatingNumberEqualToZero(cropRect.size.width) || DC_FloatingNumberEqualToZero(cropRect.size.height) || !destURL || !type || !_image || !_properties) {
             break;
         }
         imageDest = CGImageDestinationCreateWithURL((__bridge CFURLRef)(destURL), (__bridge CFStringRef)(type), 1, NULL);
@@ -252,7 +252,7 @@
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     CGColorRef visiableRectColor = NULL;
     do {
-        if (!context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
+        if (!context || DC_FloatingNumberEqualToZero(bounds.size.width) || DC_FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -384,7 +384,7 @@
                 rotation = 0 - rotation;
             }
         }
-        CGFloat radian = DEGREES_TO_RADIANS(rotation);
+        CGFloat radian = DC_DEGREES_TO_RADIANS(rotation);
         CGFloat sinFloat = sinf(radian);
         CGFloat cosFloat = cosf(radian);
         self.editedImageSize = NSMakeSize((editWith * cosFloat + editHeight * sinFloat), (editWith * sinFloat + editHeight * cosFloat));
@@ -405,7 +405,7 @@
 
 - (void)drawWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect {
     do {
-        if (!context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
+        if (!context || DC_FloatingNumberEqualToZero(bounds.size.width) || DC_FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -421,7 +421,7 @@
 
 - (void)drawRawDataWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds {
     do {
-        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
+        if (!_image || !context || DC_FloatingNumberEqualToZero(bounds.size.width) || DC_FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -431,7 +431,7 @@
         imageRect.size.width = CGImageGetWidth(_image);
         imageRect.size.height = CGImageGetHeight(_image);
         
-        if (isForSave && (bounds.origin.x != 0 || bounds.origin.y != 0)) {
+        if (isForSave && DC_FloatingNumberEqualToZero(self.rotation)) {
             imageRect.origin.x = -bounds.origin.x;
             imageRect.origin.y = -bounds.origin.y;
         } else {
@@ -448,7 +448,7 @@
 
 - (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect {
     do {
-        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
+        if (!_image || !context || DC_FloatingNumberEqualToZero(bounds.size.width) || DC_FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -480,7 +480,7 @@
 
 - (void)rotateWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
-        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
+        if (!_image || !context || DC_FloatingNumberEqualToZero(bounds.size.width) || DC_FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -497,7 +497,7 @@
 
 - (void)scaleWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
-        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
+        if (!_image || !context || DC_FloatingNumberEqualToZero(bounds.size.width) || DC_FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
