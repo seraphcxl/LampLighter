@@ -182,6 +182,7 @@
     CGImageDestinationRef imageDest = NULL;
     CGContextRef bitmapContext = NULL;
     CGImageRef imageIOImage = NULL;
+    CGColorSpaceRef rgbColorSpaceRef = NULL;
     do {
         if (FloatingNumberEqualToZero(cropRect.size.width) || FloatingNumberEqualToZero(cropRect.size.height) || !destURL || !type || !_image || !_properties) {
             break;
@@ -198,7 +199,11 @@
         
         bitmapContext = CGBitmapContextCreate(NULL, width, height, 8, 0, CGImageGetColorSpace(_image), kCGImageAlphaPremultipliedFirst);
         if (!bitmapContext) {
-            break;
+            rgbColorSpaceRef = CGColorSpaceCreateDeviceRGB();
+            bitmapContext = CGBitmapContextCreate(NULL, width, height, 8, 0, rgbColorSpaceRef, kCGImageAlphaPremultipliedFirst);
+            if (!bitmapContext) {
+                break;
+            }
         }
         
         [self drawWithContext:bitmapContext forSave:YES inRect:CGRectMake(orginX, orginY, width, height) allowTranslate:NO allowScale:NO allowCalcVisiableRect:NO];
@@ -223,6 +228,10 @@
         }
         result = CGImageDestinationFinalize(imageDest);
     } while (NO);
+    if (rgbColorSpaceRef) {
+        CGColorSpaceRelease(rgbColorSpaceRef);
+        rgbColorSpaceRef = NULL;
+    }
     if (imageIOImage) {
         CGImageRelease(imageIOImage);
         imageIOImage = NULL;
