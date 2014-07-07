@@ -53,7 +53,7 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 #pragma mark - Public
 - (void)setAnchorRadius:(CGFloat)anchorRadius {
     do {
-        if (anchorRadius == 0) {
+        if (FloatingNumberEqualToZero(anchorRadius)) {
             break;
         }
         _anchorRadius = anchorRadius;

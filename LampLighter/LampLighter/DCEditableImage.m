@@ -183,7 +183,7 @@
     CGContextRef bitmapContext = NULL;
     CGImageRef imageIOImage = NULL;
     do {
-        if (cropRect.size.width == 0 || cropRect.size.height == 0 || !destURL || !type || !_image || !_properties) {
+        if (FloatingNumberEqualToZero(cropRect.size.width) || FloatingNumberEqualToZero(cropRect.size.height) || !destURL || !type || !_image || !_properties) {
             break;
         }
         imageDest = CGImageDestinationCreateWithURL((__bridge CFURLRef)(destURL), (__bridge CFStringRef)(type), 1, NULL);
@@ -243,7 +243,7 @@
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     CGColorRef visiableRectColor = NULL;
     do {
-        if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
+        if (!context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -396,7 +396,7 @@
 
 - (void)drawWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect {
     do {
-        if (!context || bounds.size.width == 0 || bounds.size.height == 0) {
+        if (!context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -412,7 +412,7 @@
 
 - (void)drawRawDataWithContext:(CGContextRef)context forSave:(BOOL)isForSave inRect:(CGRect)bounds {
     do {
-        if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
+        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -439,7 +439,7 @@
 
 - (void)applyTransformationWithContext:(CGContextRef)context inRect:(CGRect)bounds allowTranslate:(BOOL)allowTranslate allowScale:(BOOL)allowScale allowCalcVisiableRect:(BOOL)allowCalcVisiableRect {
     do {
-        if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
+        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -471,7 +471,7 @@
 
 - (void)rotateWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
-        if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
+        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         
@@ -488,7 +488,7 @@
 
 - (void)scaleWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
-        if (!_image || !context || bounds.size.width == 0 || bounds.size.height == 0) {
+        if (!_image || !context || FloatingNumberEqualToZero(bounds.size.width) || FloatingNumberEqualToZero(bounds.size.height)) {
             break;
         }
         

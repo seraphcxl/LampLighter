@@ -14,6 +14,8 @@
 
 #import "DCEditableImage.h"
 
+const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
+
 @interface DCAppDelegate () {
 }
 
@@ -456,8 +458,8 @@
 
 #pragma mark - DCImageEditVCSavingDelegate
 - (BOOL)imageEditViewController:(DCImageEditViewController *)imageEditVC canSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti {
-     NSLog(@"%@ %@ %@%@", [self className], NSStringFromSelector(_cmd), saveURL, uti);
-    return YES;
+    NSLog(@"%@ %@ %@%@", [self className], NSStringFromSelector(_cmd), saveURL, uti);
+    return NO;
 }
 
 @end
