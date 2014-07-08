@@ -26,6 +26,16 @@
 @synthesize editableImage = _editableImage;
 @synthesize imageEditTool = _imageEditTool;
 
++ (NSString *)getCacheDir {
+    NSString *result = nil;
+    do {
+        NSArray *pathAry = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        DCAssert(pathAry.count > 0);
+        result = [NSString stringWithFormat:@"%@/%@", [pathAry objectAtIndex:0], [[NSBundle mainBundle] bundleIdentifier]];
+    } while (NO);
+    return result;
+}
+
 #pragma mark - Lifecycle
 - (id)init {
     self = [super init];
@@ -39,6 +49,16 @@
 
 - (void)dealloc {
     do {
+        NSString *cacheDir = [DCImageEditScene getCacheDir];
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        BOOL isDir = NO;
+        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
+            NSURL *cacheURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", cacheDir, self.uuid]];
+            NSError *err = nil;
+            if (![fileMgr removeItemAtURL:cacheURL error:&err] || err) {
+                NSLog(@"%@", [err localizedDescription]);
+            }
+        }
         self.imageEditTool = nil;
         self.editableImage = nil;
         self.uuid = nil;
@@ -77,9 +97,7 @@
             break;
         }
         
-        NSArray *pathAry = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        DCAssert(pathAry.count > 0);
-        NSString *cacheDir = [NSString stringWithFormat:@"%@/%@", [pathAry objectAtIndex:0], [[NSBundle mainBundle] bundleIdentifier]];
+        NSString *cacheDir = [DCImageEditScene getCacheDir];
         NSFileManager *fileMgr = [NSFileManager defaultManager];
         BOOL isDir = NO;
         if (![fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] || !isDir) {

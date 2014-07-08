@@ -18,6 +18,8 @@
 @property (strong, nonatomic, readonly) DCEditableImage *editableImage;
 @property (strong, nonatomic, readonly) DCImageEditTool *imageEditTool;
 
++ (NSString *)getCacheDir;
+
 - (instancetype)initWithType:(DCImageEditToolType)type andImageURL:(NSURL *)imageURL;
 - (NSURL *)cache;
 
