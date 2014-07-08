@@ -21,6 +21,7 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 @implementation DCImageEditTool
 
 @synthesize actionDelegate = _actionDelegate;
+@synthesize type = _type;
 @synthesize currentImg = _currentImg;
 @synthesize actived = _actived;
 @synthesize edited = _edited;

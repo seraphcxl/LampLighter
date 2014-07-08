@@ -31,6 +31,7 @@
 
 - (void)setRotation:(CGFloat)rotation;
 - (void)setScaleX:(CGFloat)scaleX Y:(CGFloat)scaleY;
+- (void)setPreserveAspectRatioScale:(CGFloat)scale;
 - (void)setTranslateX:(CGFloat)translateX Y:(CGFloat)translateY;
 
 - (BOOL)saveAs:(NSURL *)destURL type:(NSString *)type;

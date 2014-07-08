@@ -161,6 +161,12 @@
     } while (NO);
 }
 
+- (void)setPreserveAspectRatioScale:(CGFloat)scale {
+    do {
+        _scaleX = _scaleY = scale;
+    } while (NO);
+}
+
 - (void)setTranslateX:(CGFloat)translateX Y:(CGFloat)translateY {
     do {
         _translateX = translateX;

@@ -35,6 +35,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 - (id)init {
     self = [super init];
     if (self) {
+        self.type = DCImageEditToolType_Rotate;
         self.rotation = 0.0f;
         self.centerPoint = NSMakePoint(0.0f, 0.0f);
         self.handleLocation = NSMakePoint(0.0f, 0.0f);

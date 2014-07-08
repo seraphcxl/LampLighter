@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, DCImageEditToolType) {
+    DCImageEditToolType_Rotate,
+    DCImageEditToolType_Crop,
+    
+    DCImageEditToolType_Count,
+};
+
 @class DCImageEditTool;
 @class DCEditableImage;
 
@@ -24,6 +31,7 @@
 }
 
 @property (assign, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
+@property (assign, nonatomic) DCImageEditToolType type;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
 @property (assign, nonatomic, readonly) BOOL actived;
 @property (assign, nonatomic, getter = isEdited) BOOL edited;

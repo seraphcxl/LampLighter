@@ -24,7 +24,7 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 
 @implementation DCImageCropTool
 
-@synthesize type = _type;
+@synthesize cropType = _cropType;
 @synthesize mouseHitLocation = _mouseHitLocation;
 @synthesize cropRect = _cropRect;
 @synthesize scaleBeforeResize = _scaleBeforeResize;
@@ -32,7 +32,8 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 - (id)init {
     self = [super init];
     if (self) {
-        self.type = DCImageCropType_Custom;
+        self.type = DCImageEditToolType_Crop;
+        self.cropType = DCImageCropType_Custom;
         self.mouseHitLocation = DCImageCropMouseHitLoc_Outside;
         self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
         self.scaleBeforeResize = 0.0f;
@@ -41,10 +42,10 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 }
 
 #pragma mark - Public
-+ (NSString *)descriptionForImageCropType:(DCImageCropType)type {
++ (NSString *)descriptionForImageCropType:(DCImageCropType)cropType {
     NSString *result = nil;
     do {
-        switch (type) {
+        switch (cropType) {
             case DCImageCropType_Custom:
             {
                 result = @"Custom";
@@ -265,7 +266,7 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
         CGFloat ratioForCropRect = DCImageCropRatioAry[self.type].width / DCImageCropRatioAry[self.type].height;
         CGFloat cropRectWidth = 0.0f;
         CGFloat cropRectHeight = 0.0f;
-        switch (self.type) {
+        switch (self.cropType) {
             case DCImageCropType_Custom:
             {
                 self.cropRect = bounds;
@@ -355,12 +356,12 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
     return result;
 }
 
-- (void)resetCropType:(DCImageCropType)newType {
+- (void)resetCropType:(DCImageCropType)newCropType {
     do {
-        if (self.type == newType) {
+        if (self.cropType == newCropType) {
             break;
         }
-        self.type = newType;
+        self.cropType = newCropType;
         self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
     } while (NO);
 }

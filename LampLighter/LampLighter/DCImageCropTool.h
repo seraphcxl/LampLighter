@@ -47,13 +47,13 @@ extern CGSize DCImageCropRatioAry[];
 
 @interface DCImageCropTool : DCImageEditTool
 
-+ (NSString *)descriptionForImageCropType:(DCImageCropType)type;
++ (NSString *)descriptionForImageCropType:(DCImageCropType)cropType;
 
-@property (assign, nonatomic) DCImageCropType type;
+@property (assign, nonatomic) DCImageCropType cropType;
 @property (assign, nonatomic) DCImageCropMouseHitLocation mouseHitLocation;
 @property (assign, nonatomic) NSRect cropRect;
 
 - (void)resetCropRectInRect:(NSRect)bounds withMouseHitLocation:(DCImageCropMouseHitLocation)location andLockPoint:(NSPoint)lockPoint;
-- (void)resetCropType:(DCImageCropType)newType;
+- (void)resetCropType:(DCImageCropType)newCropType;
 
 @end
