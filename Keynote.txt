@@ -1,0 +1,8 @@
+1. use scene to support undo redo
+2. scene and edit tool support coding
+3. rotate
+4. crop
+5. zoom
+6. move
+7. edit tool view
+8. image filter
