@@ -14,8 +14,8 @@
     CFDictionaryRef _properties;
 }
 
-@property (strong, nonatomic) NSURL *url;
-@property (strong, nonatomic) NSString *uti;
+@property (copy, nonatomic) NSURL *url;
+@property (copy, nonatomic) NSString *uti;
 
 @property (assign, nonatomic) CGFloat rotation;
 

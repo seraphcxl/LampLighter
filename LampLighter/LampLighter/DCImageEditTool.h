@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, DCImageEditToolType) {
+    DCImageEditToolType_None,
     DCImageEditToolType_Rotate,
     DCImageEditToolType_Crop,
     
@@ -25,7 +26,7 @@ typedef NS_ENUM(NSUInteger, DCImageEditToolType) {
 
 @end
 
-@interface DCImageEditTool : NSObject {
+@interface DCImageEditTool : NSObject <NSCoding> {
 @protected
     CGFloat _anchorRadiusSqrt;
 }

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8917D753196B72420082089A /* DCImageEditScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D752196B72420082089A /* DCImageEditScene.m */; };
 		891F1F851963AFEF00796F46 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891F1F841963AFEF00796F46 /* QuartzCore.framework */; };
-		892784441960F678000D18E4 /* Tourbillon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8927843B1960F658000D18E4 /* Tourbillon.framework */; };
 		892EB259195BF906004CE94A /* DCImageEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB251195BF906004CE94A /* DCImageEditView.m */; };
 		892EB25A195BF906004CE94A /* DCImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB253195BF906004CE94A /* DCImageEditViewController.m */; };
 		892EB25B195BF906004CE94A /* DCImageCropTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB255195BF906004CE94A /* DCImageCropTool.m */; };
@@ -30,44 +29,38 @@
 		89B0A6D1195BB80C0092FC97 /* LampLighterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */; };
 		89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */; };
 		89CA25831962F32900471681 /* Beauty.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89CA25821962F32900471681 /* Beauty.jpg */; };
+		89DC8075198779F800CC6FE8 /* Tourbillon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8948EB3C198110C3006FC2C6 /* Tourbillon.framework */; };
 		89E41BCD1966CCFE00637AB2 /* DCImageCropTool+Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8927843A1960F658000D18E4 /* PBXContainerItemProxy */ = {
+		8948EB3B198110C3006FC2C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			containerPortal = 8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 89E137401925B11000A3EFB7;
 			remoteInfo = Tourbillon;
 		};
-		8927843C1960F658000D18E4 /* PBXContainerItemProxy */ = {
+		8948EB3D198110C3006FC2C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			containerPortal = 8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 89E137571925B11000A3EFB7;
 			remoteInfo = TourbillonTests;
 		};
-		8927843E1960F658000D18E4 /* PBXContainerItemProxy */ = {
+		8948EB3F198110C3006FC2C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			containerPortal = 8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 89E137721925B13D00A3EFB7;
 			remoteInfo = "Tourbillon-iOS";
 		};
-		892784401960F658000D18E4 /* PBXContainerItemProxy */ = {
+		8948EB41198110C3006FC2C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+			containerPortal = 8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 89E137801925B13D00A3EFB7;
 			remoteInfo = "Tourbillon-iOSTests";
-		};
-		892784421960F672000D18E4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 89E1373F1925B11000A3EFB7;
-			remoteInfo = Tourbillon;
 		};
 		89B0A6C8195BB80C0092FC97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -76,13 +69,19 @@
 			remoteGlobalIDString = 89B0A6A2195BB80B0092FC97;
 			remoteInfo = LampLighter;
 		};
+		89DC806F198779F500CC6FE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89E1373F1925B11000A3EFB7;
+			remoteInfo = Tourbillon;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8917D751196B72420082089A /* DCImageEditScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditScene.h; sourceTree = "<group>"; };
 		8917D752196B72420082089A /* DCImageEditScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditScene.m; sourceTree = "<group>"; };
 		891F1F841963AFEF00796F46 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		892784331960F658000D18E4 /* Tourbillon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tourbillon.xcodeproj; path = ../../Tourbillon/Tourbillon.xcodeproj; sourceTree = "<group>"; };
 		892EB24F195BF906004CE94A /* DCImageEditTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditTool.h; sourceTree = "<group>"; };
 		892EB250195BF906004CE94A /* DCImageEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditView.h; sourceTree = "<group>"; };
 		892EB251195BF906004CE94A /* DCImageEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditView.m; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		892EB25E195BF916004CE94A /* DCImageEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DCImageEditViewController.xib; sourceTree = "<group>"; };
 		89347B271964F37700BCD74C /* DCImageCropTool+ActionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DCImageCropTool+ActionList.h"; sourceTree = "<group>"; };
 		89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DCImageCropTool+ActionList.m"; sourceTree = "<group>"; };
+		8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tourbillon.xcodeproj; path = ../../Tourbillon/Tourbillon.xcodeproj; sourceTree = "<group>"; };
 		89B0A6A3195BB80B0092FC97 /* LampLighter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LampLighter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89B0A6A6195BB80B0092FC97 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		89B0A6A9195BB80B0092FC97 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -127,8 +127,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89DC8075198779F800CC6FE8 /* Tourbillon.framework in Frameworks */,
 				891F1F851963AFEF00796F46 /* QuartzCore.framework in Frameworks */,
-				892784441960F678000D18E4 /* Tourbillon.framework in Frameworks */,
 				89B0A6A7195BB80B0092FC97 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,13 +145,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		892784341960F658000D18E4 /* Products */ = {
+		8948EB35198110C2006FC2C6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8927843B1960F658000D18E4 /* Tourbillon.framework */,
-				8927843D1960F658000D18E4 /* TourbillonTests.xctest */,
-				8927843F1960F658000D18E4 /* libTourbillon-iOS.a */,
-				892784411960F658000D18E4 /* Tourbillon-iOSTests.xctest */,
+				8948EB3C198110C3006FC2C6 /* Tourbillon.framework */,
+				8948EB3E198110C3006FC2C6 /* TourbillonTests.xctest */,
+				8948EB40198110C3006FC2C6 /* libTourbillon-iOS.a */,
+				8948EB42198110C3006FC2C6 /* Tourbillon-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,7 +159,7 @@
 		89B0A69A195BB80B0092FC97 = {
 			isa = PBXGroup;
 			children = (
-				892784331960F658000D18E4 /* Tourbillon.xcodeproj */,
+				8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */,
 				89B0A6AC195BB80B0092FC97 /* LampLighter */,
 				89B0A6CA195BB80C0092FC97 /* LampLighterTests */,
 				89B0A6A5195BB80B0092FC97 /* Frameworks */,
@@ -273,7 +273,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				892784431960F672000D18E4 /* PBXTargetDependency */,
+				89DC8070198779F500CC6FE8 /* PBXTargetDependency */,
 			);
 			name = LampLighter;
 			productName = LampLighter;
@@ -326,8 +326,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 892784341960F658000D18E4 /* Products */;
-					ProjectRef = 892784331960F658000D18E4 /* Tourbillon.xcodeproj */;
+					ProductGroup = 8948EB35198110C2006FC2C6 /* Products */;
+					ProjectRef = 8948EB34198110C2006FC2C6 /* Tourbillon.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -339,32 +339,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8927843B1960F658000D18E4 /* Tourbillon.framework */ = {
+		8948EB3C198110C3006FC2C6 /* Tourbillon.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Tourbillon.framework;
-			remoteRef = 8927843A1960F658000D18E4 /* PBXContainerItemProxy */;
+			remoteRef = 8948EB3B198110C3006FC2C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8927843D1960F658000D18E4 /* TourbillonTests.xctest */ = {
+		8948EB3E198110C3006FC2C6 /* TourbillonTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = TourbillonTests.xctest;
-			remoteRef = 8927843C1960F658000D18E4 /* PBXContainerItemProxy */;
+			remoteRef = 8948EB3D198110C3006FC2C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8927843F1960F658000D18E4 /* libTourbillon-iOS.a */ = {
+		8948EB40198110C3006FC2C6 /* libTourbillon-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libTourbillon-iOS.a";
-			remoteRef = 8927843E1960F658000D18E4 /* PBXContainerItemProxy */;
+			remoteRef = 8948EB3F198110C3006FC2C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		892784411960F658000D18E4 /* Tourbillon-iOSTests.xctest */ = {
+		8948EB42198110C3006FC2C6 /* Tourbillon-iOSTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Tourbillon-iOSTests.xctest";
-			remoteRef = 892784401960F658000D18E4 /* PBXContainerItemProxy */;
+			remoteRef = 8948EB41198110C3006FC2C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -423,15 +423,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		892784431960F672000D18E4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Tourbillon;
-			targetProxy = 892784421960F672000D18E4 /* PBXContainerItemProxy */;
-		};
 		89B0A6C9195BB80C0092FC97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 89B0A6A2195BB80B0092FC97 /* LampLighter */;
 			targetProxy = 89B0A6C8195BB80C0092FC97 /* PBXContainerItemProxy */;
+		};
+		89DC8070198779F500CC6FE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Tourbillon;
+			targetProxy = 89DC806F198779F500CC6FE8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

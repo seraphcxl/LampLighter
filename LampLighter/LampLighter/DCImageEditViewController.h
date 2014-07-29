@@ -7,24 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "DCImageEditTool.h"
+//#import "DCImageEditTool.h"
 #import "DCImageEditView.h"
-
-typedef NS_ENUM(NSUInteger, DCEditImageActionType) {
-    DCEditImageActionType_Fitin,
-    DCEditImageActionType_Freestyle,
-};
+#import "DCImageEditScene.h"
 
 @class DCEditableImage;
 @class DCImageEditViewController;
 
 @protocol DCImageEditVCSavingDelegate <NSObject>
 
-- (BOOL)imageEditViewController:(DCImageEditViewController *)imageEditVC canSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti;
+- (void)imageEditViewController:(DCImageEditViewController *)imageEditVC willSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti;
 
 @end
 
-@interface DCImageEditViewController : NSViewController <DCImageEditToolActionDelegate, DCImageEditViewDrawDelegate> {
+@interface DCImageEditViewController : NSViewController <DCImageEditViewDrawDelegate> {
 }
 
 @property (weak) IBOutlet NSTextField *imageEditToolDescriptionTextField;
@@ -35,34 +31,27 @@ typedef NS_ENUM(NSUInteger, DCEditImageActionType) {
 @property (weak) IBOutlet NSTextField *imageEditedSizeTextField;
 
 @property (weak, nonatomic) id<DCImageEditVCSavingDelegate> savingDelegate;
-@property (strong, nonatomic, readonly) NSString *activeEditToolGUID;
-@property (strong, nonatomic, readonly) NSMutableDictionary *editToolDict;
-@property (assign, nonatomic, readonly) DCEditImageActionType actionType;
-@property (strong, nonatomic, readonly) DCEditableImage *currentImg;
+@property (strong, nonatomic, readonly) DCImageEditScene *currentScene;
 @property (assign, nonatomic) BOOL allowDragImage;
 @property (assign, nonatomic) BOOL allowZoomImage;
 
-- (void)resetCurrentImage:(DCEditableImage *)editableImage;
+- (void)reloadCurrentImage:(NSURL *)imageURL;
 
-- (void)resetScaleType:(DCEditImageActionType)actionType;
-
-- (BOOL)addEditTool:(DCImageEditTool *)imageEditTool;
-- (BOOL)activeEditToolByClass:(Class)imageEditToolClass;
-- (DCImageEditTool *)activeEditTool;
-
-- (void)refresh;
-- (void)showHideInfo:(BOOL)show;
+- (BOOL)saveImageAs:(NSURL *)destURL;
+- (BOOL)resetCurrentScene;
 
 - (void)addImageEditViewToView:(NSView *)view;
+- (void)refresh;
 
-- (NSSize)fitinSize;
+- (void)showHideInfo:(BOOL)show;
+
 - (void)fitin;
 - (void)actual;
 
-- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
-- (BOOL)saveCropEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type;
-
 - (void)stepZoomIn;
 - (void)stepZoomOut;
+
+- (void)undo;
+- (void)redo;
 
 @end

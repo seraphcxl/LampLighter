@@ -13,25 +13,18 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
-const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
-
-const CGFloat kImageEditor_ZoomStep = 0.25f;
-
 typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, NSURL *destURL, NSString *type);
 
 @interface DCImageEditViewController () {
 }
 
-@property (strong, nonatomic) NSString *activeEditToolGUID;
-@property (strong, nonatomic) NSMutableDictionary *editToolDict;
-@property (assign, nonatomic) DCEditImageActionType actionType;
-@property (strong, nonatomic) DCEditableImage *currentImg;
+@property (strong, nonatomic) DCImageEditScene *currentScene;
+@property (strong, nonatomic) DCStack *undoAry;
+@property (strong, nonatomic) DCStack *redoAry;
 @property (assign, nonatomic) BOOL canDragImage;
 
-- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type andBlock:(DCEditableImageSaveActionBlock)block;
+//- (BOOL)saveEditableImageAs:(NSURL *)destURL type:(NSString *)type andActionBlock:(DCEditableImageSaveActionBlock)actionBlock;
 
-- (void)cleanEditTools;
 - (void)getImageInfo;
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
 - (void)stepZoom:(BOOL)isZoomIn;
@@ -41,11 +34,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 @implementation DCImageEditViewController
 
-@synthesize savingDelegate = _savingDelegate;
-@synthesize activeEditToolGUID = _activeEditToolGUID;
-@synthesize editToolDict = _editToolDict;
-@synthesize actionType = _actionType;
-@synthesize currentImg = _currentImg;
+@synthesize currentScene = _currentScene;
+@synthesize undoAry = _undoAry;
+@synthesize redoAry = _redoAry;
 @synthesize canDragImage = _canDragImage;
 @synthesize allowDragImage = _allowDragImage;
 @synthesize allowZoomImage = _allowZoomImage;
@@ -56,10 +47,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        self.actionType = DCEditImageActionType_Fitin;
-        self.editToolDict = [[NSMutableDictionary dictionary] threadSafe_init];
-        self.currentImg = nil;
-        self.actionType = DCEditImageActionType_Freestyle;
+        self.currentScene = nil;
+        self.undoAry = [[DCStack alloc] init];
+        self.redoAry = [[DCStack alloc] init];
         self.canDragImage = NO;
         self.allowDragImage = NO;
         self.allowZoomImage = NO;
@@ -69,11 +59,13 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)dealloc {
     do {
-        [self saveEditableImageWithAlarm:YES as:nil type:nil];
+        [self saveImageAs:nil];
         self.savingDelegate = nil;
-        [self cleanEditTools];
-        self.editToolDict = nil;
-        self.currentImg = nil;
+        [self.redoAry resetStack];
+        self.redoAry = nil;
+        [self.undoAry resetStack];
+        self.undoAry = nil;
+        self.currentScene = nil;
     } while (NO);
 }
 
@@ -81,17 +73,11 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     do {
         [super loadView];
         
-        if ([self.view class] == [DCImageEditView class]) {
+        if ([self.view isKindOfClass:[DCImageEditView class]]) {
             DCImageEditView *imageEditView = (DCImageEditView *)self.view;
             imageEditView.drawDelegate = self;
         }
-        
-        [self.imageEditToolDescriptionTextField setHidden:YES];
-        [self.zoomDescriptionTextField setHidden:YES];
-        [self.rotationDescriptionTextField setHidden:YES];
-        [self.cropDescriptionTextField setHidden:YES];
-        [self.imageEditedSizeTextField setHidden:YES];
-        [self.imageURLTextField setHidden:YES];
+        [self showHideInfo:NO];
     } while (NO);
 }
 
@@ -109,17 +95,23 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 }
 
 #pragma mark - Public
-- (void)resetCurrentImage:(DCEditableImage *)editableImage {
+- (void)reloadCurrentImage:(NSURL *)imageURL {
     do {
-        if (!editableImage) {
+        if (!imageURL || ![self.view isKindOfClass:[DCImageEditView class]]) {
             break;
         }
         
-        [self cleanEditTools];
+        if (self.currentScene) {
+            [self saveImageAs:nil];
+            [self.undoAry resetStack];
+            [self.redoAry resetStack];
+            self.currentScene = nil;
+        }
         
-        self.currentImg = editableImage;
+        NSString *uuid = [NSObject createUniqueStrByUUID];
+        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:imageURL];
         
-        NSString *urlStr = [[self.currentImg url] absoluteString];
+        NSString *urlStr = [imageURL absoluteString];
         if (urlStr) {
             [self.imageURLTextField setStringValue:urlStr];
         }
@@ -127,99 +119,8 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     [self refresh];
 }
 
-- (void)resetScaleType:(DCEditImageActionType)actionType {
-    do {
-        if (self.actionType == actionType) {
-            break;
-        }
-        switch (actionType) {
-            case DCEditImageActionType_Fitin:
-            {
-                [self fitin];
-            }
-                break;
-            case DCEditImageActionType_Freestyle:
-            {
-//                [self actual];
-            }
-                break;
-            default:
-                break;
-        }
-        self.actionType = actionType;
-    } while (NO);
-}
-
-- (BOOL)addEditTool:(DCImageEditTool *)imageEditTool {
-    BOOL result = NO;
-    do {
-        if (!imageEditTool) {
-            break;
-        }
-        
-        NSString *guid = [DCImageEditTool getImageEditToolGUID:[imageEditTool class]];
-        if ([self.editToolDict threadSafe_objectForKey:guid]) {
-            NSAssert(0, @"Image edit tool already in VC.");
-        } else {
-            [imageEditTool deactive];
-            [self.editToolDict threadSafe_setObject:imageEditTool forKey:guid];
-            imageEditTool.actionDelegate = self;
-        }
-        
-        result = YES;
-    } while (NO);
-    return result;
-}
-
-- (BOOL)activeEditToolByClass:(Class)imageEditToolClass {
-    BOOL result = NO;
-    do {
-        if (imageEditToolClass) {
-            NSString *guid = [DCImageEditTool getImageEditToolGUID:[imageEditToolClass class]];
-            
-            if ([guid isEqualToString:self.activeEditToolGUID]) {
-                break;
-            } else {
-                DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-                if (tool) {
-                    [tool deactive];
-                }
-                
-                tool = [self.editToolDict threadSafe_objectForKey:guid];
-                if (tool) {
-                    [tool active];
-                }
-                self.activeEditToolGUID = guid;
-            }
-        } else {
-            DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (tool) {
-                [tool deactive];
-            }
-            self.activeEditToolGUID = nil;
-        }
-        result = YES;
-    } while (NO);
-    [self refresh];
-    return result;
-}
-
-- (DCImageEditTool *)activeEditTool {
-    DCImageEditTool *result = nil;
-    do {
-        if (!self.activeEditToolGUID) {
-            break;
-        }
-        result = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-    } while (NO);
-    return result;
-}
-
 - (void)refresh {
     do {
-        if (self.actionType == DCEditImageActionType_Fitin) {
-            [self fitin];
-        }
         [self _refresh];
     } while (NO);
 }
@@ -251,71 +152,29 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         
     } while (NO);
 }
-
-- (NSSize)fitinSize {
-    NSSize result = NSMakeSize(0.0f, 0.0f);
-    do {
-        if (!self.currentImg || !self.view) {
-            break;
-        }
-        result = [DCImageUtility fitSize:self.currentImg.editedImageSize inSize:self.view.bounds.size];
-    } while (NO);
-    return result;
-}
-
 - (void)fitin {
     do {
-        if (!self.currentImg || !self.view) {
+        if (!self.currentScene) {
             break;
         }
-        NSSize fitinSize = [self fitinSize];
-        CGFloat ratio = fitinSize.width / self.currentImg.editedImageSize.width;
-        if (ratio < kImageEditor_ZoomRatio_Min) {
-            ratio = kImageEditor_ZoomRatio_Min;
-        }
-        if (ratio > kImageEditor_ZoomRatio_Max) {
-            ratio = kImageEditor_ZoomRatio_Max;
-        }
-        [self.currentImg setScaleX:ratio Y:ratio];
-        [self.currentImg setTranslateX:0.0f Y:0.0f];
-        [self _refresh];
+        [self.currentScene zoom:[self.currentScene calcFitinRatioSizeInView:self.view]];
     } while (NO);
 }
 
 - (void)actual {
     do {
-        if (!self.currentImg) {
+        if (!self.currentScene) {
             break;
         }
-        [self.currentImg setScaleX:1.0f Y:1.0f];
-        [self.currentImg setTranslateX:0.0f Y:0.0f];
-        [self _refresh];
+        [self.currentScene zoom:1.0f];
     } while (NO);
 }
 
-- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
-    return [self saveEditableImageWithAlarm:showDlg as:destURL type:type andBlock:^BOOL(DCEditableImage *editableImage, NSURL *destURL, NSString *type) {
-        return [editableImage saveAs:destURL type:type];
-    }];
-}
-
-- (BOOL)saveCropEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type {
-    BOOL result = NO;
-    do {
-        if (!self.currentImg) {
-            break;
-        }
-        DCImageEditTool *tool = [self activeEditTool];
-        if (![tool isKindOfClass:[DCImageCropTool class]]) {
-            break;
-        }
-        DCImageCropTool *cropTool = (DCImageCropTool *)tool;
-        NSRect cropRect = NSMakeRect((cropTool.cropRect.origin.x - self.currentImg.visiableRect.origin.x) / self.currentImg.scaleX, (cropTool.cropRect.origin.y - self.currentImg.visiableRect.origin.y) / self.currentImg.scaleX, cropTool.cropRect.size.width / self.currentImg.scaleX, cropTool.cropRect.size.height / self.currentImg.scaleX);
-        result = [self saveEditableImageWithAlarm:showDlg as:destURL type:type andBlock:^BOOL(DCEditableImage *editableImage, NSURL *destURL, NSString *type) {
-            return [editableImage saveCrop:cropRect as:destURL type:type];
-        }];
-    } while (NO);
-    return result;
+- (BOOL)saveImageAs:(NSURL *)destURL {
+    return YES;
+//    return [self saveEditableImageAs:destURL type:nil andActionBlock:^BOOL(DCEditableImage *editableImage, NSURL *destURL, NSString *type) {
+//        ;
+//    }];
 }
 
 - (void)stepZoomIn {
@@ -331,94 +190,81 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 }
 
 #pragma mark - Private
-- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type andBlock:(DCEditableImageSaveActionBlock)block {
-    BOOL result = NO;
-    do {
-        if (!block) {
-            break;
-        }
-        BOOL isEdited = NO;
-        NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
-        for (DCImageEditTool *tool in editToolAry) {
-            if ([tool isEdited]) {
-                isEdited = YES;
-                break;
-            }
-        }
-        if (isEdited) {
-            BOOL needDeleteCurrentImage = NO;
-            if (!destURL) {
-                destURL = [self.currentImg url];
-                needDeleteCurrentImage = YES;
-            }
-            if (!type) {
-                type = [self.currentImg uti];
-            }
-            
-            BOOL needSave = YES;
-            if (showDlg) {
-                // need ask for save edited image.
-                if (self.savingDelegate && [self.savingDelegate respondsToSelector:@selector(imageEditViewController:canSaveImage:toURL:withUTI:)]) {
-                    needSave = [self.savingDelegate imageEditViewController:self canSaveImage:self.currentImg toURL:destURL withUTI:type];
-                } else {
-                    needSave = NO;
-                }
-            }
-            if (needSave) {
-                if (needDeleteCurrentImage) {
-                    NSError *err = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtURL:[self.currentImg url] error:&err] || err) {
-                        NSLog(@"%@", [err description]);
-                        break;
-                    }
-                }
-                // do save
-                result = block(self.currentImg, destURL, type);
-//                [self.currentImg saveAs:destURL type:type];
-            } else {
-                result = YES;
-            }
-        }
-        
-    } while (NO);
-    return result;
-}
-
-- (void)cleanEditTools {
-    do {
-        self.activeEditToolGUID = nil;
-        
-        NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
-        for (DCImageEditTool *tool in editToolAry) {
-            tool.actionDelegate = nil;
-        }
-        
-        [self.editToolDict threadSafe_removeAllObjects];
-    } while (NO);
-}
+//- (BOOL)saveEditableImageWithAlarm:(BOOL)showDlg as:(NSURL *)destURL type:(NSString *)type andActionBlock:(DCEditableImageSaveActionBlock)actionBlock {
+//    BOOL result = NO;
+//    do {
+//        if (!block) {
+//            break;
+//        }
+//        BOOL isEdited = NO;
+//        NSArray *editToolAry = [self.editToolDict threadSafe_allValues];
+//        for (DCImageEditTool *tool in editToolAry) {
+//            if ([tool isEdited]) {
+//                isEdited = YES;
+//                break;
+//            }
+//        }
+//        if (isEdited) {
+//            BOOL needDeleteCurrentImage = NO;
+//            if (!destURL) {
+//                destURL = [self.currentImg url];
+//                needDeleteCurrentImage = YES;
+//            }
+//            if (!type) {
+//                type = [self.currentImg uti];
+//            }
+//            
+//            BOOL needSave = YES;
+//            if (showDlg) {
+//                // need ask for save edited image.
+//                if (self.savingDelegate && [self.savingDelegate respondsToSelector:@selector(imageEditViewController:canSaveImage:toURL:withUTI:)]) {
+//                    needSave = [self.savingDelegate imageEditViewController:self canSaveImage:self.currentImg toURL:destURL withUTI:type];
+//                } else {
+//                    needSave = NO;
+//                }
+//            }
+//            if (needSave) {
+//                if (needDeleteCurrentImage) {
+//                    NSError *err = nil;
+//                    if (![[NSFileManager defaultManager] removeItemAtURL:[self.currentImg url] error:&err] || err) {
+//                        NSLog(@"%@", [err description]);
+//                        break;
+//                    }
+//                }
+//                // do save
+//                result = block(self.currentImg, destURL, type);
+////                [self.currentImg saveAs:destURL type:type];
+//            } else {
+//                result = YES;
+//            }
+//        }
+//        
+//    } while (NO);
+//    return result;
+//}
 
 - (void)getImageInfo {
     do {
-        if (!self.currentImg) {
+        if (!self.currentScene) {
             break;
         }
         
-        DCImageEditTool *tool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
+        DCImageEditTool *tool = self.currentScene.imageEditTool;
         NSString *imageEditToolDescription = @"";
         if (tool) {
             imageEditToolDescription = [tool imageEditToolDescription];
         }
         [self.imageEditToolDescriptionTextField setStringValue:imageEditToolDescription];
         
-        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", DCRoundingFloatToInt(self.currentImg.scaleX * 100)]];
+        [self.zoomDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d%%", DCRoundingFloatToInt(self.currentScene.editableImage.scaleX * 100)]];
         
-        [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentImg.rotation]];
+        [self.rotationDescriptionTextField setStringValue:[NSString stringWithFormat:@"%f", self.currentScene.editableImage.rotation]];
         
-        [self.imageEditedSizeTextField setStringValue:[NSString stringWithFormat:@"%d x %d", DCRoundingFloatToInt(self.currentImg.editedImageSize.width), DCRoundingFloatToInt(self.currentImg.editedImageSize.height)]];
+        [self.imageEditedSizeTextField setStringValue:[NSString stringWithFormat:@"%d x %d", DCRoundingFloatToInt(self.currentScene.editableImage.editedImageSize.width), DCRoundingFloatToInt(self.currentScene.editableImage.editedImageSize.height)]];
 
         if ([tool isKindOfClass:[DCImageCropTool class]]) {
             DCImageCropTool *cropTool = (DCImageCropTool *)tool;
-            [self.cropDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d x %d", DCRoundingFloatToInt(cropTool.cropRect.size.width / self.currentImg.scaleX), DCRoundingFloatToInt(cropTool.cropRect.size.height / self.currentImg.scaleX)]];
+            [self.cropDescriptionTextField setStringValue:[NSString stringWithFormat:@"%d x %d", DCRoundingFloatToInt(cropTool.cropRect.size.width / self.currentScene.editableImage.scaleX), DCRoundingFloatToInt(cropTool.cropRect.size.height / self.currentScene.editableImage.scaleX)]];
         }
     } while (NO);
 }
@@ -429,7 +275,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             break;
         }
         
-        [[self activeEditTool] imageEditorViewDidResized:notification];
+        [self.currentScene imageEditorViewDidResized:notification];
         
         [self refresh];
     } while (NO);
@@ -437,22 +283,20 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)stepZoom:(BOOL)isZoomIn {
     do {
-        if (self.actionType == DCEditImageActionType_Freestyle && self.allowZoomImage) {
-            CGFloat ratio = self.currentImg.scaleX;
-            if (isZoomIn) {
-                ratio -= kImageEditor_ZoomStep;
-            } else {
-                ratio += kImageEditor_ZoomStep;
-            }
-            if (ratio < kImageEditor_ZoomRatio_Min) {
-                ratio = kImageEditor_ZoomRatio_Min;
-            }
-            if (ratio > kImageEditor_ZoomRatio_Max) {
-                ratio = kImageEditor_ZoomRatio_Max;
-            }
-            [self.currentImg setScaleX:ratio Y:ratio];
-            [self _refresh];
+        CGFloat ratio = [self.currentScene imageScale];
+        if (isZoomIn) {
+            ratio -= kImageEditor_ZoomStep;
+        } else {
+            ratio += kImageEditor_ZoomStep;
         }
+        if (ratio < kImageEditor_ZoomRatio_Min) {
+            ratio = kImageEditor_ZoomRatio_Min;
+        }
+        if (ratio > kImageEditor_ZoomRatio_Max) {
+            ratio = kImageEditor_ZoomRatio_Max;
+        }
+        [self.currentScene zoom:ratio];
+        [self _refresh];
     } while (NO);
 }
 
@@ -463,30 +307,6 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     } while (NO);
 }
 
-#pragma mark - DCImageEditToolActionDelegate
-- (void)imageEditTool:(DCImageEditTool *)tool valueChanged:(NSDictionary *)infoDict {
-    do {
-        if (!tool || !infoDict) {
-            break;
-        }
-        
-        NSNumber *rotateNum = [infoDict objectForKey:kImageEditPragma_Rotation];
-        if (rotateNum) {
-            [self.currentImg setRotation:[rotateNum floatValue]];
-        }
-        
-        [self refresh];
-    } while (NO);
-}
-
-- (void)imageEditToolReseted:(DCImageEditTool *)tool {
-    do {
-        if (!tool) {
-            break;
-        }
-    } while (NO);
-}
-
 #pragma mark - DCImageEditViewDrawDelegate
 - (void)imageEditView:(DCImageEditView *)view drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
@@ -494,16 +314,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             break;
         }
         
-        if (self.currentImg) {
-            [self.currentImg drawWithContext:context inRect:bounds];
-        }
-        
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool && editTool.actived) {
-                [editTool drawWithContext:context inRect:bounds];
-            }
-        }
+        [self.currentScene drawWithContext:context inRect:bounds];
     } while (NO);
 }
 
@@ -515,26 +326,22 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleMouseDown:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleMouseDown:theEvent];
         }
         
         if (!handled) {
             // Move
             BOOL canDragImage = NO;
-            if (self.actionType == DCEditImageActionType_Freestyle && self.allowDragImage) {
+            if (self.allowDragImage) {
                 NSPoint loc = theEvent.locationInWindow;
-                if (NSPointInRect(loc, self.currentImg.visiableRect)) {
+                if (NSPointInRect(loc, self.currentScene.editableImage.visiableRect)) {
                     canDragImage = YES;
                 }
             }
             self.canDragImage = canDragImage;
         }
-        
-        
     } while (NO);
 }
 
@@ -545,11 +352,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleRightMouseDown:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleRightMouseDown:theEvent];
         }
     } while (NO);
 }
@@ -561,11 +366,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleMouseUp:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleMouseUp:theEvent];
         }
         
         // Move
@@ -580,11 +383,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleRightMouseUp:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleRightMouseUp:theEvent];
         }
     } while (NO);
 }
@@ -596,11 +397,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleMouseMoved:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleMouseMoved:theEvent];
         }
     } while (NO);
 }
@@ -612,22 +411,18 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleMouseDragged:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleMouseDragged:theEvent];
         }
         
         if (!handled) {
             // Move
-            if (self.actionType == DCEditImageActionType_Freestyle) {
-                if (self.canDragImage) {
-                    CGFloat translateX = self.currentImg.translateX + theEvent.deltaX;
-                    CGFloat translateY = self.currentImg.translateY - theEvent.deltaY;
-                    [self.currentImg setTranslateX:translateX Y:translateY];
-                    [self _refresh];
-                }
+            if (self.canDragImage) {
+                CGFloat translateX = self.currentScene.editableImage.translateX + theEvent.deltaX;
+                CGFloat translateY = self.currentScene.editableImage.translateY - theEvent.deltaY;
+                [self.currentScene moveWithX:translateX andY:translateY];
+                [self _refresh];
             }
         }
     } while (NO);
@@ -640,32 +435,28 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleScrollWheel:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleScrollWheel:theEvent];
         }
         
         if (!handled) {
             // Zoom
-            if (self.actionType == DCEditImageActionType_Freestyle && self.allowZoomImage) {
-                //            CGFloat ratio = self.currentImg.scaleX;
-                //            if (theEvent.deltaY < 0.0f) {
-                //                ratio += 0.01f;
-                //            } else if (theEvent.deltaY > 0.0f) {
-                //                ratio -= 0.01f;
-                //            }
-                CGFloat ratio = self.currentImg.scaleX - theEvent.deltaY * 0.02f;
-                if (ratio < kImageEditor_ZoomRatio_Min) {
-                    ratio = kImageEditor_ZoomRatio_Min;
-                }
-                if (ratio > kImageEditor_ZoomRatio_Max) {
-                    ratio = kImageEditor_ZoomRatio_Max;
-                }
-                [self.currentImg setScaleX:ratio Y:ratio];
-                [self _refresh];
+            //            CGFloat ratio = self.currentImg.scaleX;
+            //            if (theEvent.deltaY < 0.0f) {
+            //                ratio += 0.01f;
+            //            } else if (theEvent.deltaY > 0.0f) {
+            //                ratio -= 0.01f;
+            //            }
+            CGFloat ratio = self.currentScene.imageScale - theEvent.deltaY * 0.02f;
+            if (ratio < kImageEditor_ZoomRatio_Min) {
+                ratio = kImageEditor_ZoomRatio_Min;
             }
+            if (ratio > kImageEditor_ZoomRatio_Max) {
+                ratio = kImageEditor_ZoomRatio_Max;
+            }
+            [self.currentScene zoom:ratio];
+            [self _refresh];
         }
     } while (NO);
 }
@@ -677,11 +468,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleRightMouseDragged:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleRightMouseDragged:theEvent];
         }
     } while (NO);
 }
@@ -693,11 +482,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleMouseEntered:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleMouseEntered:theEvent];
         }
     } while (NO);
 }
@@ -709,11 +496,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleMouseExited:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleMouseExited:theEvent];
         }
     } while (NO);
 }
@@ -725,11 +510,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleKeyDown:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleKeyDown:theEvent];
         }
     } while (NO);
 }
@@ -741,11 +524,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         BOOL handled = NO;
-        if (self.activeEditToolGUID) {
-            DCImageEditTool *editTool = [self.editToolDict threadSafe_objectForKey:self.activeEditToolGUID];
-            if (editTool) {
-                handled = [editTool handleKeyUp:theEvent];
-            }
+        DCImageEditTool *editTool = self.currentScene.imageEditTool;
+        if (editTool) {
+            handled = [editTool handleKeyUp:theEvent];
         }
     } while (NO);
 }

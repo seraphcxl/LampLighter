@@ -174,5 +174,11 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
     return NO;
 }
 
+#pragma mark NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+}
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    return nil;
+}
 @end

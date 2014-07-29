@@ -35,6 +35,8 @@
 @property (weak) IBOutlet NSButton *stepZoomInBtn;
 @property (weak) IBOutlet NSButton *applyCropBtn;
 @property (weak) IBOutlet NSButton *cancelCropBtn;
+@property (weak) IBOutlet NSButton *undoBtn;
+@property (weak) IBOutlet NSButton *redoBtn;
 
 @property (strong, nonatomic) NSMutableArray *openImageIOSupportedTypes;
 
@@ -52,5 +54,7 @@
 - (IBAction)actionStepZoomIn:(id)sender;
 - (IBAction)actionForApplyCrop:(id)sender;
 - (IBAction)actionForCancelCrop:(id)sender;
+- (IBAction)actionForUndo:(id)sender;
+- (IBAction)actionForRedo:(id)sender;
 
 @end

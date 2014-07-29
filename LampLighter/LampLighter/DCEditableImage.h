@@ -11,8 +11,8 @@
 @interface DCEditableImage : NSObject {
 }
 
-@property (strong, nonatomic, readonly) NSURL *url;
-@property (strong, nonatomic, readonly) NSString *uti;
+@property (copy, nonatomic, readonly) NSURL *url;
+@property (copy, nonatomic, readonly) NSString *uti;
 
 @property (assign, nonatomic, readonly) CGFloat rotation;
 
