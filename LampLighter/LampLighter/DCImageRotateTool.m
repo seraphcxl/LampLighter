@@ -11,6 +11,8 @@
 
 NSString *kImageEditPragma_Rotation = @"ImageEditPragma_Rotation";
 
+NSString *kDCImageRotateToolRotation = @"DCImageRotateToolRotation";
+
 const CGFloat kDCImageRotateTool_BaseRadius = 64.0f;
 const CGFloat kDCImageRotateTool_ArcLength = kDCImageRotateTool_BaseRadius;
 const CGFloat kDCImageRotateTool_BaseLineLength = kDCImageRotateTool_BaseRadius * 2;
@@ -203,6 +205,26 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 
 - (BOOL)handleKeyUp:(NSEvent *)theEvent {
     return NO;
+}
+
+#pragma mark NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    do {
+        if (!aCoder || ![aCoder allowsKeyedCoding]) {
+            break;
+        }
+        [super encodeWithCoder:aCoder];
+        [aCoder encodeFloat:self.rotation forKey:kDCImageRotateToolRotation];
+    } while (NO);
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        DCAssert(aDecoder != nil && [aDecoder allowsKeyedCoding]);
+        self.rotation = [aDecoder decodeFloatForKey:kDCImageRotateToolRotation];
+    }
+    return self;
 }
 
 @end

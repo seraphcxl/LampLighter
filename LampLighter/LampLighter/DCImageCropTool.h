@@ -43,6 +43,12 @@ typedef NS_ENUM(NSUInteger, DCImageCropMouseHitLocation) {
 extern NSString *kImageEditPragma_CropMouseHitLocationX;
 extern NSString *kImageEditPragma_CropMouseHitLocationY;
 
+extern NSString *kDCImageCropToolCodingCropType;
+extern NSString *kDCImageCropToolCodingCropRectOriginX;
+extern NSString *kDCImageCropToolCodingCropRectOriginY;
+extern NSString *kDCImageCropToolCodingCropRectSizeWidth;
+extern NSString *kDCImageCropToolCodingCropRectSizeHeight;
+
 extern CGSize DCImageCropRatioAry[];
 
 @interface DCImageCropTool : DCImageEditTool

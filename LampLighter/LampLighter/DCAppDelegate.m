@@ -72,17 +72,17 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self.imageEditVC showHideInfo:YES];
         
         // Load sample image
-//        self.imageURL = [[NSBundle mainBundle] URLForImageResource:@"Beauty"];
-//        DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
-//        [self.imageEditVC resetCurrentImage:img];
-//        
-//        DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
-//        DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
-//        
-//        [self.imageEditVC addEditTool:rotateTool];
-//        [self.imageEditVC addEditTool:cropTool];
-//        
-//        [self.imageEditVC fitin];
+        self.imageURL = [[NSBundle mainBundle] URLForImageResource:@"Beauty"];
+        [self.imageEditVC reloadCurrentImage:self.imageURL];
+        [self.imageEditVC fitin];
+        
+        [self.degreeTextField setEnabled:NO];
+        [self.rotateSlider setEnabled:NO];
+        
+        [self.cropComboBox setEnabled:NO];
+        
+        [self.applyCropBtn setEnabled:NO];
+        [self.cancelCropBtn setEnabled:NO];
     } while (NO);
 
 }
@@ -228,9 +228,10 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         if (!sender || sender != self.fitinBtn) {
             break;
         }
-        [self.imageEditVC actual];
+//        [self.imageEditVC actual];
         [self.imageEditVC fitin];
     } while (NO);
+    [self.imageEditVC refresh];
 }
 
 - (IBAction)actionActual:(id)sender {
@@ -240,14 +241,16 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         }
         [self.imageEditVC actual];
     } while (NO);
+    [self.imageEditVC refresh];
 }
 
 - (IBAction)actionLockFitin:(id)sender {
     do {
-//        if (!sender || sender != self.fitinLockBtn) {
-//            break;
-//        }
-//        NSInteger state = self.fitinLockBtn.state;
+        if (!sender || sender != self.fitinLockBtn) {
+            break;
+        }
+        NSInteger state = self.fitinLockBtn.state;
+        self.imageEditVC.fitinLocked = state;
 //        if (state) {
 //            [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
 //        } else {
@@ -261,6 +264,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 //        }
 //        [self.imageEditVC refresh];
     } while (NO);
+    [self.imageEditVC refresh];
 }
 
 - (IBAction)actionStepZoomOut:(id)sender {
@@ -270,6 +274,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         }
         [self.imageEditVC stepZoomOut];
     } while (NO);
+    [self.imageEditVC refresh];
 }
 
 - (IBAction)actionStepZoomIn:(id)sender {
@@ -279,6 +284,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         }
         [self.imageEditVC stepZoomIn];
     } while (NO);
+    [self.imageEditVC refresh];
 }
 
 - (IBAction)actionForApplyCrop:(id)sender {

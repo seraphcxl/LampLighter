@@ -40,6 +40,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 @synthesize canDragImage = _canDragImage;
 @synthesize allowDragImage = _allowDragImage;
 @synthesize allowZoomImage = _allowZoomImage;
+@synthesize fitinLocked = _fitinLocked;
 
 #pragma mark - Lifecycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,6 +54,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         self.canDragImage = NO;
         self.allowDragImage = NO;
         self.allowZoomImage = NO;
+        self.fitinLocked = NO;
     }
     return self;
 }
@@ -121,6 +123,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)refresh {
     do {
+        if (self.fitinLocked) {
+            [self fitin];
+        }
         [self _refresh];
     } while (NO);
 }
@@ -177,6 +182,10 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 //    }];
 }
 
+- (BOOL)resetCurrentScene {
+    return YES;
+}
+
 - (void)stepZoomIn {
     do {
         [self stepZoom:YES];
@@ -187,6 +196,38 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     do {
         [self stepZoom:NO];
     } while (NO);
+}
+
+- (void)undo {
+    do {
+        if (self.undoAry.count == 0) {
+            break;
+        }
+        if ([self.currentScene needCache]) {
+            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
+            [self.redoAry pushObject:self.currentScene.uuid];
+        }
+        NSString *uuid = (NSString *)[self.undoAry popObject];
+        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
+        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
+    } while (NO);
+    [self refresh];
+}
+
+- (void)redo {
+    do {
+        if (self.redoAry.count == 0) {
+            break;
+        }
+        if ([self.currentScene needCache]) {
+            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
+            [self.undoAry pushObject:self.currentScene.uuid];
+        }
+        NSString *uuid = (NSString *)[self.redoAry popObject];
+        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
+        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
+    } while (NO);
+    [self refresh];
 }
 
 #pragma mark - Private
@@ -296,7 +337,6 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             ratio = kImageEditor_ZoomRatio_Max;
         }
         [self.currentScene zoom:ratio];
-        [self _refresh];
     } while (NO);
 }
 

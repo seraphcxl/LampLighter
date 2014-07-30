@@ -17,6 +17,8 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
 
 const CGFloat kImageEditor_ZoomStep = 0.25f;
 
+NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
+
 @interface DCImageEditScene () {
 }
 
@@ -59,7 +61,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
             break;
         }
         NSFileManager *fileMgr = [NSFileManager defaultManager];
-        if (![fileMgr fileExistsAtPath:[sourceURL absoluteString]]) {
+        if (![fileMgr fileExistsAtPath:[sourceURL relativePath]]) {
             break;
         }
         NSString *dir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:uuid];
@@ -67,7 +69,7 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         if (![fileMgr fileExistsAtPath:dir isDirectory:&isDirectory] || !isDirectory) {
             [fileMgr createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:NULL error:NULL];
         }
-        NSString *path = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[sourceURL absoluteString] pathExtension]]];
+        NSString *path = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[sourceURL relativePath] pathExtension]]];
         result = [NSURL fileURLWithPath:path];
         NSError *err = nil;
         if (![fileMgr copyItemAtURL:sourceURL toURL:result error:&err] || err) {
@@ -117,9 +119,26 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
     do {
         DCAssert(uuid != nil && imageURL != nil);
         self.uuid = uuid;
-        self.imageURL = [imageURL copy];
+        self.imageURL = [[DCImageEditScene cacheImage:imageURL withUUID:self.uuid] copy];
         self.editableImage = [[DCEditableImage alloc] initWithURL:self.imageURL];
         DCAssert(self.editableImage != nil);
+        
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        NSString *cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:self.uuid];
+        BOOL isDirectory = NO;
+        if (![fileMgr fileExistsAtPath:cacheDir isDirectory:&isDirectory] || !isDirectory) {
+            [fileMgr createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+        }
+        
+        NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.uuid]];
+        isDirectory = NO;
+        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDirectory] && !isDirectory) {
+            NSData *data = [NSData dataWithContentsOfFile:path];
+            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+            self.imageEditTool = [unarchiver decodeObjectForKey:kDCImageEditSceneCodingEditTool];
+            [self.imageEditTool resetEditableImage:self.editableImage];
+        }
+        
         result = self;
     } while (NO);
     return result;
@@ -170,19 +189,33 @@ const CGFloat kImageEditor_ZoomStep = 0.25f;
         }
         
         if (!self.imageEditTool) {
-            result = [self.imageURL copy];
             break;
         }
         
         NSFileManager *fileMgr = [NSFileManager defaultManager];
-        
-        NSString *cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:newUUID];
+        // save edit tool
+        NSString *cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:self.uuid];
         BOOL isDirectory = NO;
         if (![fileMgr fileExistsAtPath:cacheDir isDirectory:&isDirectory] || !isDirectory) {
             [fileMgr createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:NULL error:NULL];
         }
         
-        NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", newUUID, [[self.imageURL absoluteString] pathExtension]]];
+        NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.uuid]];
+        
+        NSMutableData *data = [NSMutableData data];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [archiver encodeObject:self.imageEditTool forKey:kDCImageEditSceneCodingEditTool];
+        [archiver finishEncoding];
+        
+        [data writeToFile:path atomically:YES];
+        // save image
+        cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:newUUID];
+        isDirectory = NO;
+        if (![fileMgr fileExistsAtPath:cacheDir isDirectory:&isDirectory] || !isDirectory) {
+            [fileMgr createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+        }
+        
+        path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", newUUID, [[self.imageURL absoluteString] pathExtension]]];
         
         NSURL *cacheURL = [NSURL fileURLWithPath:path];
         

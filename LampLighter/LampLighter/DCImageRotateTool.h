@@ -10,6 +10,8 @@
 
 extern NSString *kImageEditPragma_Rotation;
 
+extern NSString *kDCImageRotateToolRotation;
+
 @interface DCImageRotateTool : DCImageEditTool
 
 @property (assign, nonatomic) CGFloat rotation;

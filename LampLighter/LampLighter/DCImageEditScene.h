@@ -14,6 +14,8 @@ extern const CGFloat kImageEditor_ZoomRatio_Min;
 
 extern const CGFloat kImageEditor_ZoomStep;
 
+extern NSString *kDCImageEditSceneCodingEditTool;
+
 @class DCEditableImage;
 @class DCImageEditScene;
 

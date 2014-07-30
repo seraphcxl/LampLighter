@@ -15,6 +15,12 @@ CGSize DCImageCropRatioAry[] = {{0, 0}, {1, 1}, {2, 3}, {3, 5}, {5, 7}, {3, 4}, 
 NSString *kImageEditPragma_CropMouseHitLocationX = @"ImageEditPragma_CropMouseHitLocationX";
 NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHitLocationY";
 
+NSString *kDCImageCropToolCodingCropType = @"DCImageCropToolCodingCropType";
+NSString *kDCImageCropToolCodingCropRectOriginX = @"DCImageCropToolCodingCropRectOriginX";
+NSString *kDCImageCropToolCodingCropRectOriginY = @"DCImageCropToolCodingCropRectOriginY";
+NSString *kDCImageCropToolCodingCropRectSizeWidth = @"DCImageCropToolCodingCropRectSizeWidth";
+NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCropRectSizeHeight";
+
 @interface DCImageCropTool () {
 }
 
@@ -224,28 +230,6 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
     }
 }
 
-- (void)active {
-    do {
-        if (!self.currentImg) {
-            break;
-        }
-        
-        [super active];
-        
-//        self.cropRect = self.currentImg.visiableRect;
-        
-        self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
-    } while (NO);
-}
-
-- (void)deactive {
-    do {
-        self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
-        
-        [super deactive];
-    } while (NO);
-}
-
 - (void)imageEditorViewDidResized:(NSNotification *)notification {
     do {
 //        self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
@@ -368,4 +352,28 @@ NSString *kImageEditPragma_CropMouseHitLocationY = @"ImageEditPragma_CropMouseHi
 
 #pragma mark - Private
 
+#pragma mark NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    do {
+        if (!aCoder || ![aCoder allowsKeyedCoding]) {
+            break;
+        }
+        [super encodeWithCoder:aCoder];
+        [aCoder encodeInteger:self.cropType forKey:kDCImageCropToolCodingCropType];
+        [aCoder encodeFloat:self.cropRect.origin.x forKey:kDCImageCropToolCodingCropRectOriginX];
+        [aCoder encodeFloat:self.cropRect.origin.y forKey:kDCImageCropToolCodingCropRectOriginY];
+        [aCoder encodeFloat:self.cropRect.size.width forKey:kDCImageCropToolCodingCropRectSizeWidth];
+        [aCoder encodeFloat:self.cropRect.size.height forKey:kDCImageCropToolCodingCropRectSizeHeight];
+    } while (NO);
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        DCAssert(aDecoder != nil && [aDecoder allowsKeyedCoding]);
+        self.cropType = [aDecoder decodeIntegerForKey:kDCImageCropToolCodingCropType];
+        self.cropRect = NSMakeRect([aDecoder decodeFloatForKey:kDCImageCropToolCodingCropRectOriginX], [aDecoder decodeFloatForKey:kDCImageCropToolCodingCropRectOriginY], [aDecoder decodeFloatForKey:kDCImageCropToolCodingCropRectSizeWidth], [aDecoder decodeFloatForKey:kDCImageCropToolCodingCropRectSizeHeight]);
+    }
+    return self;
+}
 @end

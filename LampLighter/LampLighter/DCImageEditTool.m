@@ -10,11 +10,14 @@
 
 const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 
+NSString *kDCImageEditToolCodingType = @"DCImageEditToolCodingType";
+NSString *kDCImageEditToolCodingEdited = @"DCImageEditToolCodingEdited";
+NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadius";
+
 @interface DCImageEditTool () {
 }
 
 @property (strong, nonatomic) DCEditableImage *currentImg;
-@property (assign, nonatomic) BOOL actived;
 
 @end
 
@@ -23,7 +26,6 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 @synthesize actionDelegate = _actionDelegate;
 @synthesize type = _type;
 @synthesize currentImg = _currentImg;
-@synthesize actived = _actived;
 @synthesize edited = _edited;
 @synthesize anchorRadius = _anchorRadius;
 
@@ -66,7 +68,7 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
     do {
         if (editableImage) {
             self.currentImg = editableImage;
-            [self reset];
+//            [self reset];
         }
     } while (NO);
 }
@@ -86,18 +88,6 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
         ;
-    } while (NO);
-}
-
-- (void)active {
-    do {
-        self.actived = YES;
-    } while (NO);
-}
-
-- (void)deactive {
-    do {
-        self.actived = NO;
     } while (NO);
 }
 
@@ -176,9 +166,24 @@ const CGFloat kImageEditor_DefaultAnchorRadius = 8.0f;
 
 #pragma mark NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+    do {
+        if (!aCoder || ![aCoder allowsKeyedCoding]) {
+            break;
+        }
+        [aCoder encodeInteger:self.type forKey:kDCImageEditToolCodingType];
+        [aCoder encodeBool:self.edited forKey:kDCImageEditToolCodingEdited];
+        [aCoder encodeFloat:self.anchorRadius forKey:kDCImageEditToolCodingAnchorRadius];
+    } while (NO);
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    return nil;
+    self = [self init];
+    if (self) {
+        DCAssert(aDecoder != nil && [aDecoder allowsKeyedCoding]);
+        self.type = [aDecoder decodeIntegerForKey:kDCImageEditToolCodingType];
+        self.edited = [aDecoder decodeBoolForKey:kDCImageEditToolCodingEdited];
+        self.anchorRadius = [aDecoder decodeFloatForKey:kDCImageEditToolCodingAnchorRadius];
+    }
+    return self;
 }
 @end

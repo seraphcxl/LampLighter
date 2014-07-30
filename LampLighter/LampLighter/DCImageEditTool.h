@@ -16,6 +16,10 @@ typedef NS_ENUM(NSUInteger, DCImageEditToolType) {
     DCImageEditToolType_Count,
 };
 
+extern NSString *kDCImageEditToolCodingType;
+extern NSString *kDCImageEditToolCodingEdited;
+extern NSString *kDCImageEditToolCodingAnchorRadius;
+
 @class DCImageEditTool;
 @class DCEditableImage;
 
@@ -34,7 +38,6 @@ typedef NS_ENUM(NSUInteger, DCImageEditToolType) {
 @property (assign, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
 @property (assign, nonatomic) DCImageEditToolType type;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
-@property (assign, nonatomic, readonly) BOOL actived;
 @property (assign, nonatomic, getter = isEdited) BOOL edited;
 @property (assign, nonatomic) CGFloat anchorRadius;
 
@@ -48,9 +51,6 @@ typedef NS_ENUM(NSUInteger, DCImageEditToolType) {
 - (void)reset;
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds;
-
-- (void)active;
-- (void)deactive;
 
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
 
