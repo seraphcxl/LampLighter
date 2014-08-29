@@ -169,42 +169,42 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 
 - (IBAction)showHideRotateTool:(id)sender {
     do {
-//        if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
-//            // hide
-//            [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
-//            [self.imageEditVC activeEditToolByClass:nil];
-//        } else {
-//            // show
-//            if (self.fitinLockBtn.state) {
-//                [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
-//            } else {
-//                [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
-//            }
-//            [self.imageEditVC activeEditToolByClass:[DCImageRotateTool class]];
-//        }
+        if (!self.imageEditVC.currentScene.imageEditTool) {
+            [self.imageEditVC.currentScene resetEditToolByType:DCImageEditToolType_Rotate];
+            [self.cropBtn setEnabled:NO];
+            [self.cropComboBox setEnabled:NO];
+            
+            [self.degreeTextField setEnabled:YES];
+            [self.rotateSlider setEnabled:YES];
+            
+            [self.applyCropBtn setEnabled:YES];
+            [self.cancelCropBtn setEnabled:YES];
+            
+            [self.imageEditVC refresh];
+        }
     } while (NO);
 }
 
 - (IBAction)showHideCropTool:(id)sender {
     do {
-//        if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
-//            // hide
-//            [self.fitinLockBtn setState:0];
-//            [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
-//            [self.imageEditVC activeEditToolByClass:nil];
-//        } else {
-//            // show
-//            [self.imageEditVC saveEditableImageWithAlarm:YES as:nil type:nil];
-//            [self resetCurrentImage:nil];
-//            [self.fitinLockBtn setState:1];
-//            [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
-//            [self.imageEditVC activeEditToolByClass:[DCImageCropTool class]];
-//            DCImageEditTool *tool = [self.imageEditVC activeEditTool];
-//            if ([tool isKindOfClass:[DCImageCropTool class]]) {
-//                DCImageCropTool *cropTool = (DCImageCropTool *)tool;
-//                [cropTool resetCropType:(DCImageCropType)[self.cropComboBox indexOfSelectedItem]];
-//            }
-//        }
+        if (!self.imageEditVC.currentScene.imageEditTool) {
+            [self.imageEditVC setAllowZoomImage:NO];
+            [self.imageEditVC setAllowDragImage:NO];
+            
+            [self.imageEditVC.currentScene resetEditToolByType:DCImageEditToolType_Crop];
+            [(DCImageCropTool *)self.imageEditVC.currentScene.imageEditTool resetCropType:(DCImageCropType)[self.cropComboBox indexOfSelectedItem]];
+            
+            [self.rotateBtn setEnabled:NO];
+            [self.degreeTextField setEnabled:NO];
+            [self.rotateSlider setEnabled:NO];
+            
+            [self.cropComboBox setEnabled:YES];
+            
+            [self.applyCropBtn setEnabled:YES];
+            [self.cancelCropBtn setEnabled:YES];
+            
+            [self.imageEditVC refresh];
+        }
     } while (NO);
 }
 
@@ -228,7 +228,6 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         if (!sender || sender != self.fitinBtn) {
             break;
         }
-//        [self.imageEditVC actual];
         [self.imageEditVC fitin];
     } while (NO);
     [self.imageEditVC refresh];
@@ -251,18 +250,6 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         }
         NSInteger state = self.fitinLockBtn.state;
         self.imageEditVC.fitinLocked = state;
-//        if (state) {
-//            [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
-//        } else {
-//            if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageRotateTool class]]]) {
-//                [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
-//            } else if ([self.imageEditVC.activeEditToolGUID isEqualToString:[DCImageEditTool getImageEditToolGUID:[DCImageCropTool class]]]) {
-//                [self.imageEditVC resetScaleType:DCEditImageActionType_Fitin];
-//            } else {
-//                [self.imageEditVC resetScaleType:DCEditImageActionType_Freestyle];
-//            }
-//        }
-//        [self.imageEditVC refresh];
     } while (NO);
     [self.imageEditVC refresh];
 }

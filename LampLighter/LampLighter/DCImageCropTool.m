@@ -194,7 +194,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         NSPoint bottomRightAnchor = NSMakePoint(rightX, bottomY);
         CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomRightAnchor]);
         
-        if (self.type == DCImageCropType_Custom) {
+        if (self.cropType == DCImageCropType_Custom) {
             // Center anchor
             centerAnchorColor = CGColorCreateGenericRGB(DC_RGB256(255.0f), DC_RGB256(255.0f), DC_RGB256(0.0f), 1.0f);
             CGContextSetFillColorWithColor(context, centerAnchorColor);
@@ -285,7 +285,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
                 break;
         }
         
-        if (self.type != DCImageCropType_Custom) {
+        if (self.cropType != DCImageCropType_Custom) {
             switch (location) {
                 case DCImageCropMouseHitLoc_TopLeft:
                 {

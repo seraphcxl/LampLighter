@@ -92,6 +92,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 - (void)viewCtrlWillDisappear {
     do {
         self.savingDelegate = nil;
+        self.currentScene.delegate = nil;
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     } while (NO);
 }
@@ -112,6 +113,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         
         NSString *uuid = [NSObject createUniqueStrByUUID];
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:imageURL];
+        self.currentScene.delegate = self;
         
         NSString *urlStr = [imageURL absoluteString];
         if (urlStr) {
@@ -125,6 +127,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     do {
         if (self.fitinLocked) {
             [self fitin];
+            [self center];
         }
         [self _refresh];
     } while (NO);
@@ -157,6 +160,16 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         
     } while (NO);
 }
+
+- (void)center {
+    do {
+        if (!self.currentScene) {
+            break;
+        }
+        [self.currentScene moveWithX:0.0f andY:0.0f];
+    } while (NO);
+}
+
 - (void)fitin {
     do {
         if (!self.currentScene) {
@@ -209,7 +222,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         NSString *uuid = (NSString *)[self.undoAry popObject];
         NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
+        self.currentScene.delegate = nil;
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
+        self.currentScene.delegate = self;
     } while (NO);
     [self refresh];
 }
@@ -225,7 +240,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         NSString *uuid = (NSString *)[self.redoAry popObject];
         NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
+        self.currentScene.delegate = nil;
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
+        self.currentScene.delegate = self;
     } while (NO);
     [self refresh];
 }
@@ -374,7 +391,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (!handled) {
             // Move
             BOOL canDragImage = NO;
-            if (self.allowDragImage) {
+            if (self.allowDragImage && !self.fitinLocked) {
                 NSPoint loc = theEvent.locationInWindow;
                 if (NSPointInRect(loc, self.currentScene.editableImage.visiableRect)) {
                     canDragImage = YES;
@@ -569,6 +586,39 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             handled = [editTool handleKeyUp:theEvent];
         }
     } while (NO);
+}
+
+#pragma mark DCImageEditSceneDelegate
+- (void)imageEditScene:(DCImageEditScene *)scene cachedImageToURL:(NSURL *)url {
+    do {
+        ;
+    } while (NO);
+}
+
+- (void)imageEditSceneZoomedImage:(DCImageEditScene *)scene {
+    do {
+        ;
+    } while (NO);
+}
+
+- (void)imageEditSceneMovedImage:(DCImageEditScene *)scene {
+    do {
+        ;
+    } while (NO);
+}
+
+- (void)imageEditScene:(DCImageEditScene *)scene editImageWithValue:(NSDictionary *)infoDict {
+    do {
+        ;
+    } while (NO);
+    [self refresh];
+}
+
+- (void)imageEditSceneResetEditimage:(DCImageEditScene *)scene {
+    do {
+        ;
+    } while (NO);
+    [self refresh];
 }
 
 @end

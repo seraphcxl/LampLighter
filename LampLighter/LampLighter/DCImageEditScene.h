@@ -26,6 +26,7 @@ extern NSString *kDCImageEditSceneCodingEditTool;
 - (void)imageEditSceneMovedImage:(DCImageEditScene *)scene;
 - (void)imageEditScene:(DCImageEditScene *)scene editImageWithValue:(NSDictionary *)infoDict;
 - (void)imageEditSceneResetEditimage:(DCImageEditScene *)scene;
+
 @end
 
 @interface DCImageEditScene : NSObject <DCImageEditToolActionDelegate> {

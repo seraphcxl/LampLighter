@@ -20,7 +20,7 @@
 
 @end
 
-@interface DCImageEditViewController : NSViewController <DCImageEditViewDrawDelegate> {
+@interface DCImageEditViewController : NSViewController <DCImageEditViewDrawDelegate, DCImageEditSceneDelegate> {
 }
 
 @property (weak) IBOutlet NSTextField *imageEditToolDescriptionTextField;
@@ -45,6 +45,8 @@
 - (void)refresh;
 
 - (void)showHideInfo:(BOOL)show;
+
+- (void)center;
 
 - (void)fitin;
 - (void)actual;
