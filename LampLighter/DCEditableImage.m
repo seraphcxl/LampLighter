@@ -120,7 +120,6 @@
         
         self.originImageSize = NSMakeSize(width, height);
         self.editedImageSize = self.originImageSize;
-        
         self.visiableRect = NSMakeRect(0.0f, 0.0f, width, height);
         
         [self fixupImageOrientation];
@@ -314,6 +313,10 @@
             } else {
                 // Orientations 5-8 are rotated ±90 degrees, so they swap width & height.
                 context = CGBitmapContextCreate(NULL, height, width, 8, 0, CGImageGetColorSpace(_image), kCGImageAlphaPremultipliedFirst);
+                
+                self.originImageSize = NSMakeSize(height, width);
+                self.editedImageSize = self.originImageSize;
+                self.visiableRect = NSMakeRect(0.0f, 0.0f, height, width);
             }
             
             switch(orientation)
