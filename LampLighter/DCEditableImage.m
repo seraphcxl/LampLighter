@@ -218,19 +218,61 @@
             break;
         }
         
+        // Set image info
+        CFMutableDictionaryRef prop = CFDictionaryCreateMutableCopy(NULL, 0, _properties);
+        CFNumberRef cfWidth = CFNumberCreate(NULL, kCFNumberIntType, &width);
+        CFNumberRef cfHeight = CFNumberCreate(NULL, kCFNumberIntType, &height);
+        CFDictionarySetValue(prop, kCGImagePropertyPixelWidth, cfWidth);
+        CFDictionarySetValue(prop, kCGImagePropertyPixelHeight, cfHeight);
+        // Exif
+        CFDictionaryRef srcEXIFProp = (CFDictionaryRef)CFDictionaryGetValue(_properties, kCGImagePropertyExifDictionary);
+        if (srcEXIFProp) {
+            CFMutableDictionaryRef exifProp = CFDictionaryCreateMutableCopy(NULL, 0, srcEXIFProp);
+            if (exifProp) {
+                CFDictionarySetValue(exifProp, kCGImagePropertyExifPixelXDimension, cfWidth);
+                CFDictionarySetValue(exifProp, kCGImagePropertyExifPixelYDimension, cfHeight);
+                
+                CFDictionarySetValue(prop, kCGImagePropertyExifDictionary, exifProp);
+            }
+            CFRelease(exifProp);
+        }
+        
         if ([self getImageOrientation] != 1) {
-            CFMutableDictionaryRef prop = CFDictionaryCreateMutableCopy(NULL, 0, _properties);
             int orientation = 1;
             CFNumberRef cfOrientation = CFNumberCreate(NULL, kCFNumberIntType, &orientation);
             CFDictionarySetValue(prop, kCGImagePropertyOrientation, cfOrientation);
-            
+            // TIFF
+            CFDictionaryRef srcTIFFProp = (CFDictionaryRef)CFDictionaryGetValue(_properties, kCGImagePropertyTIFFDictionary);
+            if (srcTIFFProp) {
+                CFMutableDictionaryRef tiffProp = CFDictionaryCreateMutableCopy(NULL, 0, srcTIFFProp);
+                if (tiffProp) {
+                    CFDictionarySetValue(tiffProp, kCGImagePropertyTIFFOrientation, cfOrientation);
+                    
+                    CFDictionarySetValue(prop, kCGImagePropertyTIFFDictionary, tiffProp);
+                }
+                CFRelease(tiffProp);
+            }
+            // IPTC
+            CFDictionaryRef srcIPTCProp = (CFDictionaryRef)CFDictionaryGetValue(_properties, kCGImagePropertyIPTCDictionary);
+            if (srcIPTCProp) {
+                CFMutableDictionaryRef iptcProp = CFDictionaryCreateMutableCopy(NULL, 0, srcIPTCProp);
+                if (iptcProp) {
+                    CFDictionarySetValue(iptcProp, kCGImagePropertyIPTCImageOrientation, cfOrientation);
+                    
+                    CFDictionarySetValue(prop, kCGImagePropertyIPTCDictionary, iptcProp);
+                }
+                CFRelease(iptcProp);
+            }
             CGImageDestinationAddImage(imageDest, imageIOImage, prop);
             
-            CFRelease(prop);
             CFRelease(cfOrientation);
         } else {
-            CGImageDestinationAddImage(imageDest, imageIOImage, _properties);
+            CGImageDestinationAddImage(imageDest, imageIOImage, prop);
         }
+        CFRelease(cfHeight);
+        CFRelease(cfWidth);
+        CFRelease(prop);
+        
         result = CGImageDestinationFinalize(imageDest);
     } while (NO);
     if (rgbColorSpaceRef) {
