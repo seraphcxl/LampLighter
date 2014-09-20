@@ -144,6 +144,37 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
     return result;
 }
 
+- (BOOL)reset {
+    BOOL result = NO;
+    do {
+        DCImageEditToolType type = self.imageEditTool.type;
+        self.imageEditTool = nil;
+        switch (type) {
+            case DCImageEditToolType_Rotate:
+            {
+                self.imageEditTool = [[DCImageRotateTool alloc] initWithEditableImage:self.editableImage];
+                result = YES;
+            }
+                break;
+            case DCImageEditToolType_Crop:
+            {
+                self.imageEditTool = [[DCImageCropTool alloc] initWithEditableImage:self.editableImage];
+                result = YES;
+            }
+                break;
+            default:
+                break;
+        }
+        if (self.imageEditTool) {
+            self.imageEditTool.actionDelegate = self;
+        }
+        [self.editableImage reset];
+        
+        result = YES;
+    } while (NO);
+    return result;
+}
+
 - (BOOL)resetEditToolByType:(DCImageEditToolType)type {
     BOOL result = NO;
     do {
@@ -167,6 +198,8 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         if (self.imageEditTool) {
             self.imageEditTool.actionDelegate = self;
         }
+        
+        result = YES;
     } while (NO);
     return result;
 }

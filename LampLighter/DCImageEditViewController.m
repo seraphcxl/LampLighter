@@ -196,7 +196,14 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 }
 
 - (BOOL)resetCurrentScene {
-    return YES;
+    BOOL result = NO;
+    do {
+        if (!self.currentScene) {
+            break;
+        }
+        [self.currentScene reset];
+    } while (NO);
+    return result;
 }
 
 - (void)stepZoomIn {

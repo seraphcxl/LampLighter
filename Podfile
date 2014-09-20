@@ -2,10 +2,10 @@
 # platform :ios, "6.0"
 
 target "LampLighter" do
-pod 'Tourbillon', '~> 0.9.6'
+pod 'Tourbillon', '~> 0.9.8'
 end
 
 target "LampLighterTests" do
-pod 'Tourbillon', '~> 0.9.6'
+pod 'Tourbillon', '~> 0.9.8'
 end
 

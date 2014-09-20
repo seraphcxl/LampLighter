@@ -30,6 +30,12 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 - (void)saveCropImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)cleanEditTools;
 
+- (void)setCropToolEnabled:(BOOL)flag;
+- (void)setRotateToolEnabled:(BOOL)flag;
+- (void)setApplyAndCancelEnabled:(BOOL)flag;
+
+- (void)resetCurrentImage;
+
 @end
 
 @implementation DCAppDelegate
@@ -84,7 +90,6 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self.applyCropBtn setEnabled:NO];
         [self.cancelCropBtn setEnabled:NO];
     } while (NO);
-
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
@@ -102,6 +107,34 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         self.imageEditVC = nil;
         
         self.imageURL = nil;
+    } while (NO);
+}
+
+- (void)setCropToolEnabled:(BOOL)flag {
+    do {
+        [self.cropComboBox setEnabled:flag];
+    } while (NO);
+}
+
+- (void)setRotateToolEnabled:(BOOL)flag {
+    do {
+        [self.degreeTextField setEnabled:flag];
+        [self.rotateSlider setEnabled:flag];
+    } while (NO);
+}
+
+- (void)setApplyAndCancelEnabled:(BOOL)flag {
+    do {
+        [self.applyCropBtn setEnabled:flag];
+        [self.cancelCropBtn setEnabled:flag];
+    } while (NO);
+}
+
+- (void)resetCurrentImage {
+    do {
+        [self.imageEditVC resetCurrentScene];
+        [self.imageEditVC fitin];
+        [self.imageEditVC refresh];
     } while (NO);
 }
 
@@ -152,18 +185,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 
 - (IBAction)resetCurrentImage:(id)sender {
     do {
-//        DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
-//        [self.imageEditVC resetCurrentImage:img];
-//        
-//        DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
-//        DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
-//        
-//        [self.imageEditVC addEditTool:rotateTool];
-//        [self.imageEditVC addEditTool:cropTool];
-//        
-//        [self.imageEditVC fitin];
-//        
-//        [self cleanEditTools];
+        [self resetCurrentImage];
     } while (NO);
 }
 
@@ -172,13 +194,11 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         if (!self.imageEditVC.currentScene.imageEditTool) {
             [self.imageEditVC.currentScene resetEditToolByType:DCImageEditToolType_Rotate];
             [self.cropBtn setEnabled:NO];
-            [self.cropComboBox setEnabled:NO];
+            [self setCropToolEnabled:NO];
             
-            [self.degreeTextField setEnabled:YES];
-            [self.rotateSlider setEnabled:YES];
+            [self setRotateToolEnabled:YES];
             
-            [self.applyCropBtn setEnabled:YES];
-            [self.cancelCropBtn setEnabled:YES];
+            [self setApplyAndCancelEnabled:YES];
             
             [self.imageEditVC refresh];
         }
@@ -195,13 +215,11 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
             [(DCImageCropTool *)self.imageEditVC.currentScene.imageEditTool resetCropType:(DCImageCropType)[self.cropComboBox indexOfSelectedItem]];
             
             [self.rotateBtn setEnabled:NO];
-            [self.degreeTextField setEnabled:NO];
-            [self.rotateSlider setEnabled:NO];
+            [self setRotateToolEnabled:YES];
             
-            [self.cropComboBox setEnabled:YES];
+            [self setCropToolEnabled:YES];
             
-            [self.applyCropBtn setEnabled:YES];
-            [self.cancelCropBtn setEnabled:YES];
+            [self setApplyAndCancelEnabled:YES];
             
             [self.imageEditVC refresh];
         }
@@ -288,23 +306,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 
 - (IBAction)actionForCancelCrop:(id)sender {
     do {
-//        DCEditableImage *img = [[DCEditableImage alloc] initWithURL:self.imageURL];
-//        [self.imageEditVC resetCurrentImage:img];
-//        
-//        DCImageRotateTool *rotateTool = [[DCImageRotateTool alloc] initWithEditableImage:img];
-//        DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:img];
-//        
-//        [self.imageEditVC addEditTool:rotateTool];
-//        [self.imageEditVC addEditTool:cropTool];
-//        
-//        [self.imageEditVC fitin];
-//        
-//        [self.rotateSlider setFloatValue:0.0f];
-//        [self.degreeTextField setStringValue:@"0"];
-////        [self.cropComboBox selectItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:DCImageCropType_Custom]];
-//        [self.fitinLockBtn setState:0];
-//        
-//        [self showHideCropTool:nil];
+        [self resetCurrentImage];
     } while (NO);
 }
 
@@ -456,9 +458,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 }
 
 #pragma mark - DCImageEditVCSavingDelegate
-- (BOOL)imageEditViewController:(DCImageEditViewController *)imageEditVC canSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti {
-    NSLog(@"%@ %@ %@%@", [self className], NSStringFromSelector(_cmd), saveURL, uti);
-    return NO;
+- (void)imageEditViewController:(DCImageEditViewController *)imageEditVC willSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti {
 }
 
 @end

@@ -29,6 +29,8 @@
 
 - (instancetype)initWithURL:(NSURL *)sourceUrl;
 
+- (void)reset;
+
 - (void)setRotation:(CGFloat)rotation;
 - (void)setScaleX:(CGFloat)scaleX Y:(CGFloat)scaleY;
 - (void)setPreserveAspectRatioScale:(CGFloat)scale;

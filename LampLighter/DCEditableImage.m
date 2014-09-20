@@ -129,6 +129,70 @@
     return self;
 }
 
+- (void)reset {
+    do {
+        BOOL readSourceDone = NO;
+        CGImageSourceRef imageSrc = NULL;
+        NSInteger width = 0;
+        NSInteger height = 0;
+        
+        if (!self.url) {
+            break;
+        }
+        imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)(self.url), NULL);
+		CGImageRef image = CGImageSourceCreateImageAtIndex(imageSrc, 0, NULL);
+		if (!image) {
+			break;
+		}
+        _image = image;
+        _properties = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, NULL);
+        
+        CFNumberRef pixelWidth = CFDictionaryGetValue(_properties, kCGImagePropertyPixelWidth);
+        if (pixelWidth) {
+            if (!CFNumberGetValue(pixelWidth, kCFNumberIntType, &width)) {
+                break;
+            }
+        }
+        
+        CFNumberRef pixelHeight = CFDictionaryGetValue(_properties, kCGImagePropertyPixelHeight);
+        if (pixelHeight) {
+            if (!CFNumberGetValue(pixelHeight, kCFNumberIntType, &height)) {
+                break;
+            }
+        }
+        
+        readSourceDone = YES;
+        
+        if (imageSrc) {
+            CFRelease(imageSrc);
+            imageSrc = nil;
+        }
+        if (!readSourceDone) {
+            if (_image) {
+                CGImageRelease(_image);
+                _image = NULL;
+            }
+            if (_properties) {
+                CFRelease(_properties);
+                _properties = NULL;
+            }
+            break;
+        }
+        
+        self.rotation = 0.0;
+        self.scaleX = 1.0;
+        self.scaleY = 1.0;
+        self.translateX = 0.0;
+        self.translateY = 0.0;
+        
+        self.originImageSize = NSMakeSize(width, height);
+        self.editedImageSize = self.originImageSize;
+        self.visiableRect = NSMakeRect(0.0f, 0.0f, width, height);
+        
+        [self fixupImageOrientation];
+    } while (NO);
+}
+
 - (void)dealloc {
     do {
         if (_image) {
