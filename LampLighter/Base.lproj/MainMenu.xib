@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -10,7 +10,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="DCAppDelegate">
             <connections>
                 <outlet property="actualBtn" destination="vPY-L0-Szj" id="RSR-07-WVq"/>
@@ -843,7 +843,7 @@ Gw
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="actionForApplyCrop:" target="Voe-Tx-rLC" id="ILQ-OZ-uZs"/>
+                            <action selector="actionForApply:" target="Voe-Tx-rLC" id="lET-Z7-kzm"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Mjk-Ay-OgK">
@@ -857,7 +857,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="actionForCancelCrop:" target="Voe-Tx-rLC" id="LUj-66-40o"/>
+                            <action selector="actionForCancel:" target="Voe-Tx-rLC" id="H2T-Hj-Cq2"/>
                         </connections>
                     </button>
                     <comboBox verticalHuggingPriority="750" id="Sm6-wm-z92">

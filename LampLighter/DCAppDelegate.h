@@ -52,8 +52,8 @@
 - (IBAction)actionLockFitin:(id)sender;
 - (IBAction)actionStepZoomOut:(id)sender;
 - (IBAction)actionStepZoomIn:(id)sender;
-- (IBAction)actionForApplyCrop:(id)sender;
-- (IBAction)actionForCancelCrop:(id)sender;
+- (IBAction)actionForApply:(id)sender;
+- (IBAction)actionForCancel:(id)sender;
 - (IBAction)actionForUndo:(id)sender;
 - (IBAction)actionForRedo:(id)sender;
 

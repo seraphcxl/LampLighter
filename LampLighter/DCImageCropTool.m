@@ -247,7 +247,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         }
         NSPoint centerPoint = NSMakePoint(bounds.origin.x + bounds.size.width / 2.0f, bounds.origin.y + bounds.size.height / 2.0f);
         CGFloat ratioForVisiableRect = bounds.size.width / bounds.size.height;
-        CGFloat ratioForCropRect = DCImageCropRatioAry[self.type].width / DCImageCropRatioAry[self.type].height;
+        CGFloat ratioForCropRect = DCImageCropRatioAry[self.cropType].width / DCImageCropRatioAry[self.cropType].height;
         CGFloat cropRectWidth = 0.0f;
         CGFloat cropRectHeight = 0.0f;
         switch (self.cropType) {
@@ -269,11 +269,11 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
             case DCImageCropType_A4:
             {
                 if (ratioForVisiableRect > ratioForCropRect) {
-                    cropRectWidth = bounds.size.height * DCImageCropRatioAry[self.type].width / DCImageCropRatioAry[self.type].height;
+                    cropRectWidth = bounds.size.height * DCImageCropRatioAry[self.cropType].width / DCImageCropRatioAry[self.cropType].height;
                     cropRectHeight = bounds.size.height;
                 } else if (ratioForVisiableRect < ratioForCropRect) {
                     cropRectWidth = bounds.size.width;
-                    cropRectHeight = bounds.size.width * DCImageCropRatioAry[self.type].height / DCImageCropRatioAry[self.type].width;
+                    cropRectHeight = bounds.size.width * DCImageCropRatioAry[self.cropType].height / DCImageCropRatioAry[self.cropType].width;
                 } else {
                     cropRectWidth = bounds.size.width;
                     cropRectHeight = bounds.size.height;
