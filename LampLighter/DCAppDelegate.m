@@ -357,12 +357,14 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         switch (self.imageEditVC.currentScene.imageEditTool.type) {
             case DCImageEditToolType_Rotate:
             {
+                [self.cropBtn setEnabled:NO];
                 [self setRotateToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
             }
                 break;
             case DCImageEditToolType_Crop:
             {
+                [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
             }
@@ -383,12 +385,14 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         switch (self.imageEditVC.currentScene.imageEditTool.type) {
             case DCImageEditToolType_Rotate:
             {
+                [self.cropBtn setEnabled:NO];
                 [self setRotateToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
             }
                 break;
             case DCImageEditToolType_Crop:
             {
+                [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
             }
