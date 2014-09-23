@@ -19,6 +19,8 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
 
 @property (strong, nonatomic) DCEditableImage *currentImg;
 
+- (void)applyEditionToImage;
+
 @end
 
 @implementation DCImageEditTool
@@ -70,6 +72,10 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
             self.currentImg = editableImage;
 //            [self reset];
         }
+        
+        if ([self isEdited]) {
+            [self applyEditionToImage];
+        }
     } while (NO);
 }
 
@@ -113,6 +119,13 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
         }
     } while (NO);
     return result;
+}
+
+#pragma mark - Private
+- (void)applyEditionToImage {
+    do {
+        ;
+    } while (NO);
 }
 
 #pragma mark - Responder

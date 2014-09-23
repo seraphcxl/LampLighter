@@ -135,10 +135,11 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         
         NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.uuid]];
         isDirectory = NO;
-        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDirectory] && !isDirectory) {
+        if ([fileMgr fileExistsAtPath:path isDirectory:&isDirectory] && !isDirectory) {
             NSData *data = [NSData dataWithContentsOfFile:path];
             NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
             self.imageEditTool = [unarchiver decodeObjectForKey:kDCImageEditSceneCodingEditTool];
+            self.imageEditTool.actionDelegate = self;
             [self.imageEditTool resetEditableImage:self.editableImage];
         }
         
@@ -150,7 +151,43 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 - (BOOL)reset {
     BOOL result = NO;
     do {
-        DCImageEditToolType type = self.imageEditTool.type;
+//        DCImageEditToolType type = self.imageEditTool.type;
+//        switch (type) {
+//            case DCImageEditToolType_Rotate:
+//            {
+//                self.imageEditTool = [[DCImageRotateTool alloc] initWithEditableImage:self.editableImage];
+//                result = YES;
+//            }
+//                break;
+//            case DCImageEditToolType_Crop:
+//            {
+//                DCImageCropType cropType = [(DCImageCropTool *)self.imageEditTool cropType];
+//                DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:self.editableImage];
+//                [cropTool resetCropType:cropType];
+//                self.imageEditTool = cropTool;
+//                result = YES;
+//            }
+//                break;
+//            default:
+//                break;
+//        }
+//        if (self.imageEditTool) {
+//            self.imageEditTool.actionDelegate = self;
+//        }
+        
+        self.imageEditTool.actionDelegate = nil;
+        self.imageEditTool = nil;
+        
+        [self.editableImage reset];
+        
+        result = YES;
+    } while (NO);
+    return result;
+}
+
+- (BOOL)resetEditToolByType:(DCImageEditToolType)type {
+    BOOL result = NO;
+    do {
         switch (type) {
             case DCImageEditToolType_Rotate:
             {
@@ -168,36 +205,9 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
             }
                 break;
             default:
-                break;
-        }
-        if (self.imageEditTool) {
-            self.imageEditTool.actionDelegate = self;
-        }
-        [self.editableImage reset];
-        
-        result = YES;
-    } while (NO);
-    return result;
-}
-
-- (BOOL)resetEditToolByType:(DCImageEditToolType)type {
-    BOOL result = NO;
-    do {
-        self.imageEditTool = nil;
-        switch (type) {
-            case DCImageEditToolType_Rotate:
             {
-                self.imageEditTool = [[DCImageRotateTool alloc] initWithEditableImage:self.editableImage];
-                result = YES;
+                self.imageEditTool = nil;
             }
-                break;
-            case DCImageEditToolType_Crop:
-            {
-                self.imageEditTool = [[DCImageCropTool alloc] initWithEditableImage:self.editableImage];
-                result = YES;
-            }
-                break;
-            default:
                 break;
         }
         if (self.imageEditTool) {

@@ -119,6 +119,13 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
             [self setEdited:NO];
         }
         
+        [self applyEditionToImage];
+    } while (NO);
+}
+
+#pragma mark - Private
+- (void)applyEditionToImage {
+    do {
         if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
             [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:_rotation], kImageEditPragma_Rotation, nil]];
         }
@@ -222,7 +229,7 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
     self = [super initWithCoder:aDecoder];
     if (self) {
         DCAssert(aDecoder != nil && [aDecoder allowsKeyedCoding]);
-        self.rotation = [aDecoder decodeFloatForKey:kDCImageRotateToolRotation];
+        self.rotation = ABS(360.0f - [aDecoder decodeFloatForKey:kDCImageRotateToolRotation]);
     }
     return self;
 }

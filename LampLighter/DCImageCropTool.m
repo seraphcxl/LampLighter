@@ -34,6 +34,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
 @synthesize mouseHitLocation = _mouseHitLocation;
 @synthesize cropRect = _cropRect;
 @synthesize scaleBeforeResize = _scaleBeforeResize;
+@synthesize mouseHitLocPoint = _mouseHitLocPoint;
 
 - (id)init {
     self = [super init];
@@ -43,6 +44,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         self.mouseHitLocation = DCImageCropMouseHitLoc_Outside;
         self.cropRect = NSMakeRect(0.0f, 0.0f, 0.0f, 0.0f);
         self.scaleBeforeResize = 0.0f;
+        self.mouseHitLocPoint = NSMakePoint(0.0f, 0.0f);
     }
     return self;
 }
@@ -351,6 +353,13 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
 }
 
 #pragma mark - Private
+- (void)applyEditionToImage {
+    do {
+        if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
+            [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:self.mouseHitLocPoint.x], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:self.mouseHitLocPoint.y], kImageEditPragma_CropMouseHitLocationY, nil]];
+        }
+    } while (NO);
+}
 
 #pragma mark NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder {

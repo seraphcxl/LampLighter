@@ -112,7 +112,7 @@
 - (BOOL)handleMouseDragged:(NSEvent *)theEvent {
     BOOL result = NO;
     NSPoint loc = NSMakePoint(0.0f, 0.0f);
-    NSPoint mouseHitLoc = NSMakePoint(0.0f, 0.0f);
+    NSPoint mouseHitLocPoint = NSMakePoint(0.0f, 0.0f);
     do {
         if (!theEvent || !self.currentImg) {
             break;
@@ -132,61 +132,62 @@
                 break;
             case DCImageCropMouseHitLoc_TopLeft:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopLeft andHitPoint:loc];
-                [self actionForTopLeftWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopLeft andHitPoint:loc];
+                [self actionForTopLeftWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomLeft:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomLeft andHitPoint:loc];
-                [self actionForBottomLeftWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomLeft andHitPoint:loc];
+                [self actionForBottomLeftWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_TopRight:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopRight andHitPoint:loc];
-                [self actionForTopRightWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopRight andHitPoint:loc];
+                [self actionForTopRightWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomRight:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomRight andHitPoint:loc];
-                [self actionForBottomRightWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomRight andHitPoint:loc];
+                [self actionForBottomRightWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_TopCenter:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopCenter andHitPoint:loc];
-                [self actionForTopCenterWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_TopCenter andHitPoint:loc];
+                [self actionForTopCenterWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_BottomCenter:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomCenter andHitPoint:loc];
-                [self actionForBottomCenterWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_BottomCenter andHitPoint:loc];
+                [self actionForBottomCenterWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_LeftCenter:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_LeftCenter andHitPoint:loc];
-                [self actionForLeftCenterWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_LeftCenter andHitPoint:loc];
+                [self actionForLeftCenterWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             case DCImageCropMouseHitLoc_RightCenter:
             {
-                mouseHitLoc = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_RightCenter andHitPoint:loc];
-                [self actionForRightCenterWithMouseHitLocation:mouseHitLoc];
+                mouseHitLocPoint = [self fitinMouseHitLocationPointBy:DCImageCropMouseHitLoc_RightCenter andHitPoint:loc];
+                [self actionForRightCenterWithMouseHitLocation:mouseHitLocPoint];
             }
                 break;
             default:
                 break;
         }
+        self.mouseHitLocPoint = mouseHitLocPoint;
         if (self.mouseHitLocation != DCImageCropMouseHitLoc_Outside) {
             result = YES;
         }
     } while (NO);
     if (self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(imageEditTool:valueChanged:)]) {
-        [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:mouseHitLoc.x], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:mouseHitLoc.y], kImageEditPragma_CropMouseHitLocationY, nil]];
+        [self.actionDelegate imageEditTool:self valueChanged:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:self.mouseHitLocPoint.x], kImageEditPragma_CropMouseHitLocationX, [NSNumber numberWithFloat:self.mouseHitLocPoint.y], kImageEditPragma_CropMouseHitLocationY, nil]];
     }
     return result;
 }

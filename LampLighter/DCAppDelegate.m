@@ -197,6 +197,13 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 - (IBAction)resetCurrentImage:(id)sender {
     do {
         [self resetCurrentImage];
+        
+        [self setRotateToolEnabled:NO];
+        [self setCropToolEnabled:NO];
+        [self setApplyAndCancelEnabled:NO];
+        [self setSelectEditToolEnabled:YES];
+        
+        [self cleanEditTools];
     } while (NO);
 }
 
@@ -334,20 +341,64 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self.imageEditVC fitin];
         [self.imageEditVC refresh];
         
-        [self.rotateSlider setFloatValue:0.0f];
-        [self.degreeTextField setStringValue:@"0"];
+        [self setRotateToolEnabled:NO];
+        [self setCropToolEnabled:NO];
+        [self setApplyAndCancelEnabled:NO];
+        [self setSelectEditToolEnabled:YES];
+        
+        [self cleanEditTools];
     } while (NO);
 }
 
 - (IBAction)actionForUndo:(id)sender {
     do {
         [self.imageEditVC undo];
+        
+        switch (self.imageEditVC.currentScene.imageEditTool.type) {
+            case DCImageEditToolType_Rotate:
+            {
+                [self setRotateToolEnabled:YES];
+                [self setApplyAndCancelEnabled:YES];
+            }
+                break;
+            case DCImageEditToolType_Crop:
+            {
+                [self setCropToolEnabled:YES];
+                [self setApplyAndCancelEnabled:YES];
+            }
+                break;
+            default:
+                break;
+        }
+        
+        [self.imageEditVC fitin];
+        [self.imageEditVC refresh];
     } while (NO);
 }
 
 - (IBAction)actionForRedo:(id)sender {
     do {
         [self.imageEditVC redo];
+        
+        switch (self.imageEditVC.currentScene.imageEditTool.type) {
+            case DCImageEditToolType_Rotate:
+            {
+                [self setRotateToolEnabled:YES];
+                [self setApplyAndCancelEnabled:YES];
+            }
+                break;
+            case DCImageEditToolType_Crop:
+            {
+                [self setCropToolEnabled:YES];
+                [self setApplyAndCancelEnabled:YES];
+            }
+                break;
+            default:
+                break;
+        }
+        
+        [self.imageEditVC fitin];
+        [self.imageEditVC refresh];
     } while (NO);
 }
 

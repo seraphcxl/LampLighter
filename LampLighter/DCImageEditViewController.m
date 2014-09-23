@@ -119,6 +119,10 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (urlStr) {
             [self.imageURLTextField setStringValue:urlStr];
         }
+        
+        self.allowDragImage = YES;
+        self.allowZoomImage = YES;
+        self.fitinLocked = NO;
     } while (NO);
     [self refresh];
 }
@@ -202,6 +206,10 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             break;
         }
         result = [self.currentScene reset];
+        
+        self.allowDragImage = YES;
+        self.allowZoomImage = YES;
+        self.fitinLocked = NO;
     } while (NO);
     return result;
 }
@@ -253,7 +261,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             [self.redoAry pushObject:self.currentScene.uuid];
         }
         NSString *uuid = (NSString *)[self.undoAry popObject];
-        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
+        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.%@", uuid, uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
         self.currentScene.delegate = nil;
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
         self.currentScene.delegate = self;
@@ -373,6 +381,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)stepZoom:(BOOL)isZoomIn {
     do {
+        if (!self.allowZoomImage) {
+            break;
+        }
         CGFloat ratio = [self.currentScene imageScale];
         if (isZoomIn) {
             ratio -= kImageEditor_ZoomStep;
@@ -529,7 +540,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             handled = [editTool handleScrollWheel:theEvent];
         }
         
-        if (!handled) {
+        if (!handled && self.allowZoomImage) {
             // Zoom
             //            CGFloat ratio = self.currentImg.scaleX;
             //            if (theEvent.deltaY < 0.0f) {

@@ -58,6 +58,7 @@ extern CGSize DCImageCropRatioAry[];
 @property (assign, nonatomic) DCImageCropType cropType;
 @property (assign, nonatomic) DCImageCropMouseHitLocation mouseHitLocation;
 @property (assign, nonatomic) NSRect cropRect;
+@property (assign, nonatomic) NSPoint mouseHitLocPoint;
 
 - (void)resetCropRectInRect:(NSRect)bounds withMouseHitLocation:(DCImageCropMouseHitLocation)location andLockPoint:(NSPoint)lockPoint;
 - (void)resetCropType:(DCImageCropType)newCropType;
