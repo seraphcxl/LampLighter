@@ -27,12 +27,12 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 - (NSArray *)extensionsForUTI:(CFStringRef)uti;
 - (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-- (void)saveCropImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)cleanEditTools;
 
 - (void)setCropToolEnabled:(BOOL)flag;
 - (void)setRotateToolEnabled:(BOOL)flag;
 - (void)setApplyAndCancelEnabled:(BOOL)flag;
+- (void)setSelectEditToolEnabled:(BOOL)flag;
 
 - (void)resetCurrentImage;
 
@@ -86,6 +86,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self setRotateToolEnabled:NO];
         [self setCropToolEnabled:NO];
         [self setApplyAndCancelEnabled:NO];
+        [self setSelectEditToolEnabled:YES];
     } while (NO);
 }
 
@@ -104,6 +105,17 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         self.imageEditVC = nil;
         
         self.imageURL = nil;
+        
+        // Clear cache dir
+        NSString *cacheDir = [DCImageEditScene getCacheDir];
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        BOOL isDir = NO;
+        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
+            NSError *err = nil;
+            if (![fileMgr removeItemAtPath:cacheDir error:&err] || err) {
+                NSLog(@"%@", [err localizedDescription]);
+            }
+        }
     } while (NO);
 }
 
@@ -124,6 +136,13 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         [self.applyCropBtn setEnabled:flag];
         [self.cancelCropBtn setEnabled:flag];
+    } while (NO);
+}
+
+- (void)setSelectEditToolEnabled:(BOOL)flag {
+    do {
+        [self.rotateBtn setEnabled:flag];
+        [self.cropBtn setEnabled:flag];
     } while (NO);
 }
 
@@ -185,6 +204,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         if (!self.imageEditVC.currentScene.imageEditTool) {
             [self.imageEditVC.currentScene resetEditToolByType:DCImageEditToolType_Rotate];
+            
             [self.cropBtn setEnabled:NO];
             [self setCropToolEnabled:NO];
             
@@ -293,6 +313,18 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 //        [panel setTreatsFilePackagesAsDirectories:YES];
 //        
 //        [panel beginSheetForDirectory:nil file:@"cropped image" modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(saveCropImageDidEnd:returnCode:contextInfo:) contextInfo:nil];
+        if (![self.imageEditVC applyEditionForCurrentScene]) {
+            break;
+        }
+        [self.imageEditVC fitin];
+        [self.imageEditVC refresh];
+        
+        [self cleanEditTools];
+        
+        [self setRotateToolEnabled:NO];
+        [self setCropToolEnabled:NO];
+        [self setApplyAndCancelEnabled:NO];
+        [self setSelectEditToolEnabled:YES];
     } while (NO);
 }
 
@@ -308,9 +340,15 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 }
 
 - (IBAction)actionForUndo:(id)sender {
+    do {
+        [self.imageEditVC undo];
+    } while (NO);
 }
 
 - (IBAction)actionForRedo:(id)sender {
+    do {
+        [self.imageEditVC redo];
+    } while (NO);
 }
 
 #pragma mark - Private
@@ -399,6 +437,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
             [self setRotateToolEnabled:NO];
             [self setCropToolEnabled:NO];
             [self setApplyAndCancelEnabled:NO];
+            [self setSelectEditToolEnabled:YES];
             
             [self cleanEditTools];
 		}
@@ -408,12 +447,6 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 //	if (returnCode == NSOKButton) {
 //        [self.imageEditVC saveEditableImageWithAlarm:NO as:[panel URL] type:nil];
-//	}
-}
-
-- (void)saveCropImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
-//    if (returnCode == NSOKButton) {
-//        [self.imageEditVC saveCropEditableImageWithAlarm:NO as:[panel URL] type:nil];
 //	}
 }
 

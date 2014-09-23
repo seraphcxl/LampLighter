@@ -253,8 +253,11 @@
     CGImageRef imageIOImage = NULL;
     CGColorSpaceRef rgbColorSpaceRef = NULL;
     do {
-        if (DCFloatingNumberEqualToZero(cropRect.size.width) || DCFloatingNumberEqualToZero(cropRect.size.height) || !destURL || !type || !_image || !_properties) {
+        if (DCFloatingNumberEqualToZero(cropRect.size.width) || DCFloatingNumberEqualToZero(cropRect.size.height) || !destURL|| !_image || !_properties) {
             break;
+        }
+        if (!type) {
+            type = [self.uti copy];
         }
         imageDest = CGImageDestinationCreateWithURL((__bridge CFURLRef)(destURL), (__bridge CFStringRef)(type), 1, NULL);
         if (!imageDest) {

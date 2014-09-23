@@ -40,6 +40,7 @@
 
 - (BOOL)saveImageAs:(NSURL *)destURL;
 - (BOOL)resetCurrentScene;
+- (BOOL)applyEditionForCurrentScene;
 
 - (void)addImageEditViewToView:(NSView *)view;
 - (void)refresh;

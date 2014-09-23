@@ -201,7 +201,32 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (!self.currentScene) {
             break;
         }
-        [self.currentScene reset];
+        result = [self.currentScene reset];
+    } while (NO);
+    return result;
+}
+
+- (BOOL)applyEditionForCurrentScene {
+    BOOL result = NO;
+    do {
+        if (!self.currentScene) {
+            break;
+        }
+        if (![self.currentScene needCache]) {
+            break;
+        }
+        [self.undoAry pushObject:self.currentScene.uuid];
+        
+        NSString *uuid = [NSObject createUniqueStrByUUID];
+        NSURL *newFileURL = [self.currentScene cacheWithNewUUID:uuid];
+        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:newFileURL];
+        self.currentScene.delegate = self;
+        
+        NSString *urlStr = [newFileURL absoluteString];
+        if (urlStr) {
+            [self.imageURLTextField setStringValue:urlStr];
+        }
+        result = YES;
     } while (NO);
     return result;
 }
@@ -224,7 +249,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             break;
         }
         if ([self.currentScene needCache]) {
-            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
+//            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
             [self.redoAry pushObject:self.currentScene.uuid];
         }
         NSString *uuid = (NSString *)[self.undoAry popObject];
@@ -242,7 +267,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             break;
         }
         if ([self.currentScene needCache]) {
-            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
+//            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
             [self.undoAry pushObject:self.currentScene.uuid];
         }
         NSString *uuid = (NSString *)[self.redoAry popObject];

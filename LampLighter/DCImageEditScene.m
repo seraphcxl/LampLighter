@@ -71,11 +71,14 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         }
         NSString *path = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[sourceURL relativePath] pathExtension]]];
         result = [NSURL fileURLWithPath:path];
-        NSError *err = nil;
-        if (![fileMgr copyItemAtURL:sourceURL toURL:result error:&err] || err) {
-            result = nil;
-            NSLog(@"%@", [err localizedDescription]);
-            break;
+        isDirectory = NO;
+        if (![fileMgr fileExistsAtPath:path isDirectory:&isDirectory] || isDirectory) {
+            NSError *err = nil;
+            if (![fileMgr copyItemAtURL:sourceURL toURL:result error:&err] || err) {
+                result = nil;
+                NSLog(@"%@", [err localizedDescription]);
+                break;
+            }
         }
     } while (NO);
     return result;
