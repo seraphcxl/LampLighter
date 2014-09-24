@@ -271,6 +271,8 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         NSURL *newFileURL = [self.currentScene cacheWithNewUUID:uuid];
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:newFileURL];
         self.currentScene.delegate = self;
+        self.allowDragImage = YES;
+        self.allowZoomImage = YES;
         
         NSString *urlStr = [newFileURL absoluteString];
         if (urlStr) {

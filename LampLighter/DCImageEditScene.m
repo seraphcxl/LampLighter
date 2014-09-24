@@ -269,7 +269,17 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
                 }
             }
                 break;
+            case DCImageEditToolType_None:
             default:
+            {
+                NSFileManager *fileMgr = [NSFileManager defaultManager];
+                NSError *err = nil;
+                if (![fileMgr copyItemAtURL:self.imageURL toURL:destURL error:&err] || err) {
+                    NSLog(@"%@", [err localizedDescription]);
+                    break;
+                }
+                result = YES;
+            }
                 break;
         }
     } while (NO);
