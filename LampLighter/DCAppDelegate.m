@@ -89,6 +89,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self setCropToolEnabled:NO];
         [self setApplyAndCancelEnabled:NO];
         [self setSelectEditToolEnabled:YES];
+        
+        [self.imageEditVC refresh];
     } while (NO);
 }
 
@@ -281,8 +283,11 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         if (!sender || sender != self.fitinLockBtn) {
             break;
         }
+        if (self.imageEditVC.currentScene.imageEditTool.type == DCImageEditToolType_Crop) {
+            break;
+        }
         NSInteger state = self.fitinLockBtn.state;
-        self.imageEditVC.fitinLocked = state;
+        self.imageEditVC.allowZoomImage = !state;
     } while (NO);
     [self.imageEditVC refresh];
 }

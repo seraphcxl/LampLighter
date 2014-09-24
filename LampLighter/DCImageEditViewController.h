@@ -35,7 +35,6 @@
 @property (strong, nonatomic, readonly) DCImageEditScene *currentScene;
 @property (assign, nonatomic) BOOL allowDragImage;
 @property (assign, nonatomic) BOOL allowZoomImage;
-@property (assign, nonatomic) BOOL fitinLocked;
 
 + (void)clearCacheDir;
 

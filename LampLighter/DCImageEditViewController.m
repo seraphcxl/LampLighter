@@ -40,7 +40,6 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 @synthesize canDragImage = _canDragImage;
 @synthesize allowDragImage = _allowDragImage;
 @synthesize allowZoomImage = _allowZoomImage;
-@synthesize fitinLocked = _fitinLocked;
 
 + (void)clearCacheDir {
     do {
@@ -68,7 +67,6 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         self.canDragImage = NO;
         self.allowDragImage = NO;
         self.allowZoomImage = NO;
-        self.fitinLocked = NO;
     }
     return self;
 }
@@ -138,14 +136,13 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         
         self.allowDragImage = YES;
         self.allowZoomImage = YES;
-        self.fitinLocked = NO;
     } while (NO);
     [self refresh];
 }
 
 - (void)refresh {
     do {
-        if (self.fitinLocked) {
+        if (!self.allowZoomImage) {
             [self fitin];
             [self center];
         }
@@ -193,9 +190,6 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 - (void)fitin {
     do {
         if (!self.currentScene) {
-            break;
-        }
-        if (!self.allowZoomImage) {
             break;
         }
         [self.currentScene zoom:[self.currentScene calcFitinRatioSizeInView:self.view]];
@@ -251,7 +245,6 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         
         self.allowDragImage = YES;
         self.allowZoomImage = YES;
-        self.fitinLocked = NO;
     } while (NO);
     return result;
 }
@@ -430,9 +423,17 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         CGFloat ratio = [self.currentScene imageScale];
         if (isZoomIn) {
-            ratio -= kImageEditor_ZoomStep;
+            if (ratio < 1.0f) {
+                ratio -= kImageEditor_ZoomStep;
+            } else {
+                ratio -= kImageEditor_ZoomStep * 2;
+            }
         } else {
-            ratio += kImageEditor_ZoomStep;
+            if (ratio < 1.0f) {
+                ratio += kImageEditor_ZoomStep;
+            } else {
+                ratio += kImageEditor_ZoomStep * 2;
+            }
         }
         if (ratio < kImageEditor_ZoomRatio_Min) {
             ratio = kImageEditor_ZoomRatio_Min;
@@ -478,7 +479,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (!handled) {
             // Move
             BOOL canDragImage = NO;
-            if (self.allowDragImage && !self.fitinLocked) {
+            if (self.allowDragImage) {
                 NSPoint loc = theEvent.locationInWindow;
                 if (NSPointInRect(loc, self.currentScene.editableImage.visiableRect)) {
                     canDragImage = YES;
@@ -592,7 +593,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             //            } else if (theEvent.deltaY > 0.0f) {
             //                ratio -= 0.01f;
             //            }
-            CGFloat ratio = self.currentScene.imageScale - theEvent.deltaY * 0.02f;
+            CGFloat ratio = self.currentScene.imageScale - theEvent.deltaY * kImageEditor_ZoomStep;
             if (ratio < kImageEditor_ZoomRatio_Min) {
                 ratio = kImageEditor_ZoomRatio_Min;
             }

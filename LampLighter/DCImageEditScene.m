@@ -12,10 +12,10 @@
 #import "DCImageRotateTool.h"
 #import "DCImageCropTool.h"
 
-const CGFloat kImageEditor_ZoomRatio_Max = 5.0f;
-const CGFloat kImageEditor_ZoomRatio_Min = 0.02f;
+const CGFloat kImageEditor_ZoomRatio_Max = 3.0f;
+const CGFloat kImageEditor_ZoomRatio_Min = 0.05f;
 
-const CGFloat kImageEditor_ZoomStep = 0.25f;
+const CGFloat kImageEditor_ZoomStep = 0.05f;
 
 NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 
@@ -252,35 +252,45 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         if (!destURL) {
             break;
         }
-        switch (self.imageEditTool.type) {
-            case DCImageEditToolType_Rotate:
-            {
-                if ([self.editableImage saveAs:destURL type:nil]) {
-                    result = YES;
+        
+        BOOL isCopy = NO;
+        if (self.imageEditTool) {
+            switch (self.imageEditTool.type) {
+                case DCImageEditToolType_Rotate:
+                {
+                    if ([self.editableImage saveAs:destURL type:nil]) {
+                        result = YES;
+                    }
                 }
-            }
-                break;
-            case DCImageEditToolType_Crop:
-            {
-                DCImageCropTool *cropTool = (DCImageCropTool *)self.imageEditTool;
-                NSRect cropRect = NSMakeRect((cropTool.cropRect.origin.x - self.editableImage.visiableRect.origin.x) / self.editableImage.scaleX, (cropTool.cropRect.origin.y - self.editableImage.visiableRect.origin.y) / self.editableImage.scaleX, cropTool.cropRect.size.width / self.editableImage.scaleX, cropTool.cropRect.size.height / self.editableImage.scaleX);
-                if ([self.editableImage saveCrop:cropRect as:destURL type:nil]) {
-                    result = YES;
-                }
-            }
-                break;
-            case DCImageEditToolType_None:
-            default:
-            {
-                NSFileManager *fileMgr = [NSFileManager defaultManager];
-                NSError *err = nil;
-                if (![fileMgr copyItemAtURL:self.imageURL toURL:destURL error:&err] || err) {
-                    NSLog(@"%@", [err localizedDescription]);
                     break;
+                case DCImageEditToolType_Crop:
+                {
+                    DCImageCropTool *cropTool = (DCImageCropTool *)self.imageEditTool;
+                    NSRect cropRect = NSMakeRect((cropTool.cropRect.origin.x - self.editableImage.visiableRect.origin.x) / self.editableImage.scaleX, (cropTool.cropRect.origin.y - self.editableImage.visiableRect.origin.y) / self.editableImage.scaleX, cropTool.cropRect.size.width / self.editableImage.scaleX, cropTool.cropRect.size.height / self.editableImage.scaleX);
+                    if ([self.editableImage saveCrop:cropRect as:destURL type:nil]) {
+                        result = YES;
+                    }
                 }
-                result = YES;
+                    break;
+                case DCImageEditToolType_None:
+                default:
+                {
+                    isCopy = YES;
+                }
+                    break;
             }
+        } else {
+            isCopy = YES;
+        }
+        
+        if (isCopy) {
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            NSError *err = nil;
+            if (![fileMgr copyItemAtURL:self.imageURL toURL:destURL error:&err] || err) {
+                NSLog(@"%@", [err localizedDescription]);
                 break;
+            }
+            result = YES;
         }
     } while (NO);
     return result;
