@@ -25,8 +25,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 - (void)textFeildDidEndEditing:(NSNotification *)notification;
 - (void)createOpenTypesArray;
 - (NSArray *)extensionsForUTI:(CFStringRef)uti;
-- (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-- (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+//- (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+//- (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)cleanEditTools;
 
 - (void)setCropToolEnabled:(BOOL)flag;
@@ -169,7 +169,29 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [panel setDirectoryURL:nil];
         [panel setAllowedFileTypes:self.openImageIOSupportedTypes];
         
-        [panel beginSheetForDirectory:nil file:nil types:self.openImageIOSupportedTypes modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(openImageDidEnd:returnCode:contextInfo:) contextInfo:nil];
+//        [panel beginSheetForDirectory:nil file:nil types:self.openImageIOSupportedTypes modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(openImageDidEnd:returnCode:contextInfo:) contextInfo:nil];
+        
+        [panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+            do {
+                if (result == NSOKButton) {
+                    if ([[panel URLs] count] > 0) {
+                        // Save current image
+                        
+                        // Open new image
+                        self.imageURL = [[panel URLs] objectAtIndex:0];
+                        [self.imageEditVC reloadCurrentImage:self.imageURL];
+                        [self.imageEditVC fitin];
+                        
+                        [self setRotateToolEnabled:NO];
+                        [self setCropToolEnabled:NO];
+                        [self setApplyAndCancelEnabled:NO];
+                        [self setSelectEditToolEnabled:YES];
+                        
+                        [self cleanEditTools];
+                    }
+                }
+            } while (NO);
+        }];
     } while (NO);
 }
 
@@ -185,8 +207,17 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [panel setAllowedFileTypes:@[self.imageEditVC.currentScene.editableImage.uti]];
         [panel setAllowsOtherFileTypes:NO];
         [panel setTreatsFilePackagesAsDirectories:YES];
+        [panel setNameFieldStringValue:@"untitled image"];
         
-        [panel beginSheetForDirectory:nil file:@"untitled image" modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(saveImageDidEnd:returnCode:contextInfo:) contextInfo:nil];
+//        [panel beginSheetForDirectory:nil file:@"untitled image" modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(saveImageDidEnd:returnCode:contextInfo:) contextInfo:nil];
+        
+        [panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+            do {
+                if (result == NSOKButton) {
+                    [self.imageEditVC saveImageAs:[panel URL]];
+                }
+            } while (NO);
+        }];
     } while (NO);
 }
 
@@ -482,31 +513,31 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 	return extensions;
 }
 
-- (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
-	if (returnCode == NSOKButton) {
-		if ([[panel URLs] count] > 0) {
-            // Save current image
-            
-            // Open new image
-			self.imageURL = [[panel URLs] objectAtIndex:0];
-            [self.imageEditVC reloadCurrentImage:self.imageURL];
-            [self.imageEditVC fitin];
-            
-            [self setRotateToolEnabled:NO];
-            [self setCropToolEnabled:NO];
-            [self setApplyAndCancelEnabled:NO];
-            [self setSelectEditToolEnabled:YES];
-            
-            [self cleanEditTools];
-		}
-	}
-}
+//- (void)openImageDidEnd:(NSOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+//	if (returnCode == NSOKButton) {
+//		if ([[panel URLs] count] > 0) {
+//            // Save current image
+//            
+//            // Open new image
+//			self.imageURL = [[panel URLs] objectAtIndex:0];
+//            [self.imageEditVC reloadCurrentImage:self.imageURL];
+//            [self.imageEditVC fitin];
+//            
+//            [self setRotateToolEnabled:NO];
+//            [self setCropToolEnabled:NO];
+//            [self setApplyAndCancelEnabled:NO];
+//            [self setSelectEditToolEnabled:YES];
+//            
+//            [self cleanEditTools];
+//		}
+//	}
+//}
 
-- (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
-	if (returnCode == NSOKButton) {
-        [self.imageEditVC saveImageAs:[panel URL]];
-	}
-}
+//- (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+//	if (returnCode == NSOKButton) {
+//        [self.imageEditVC saveImageAs:[panel URL]];
+//	}
+//}
 
 - (void)cleanEditTools {
     do {
