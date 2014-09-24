@@ -1,8 +1,9 @@
-1. use scene to support undo redo
-2. scene and edit tool support coding
-3. rotate
-4. crop
-5. zoom
-6. move
-7. edit tool view
+1. use scene to support undo redo (Done)
+2. scene and edit tool support coding (Done)
+3. rotate (Done)
+4. crop (Done)
+5. zoom (Done)
+6. move (Done)
+7. edit tool view (Done)
 8. image filter
+9. crop edit tool support drag on line
