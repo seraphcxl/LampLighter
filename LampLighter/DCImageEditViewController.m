@@ -195,6 +195,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (!self.currentScene) {
             break;
         }
+        if (!self.allowZoomImage) {
+            break;
+        }
         [self.currentScene zoom:[self.currentScene calcFitinRatioSizeInView:self.view]];
     } while (NO);
 }
@@ -202,6 +205,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 - (void)actual {
     do {
         if (!self.currentScene) {
+            break;
+        }
+        if (!self.allowZoomImage) {
             break;
         }
         [self.currentScene zoom:1.0f];

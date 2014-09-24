@@ -234,6 +234,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
             
             [self setApplyAndCancelEnabled:YES];
             
+            [self.fitinLockBtn setState:1];
+            
             [self.imageEditVC refresh];
         }
     } while (NO);
@@ -361,6 +363,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                 [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
+                [self.fitinLockBtn setState:1];
             }
                 break;
             default:
@@ -389,6 +392,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                 [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
+                [self.fitinLockBtn setState:1];
             }
                 break;
             default:
