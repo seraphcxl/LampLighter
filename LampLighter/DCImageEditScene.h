@@ -48,6 +48,8 @@ extern NSString *kDCImageEditSceneCodingEditTool;
 - (BOOL)needCache;
 - (NSURL *)cacheWithNewUUID:(NSString *)newUUID;
 
+- (BOOL)saveImageAs:(NSURL *)destURL;
+
 - (NSSize)calcFitinSizeInView:(NSView *)view;
 - (CGFloat)calcFitinRatioSizeInView:(NSView *)view;
 - (CGFloat)imageScale;

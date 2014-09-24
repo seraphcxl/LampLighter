@@ -16,6 +16,7 @@
 
 @protocol DCImageEditVCSavingDelegate <NSObject>
 
+- (BOOL)allowImageEditViewController:(DCImageEditViewController *)imageEditVC saveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti;
 - (void)imageEditViewController:(DCImageEditViewController *)imageEditVC willSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti;
 
 @end

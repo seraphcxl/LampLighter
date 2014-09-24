@@ -494,9 +494,9 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 }
 
 - (void)saveImageDidEnd:(NSSavePanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
-//	if (returnCode == NSOKButton) {
-//        [self.imageEditVC saveEditableImageWithAlarm:NO as:[panel URL] type:nil];
-//	}
+	if (returnCode == NSOKButton) {
+        [self.imageEditVC saveImageAs:[panel URL]];
+	}
 }
 
 - (void)cleanEditTools {
@@ -529,7 +529,18 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 }
 
 #pragma mark - DCImageEditVCSavingDelegate
+- (BOOL)allowImageEditViewController:(DCImageEditViewController *)imageEditVC saveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti {
+    BOOL result = NO;
+    do {
+        result = YES;
+    } while (NO);
+    return result;
+}
+
 - (void)imageEditViewController:(DCImageEditViewController *)imageEditVC willSaveImage:(DCEditableImage *)editableImage toURL:(NSURL *)saveURL withUTI:(NSString *)uti {
+    do {
+        ;
+    } while (NO);
 }
 
 @end

@@ -75,7 +75,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)dealloc {
     do {
-        [self saveImageAs:nil];
+//        [self saveImageAs:nil];
         self.savingDelegate = nil;
         [self.redoAry resetStack];
         self.redoAry = nil;
@@ -119,7 +119,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         }
         
         if (self.currentScene) {
-            [self saveImageAs:nil];
+//            [self saveImageAs:nil];
             [self.undoAry resetStack];
             [self.redoAry resetStack];
             self.currentScene = nil;
@@ -209,10 +209,30 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 }
 
 - (BOOL)saveImageAs:(NSURL *)destURL {
-    return YES;
-//    return [self saveEditableImageAs:destURL type:nil andActionBlock:^BOOL(DCEditableImage *editableImage, NSURL *destURL, NSString *type) {
-//        ;
-//    }];
+    BOOL result = NO;
+    do {
+        if (!destURL) {
+            break;
+        }
+        
+        BOOL allowSaving = YES;
+        if (self.savingDelegate && [self.savingDelegate respondsToSelector:@selector(allowImageEditViewController:saveImage:toURL:withUTI:)]) {
+            allowSaving = [self.savingDelegate allowImageEditViewController:self saveImage:self.currentScene.editableImage toURL:destURL withUTI:self.currentScene.editableImage.uti];
+        }
+        
+        if (allowSaving) {
+            if (self.savingDelegate && [self.savingDelegate respondsToSelector:@selector(imageEditViewController:willSaveImage:toURL:withUTI:)]) {
+                [self.savingDelegate imageEditViewController:self willSaveImage:self.currentScene.editableImage toURL:destURL withUTI:self.currentScene.editableImage .uti];
+            }
+            
+            if (![self.currentScene saveImageAs:destURL]) {
+                break;
+            }
+        }
+        
+        result = YES;
+    } while (NO);
+    return result;
 }
 
 - (BOOL)resetCurrentScene {

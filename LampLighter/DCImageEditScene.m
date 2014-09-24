@@ -246,6 +246,36 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
     return result;
 }
 
+- (BOOL)saveImageAs:(NSURL *)destURL {
+    BOOL result = NO;
+    do {
+        if (!destURL) {
+            break;
+        }
+        switch (self.imageEditTool.type) {
+            case DCImageEditToolType_Rotate:
+            {
+                if ([self.editableImage saveAs:destURL type:nil]) {
+                    result = YES;
+                }
+            }
+                break;
+            case DCImageEditToolType_Crop:
+            {
+                DCImageCropTool *cropTool = (DCImageCropTool *)self.imageEditTool;
+                NSRect cropRect = NSMakeRect((cropTool.cropRect.origin.x - self.editableImage.visiableRect.origin.x) / self.editableImage.scaleX, (cropTool.cropRect.origin.y - self.editableImage.visiableRect.origin.y) / self.editableImage.scaleX, cropTool.cropRect.size.width / self.editableImage.scaleX, cropTool.cropRect.size.height / self.editableImage.scaleX);
+                if ([self.editableImage saveCrop:cropRect as:destURL type:nil]) {
+                    result = YES;
+                }
+            }
+                break;
+            default:
+                break;
+        }
+    } while (NO);
+    return result;
+}
+
 - (NSURL *)cacheWithNewUUID:(NSString *)newUUID {
     NSURL *result = nil;
     do {
@@ -288,27 +318,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         
         NSURL *cacheURL = [NSURL fileURLWithPath:path];
         
-        BOOL saveSucc = NO;
-        switch (self.imageEditTool.type) {
-            case DCImageEditToolType_Rotate:
-            {
-                if ([self.editableImage saveAs:cacheURL type:nil]) {
-                    saveSucc = YES;
-                }
-            }
-                break;
-            case DCImageEditToolType_Crop:
-            {
-                DCImageCropTool *cropTool = (DCImageCropTool *)self.imageEditTool;
-                NSRect cropRect = NSMakeRect((cropTool.cropRect.origin.x - self.editableImage.visiableRect.origin.x) / self.editableImage.scaleX, (cropTool.cropRect.origin.y - self.editableImage.visiableRect.origin.y) / self.editableImage.scaleX, cropTool.cropRect.size.width / self.editableImage.scaleX, cropTool.cropRect.size.height / self.editableImage.scaleX);
-                if ([self.editableImage saveCrop:cropRect as:cacheURL type:nil]) {
-                    saveSucc = YES;
-                }
-            }
-                break;
-            default:
-                break;
-        }
+        BOOL saveSucc = [self saveImageAs:cacheURL];
         if (saveSucc) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(imageEditScene:cachedImageToURL:)]) {
                 [self.delegate imageEditScene:self cachedImageToURL:cacheURL];
