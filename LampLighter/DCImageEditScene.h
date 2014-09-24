@@ -40,6 +40,7 @@ extern NSString *kDCImageEditSceneCodingEditTool;
 
 + (NSString *)getCacheDir;
 + (NSURL *)cacheImage:(NSURL *)sourceURL withUUID:(NSString *)uuid;
++ (void)clearExistedFile:(NSString *)path;
 
 - (instancetype)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL;
 - (BOOL)reset;

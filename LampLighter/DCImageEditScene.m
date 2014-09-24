@@ -84,6 +84,23 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
     return result;
 }
 
++ (void)clearExistedFile:(NSString *)path {
+    do {
+        if (!path) {
+            break;
+        }
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        NSError *err = nil;
+        BOOL isDirectory = NO;
+        if ([fileMgr fileExistsAtPath:path isDirectory:&isDirectory] && !isDirectory) {
+            if (![fileMgr removeItemAtPath:path error:&err] || err) {
+                NSLog(@"%@", [err localizedDescription]);
+                break;
+            }
+        }
+    } while (NO);
+}
+
 #pragma mark - Lifecycle
 - (id)init {
     self = [super init];
@@ -99,16 +116,16 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 - (void)dealloc {
     do {
         self.delegate = nil;
-        NSString *cacheDir = [DCImageEditScene getCacheDir];
-        NSFileManager *fileMgr = [NSFileManager defaultManager];
-        BOOL isDir = NO;
-        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
-            NSURL *cacheURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", cacheDir, self.uuid]];
-            NSError *err = nil;
-            if (![fileMgr removeItemAtURL:cacheURL error:&err] || err) {
-                NSLog(@"%@", [err localizedDescription]);
-            }
-        }
+//        NSString *cacheDir = [DCImageEditScene getCacheDir];
+//        NSFileManager *fileMgr = [NSFileManager defaultManager];
+//        BOOL isDir = NO;
+//        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
+//            NSURL *cacheURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", cacheDir, self.uuid]];
+//            NSError *err = nil;
+//            if (![fileMgr removeItemAtURL:cacheURL error:&err] || err) {
+//                NSLog(@"%@", [err localizedDescription]);
+//            }
+//        }
         self.imageEditTool = nil;
         self.editableImage = nil;
         self.imageURL = nil;
@@ -140,7 +157,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
             NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
             self.imageEditTool = [unarchiver decodeObjectForKey:kDCImageEditSceneCodingEditTool];
             self.imageEditTool.actionDelegate = self;
-            [self.imageEditTool resetEditableImage:self.editableImage];
+            [self.imageEditTool resetEditableImage:self.editableImage];            
         }
         
         result = self;
@@ -255,6 +272,8 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         [archiver encodeObject:self.imageEditTool forKey:kDCImageEditSceneCodingEditTool];
         [archiver finishEncoding];
         
+        [DCImageEditScene clearExistedFile:path];
+        
         [data writeToFile:path atomically:YES];
         // save image
         cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:newUUID];
@@ -264,6 +283,8 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         }
         
         path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", newUUID, [[self.imageURL absoluteString] pathExtension]]];
+        
+        [DCImageEditScene clearExistedFile:path];
         
         NSURL *cacheURL = [NSURL fileURLWithPath:path];
         

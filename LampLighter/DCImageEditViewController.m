@@ -42,6 +42,20 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 @synthesize allowZoomImage = _allowZoomImage;
 @synthesize fitinLocked = _fitinLocked;
 
++ (void)clearCacheDir {
+    do {
+        NSString *cacheDir = [DCImageEditScene getCacheDir];
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        BOOL isDir = NO;
+        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
+            NSError *err = nil;
+            if (![fileMgr removeItemAtPath:cacheDir error:&err] || err) {
+                NSLog(@"%@", [err localizedDescription]);
+            }
+        }
+    } while (NO);
+}
+
 #pragma mark - Lifecycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -110,6 +124,8 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             [self.redoAry resetStack];
             self.currentScene = nil;
         }
+        
+        [DCImageEditViewController clearCacheDir];
         
         NSString *uuid = [NSObject createUniqueStrByUUID];
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:imageURL];
@@ -279,7 +295,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
             [self.undoAry pushObject:self.currentScene.uuid];
         }
         NSString *uuid = (NSString *)[self.redoAry popObject];
-        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
+        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.%@", uuid, uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
         self.currentScene.delegate = nil;
         self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
         self.currentScene.delegate = self;

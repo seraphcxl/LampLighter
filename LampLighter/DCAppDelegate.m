@@ -50,6 +50,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         self.imageEditVC.allowDragImage = YES;
         self.imageEditVC.allowZoomImage = YES;
         self.imageEditVC.savingDelegate = self;
+        
+        [DCImageEditViewController clearCacheDir];
     } while (NO);
 }
 
@@ -107,15 +109,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         self.imageURL = nil;
         
         // Clear cache dir
-        NSString *cacheDir = [DCImageEditScene getCacheDir];
-        NSFileManager *fileMgr = [NSFileManager defaultManager];
-        BOOL isDir = NO;
-        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
-            NSError *err = nil;
-            if (![fileMgr removeItemAtPath:cacheDir error:&err] || err) {
-                NSLog(@"%@", [err localizedDescription]);
-            }
-        }
+        [DCImageEditViewController clearCacheDir];
     } while (NO);
 }
 

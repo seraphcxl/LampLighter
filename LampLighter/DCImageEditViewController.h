@@ -36,6 +36,8 @@
 @property (assign, nonatomic) BOOL allowZoomImage;
 @property (assign, nonatomic) BOOL fitinLocked;
 
++ (void)clearCacheDir;
+
 - (void)reloadCurrentImage:(NSURL *)imageURL;
 
 - (BOOL)saveImageAs:(NSURL *)destURL;
