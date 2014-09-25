@@ -229,6 +229,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self setSelectEditToolEnabled:YES];
         
         [self cleanEditTools];
+        
+        [self.imageEditVC refresh];
     } while (NO);
 }
 
