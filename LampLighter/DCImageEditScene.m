@@ -142,6 +142,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         self.imageURL = [[DCImageEditScene cacheImage:imageURL withUUID:self.uuid] copy];
         self.editableImage = [[DCEditableImage alloc] initWithURL:self.imageURL];
         DCAssert(self.editableImage != nil);
+        self.editableImage.delegate = self;
         
         NSFileManager *fileMgr = [NSFileManager defaultManager];
         NSString *cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:self.uuid];
@@ -468,4 +469,13 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
     } while (NO);
 }
 
+#pragma mark - DCEditableImageDelegate
+- (void)imageVisiableRectChanged:(DCEditableImage *)image {
+    do {
+        if (!image || !self.imageEditTool) {
+            break;
+        }
+        [self.imageEditTool handleZoomImage];
+    } while (NO);
+}
 @end

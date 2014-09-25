@@ -35,7 +35,7 @@ extern NSString *kDCImageEditToolCodingAnchorRadius;
     CGFloat _anchorRadiusSqrt;
 }
 
-@property (assign, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
+@property (weak, nonatomic) id<DCImageEditToolActionDelegate> actionDelegate;
 @property (assign, nonatomic) DCImageEditToolType type;
 @property (strong, nonatomic, readonly) DCEditableImage *currentImg;
 @property (assign, nonatomic, getter = isEdited) BOOL edited;
@@ -70,5 +70,7 @@ extern NSString *kDCImageEditToolCodingAnchorRadius;
 - (BOOL)handleMouseExited:(NSEvent *)theEvent;
 - (BOOL)handleKeyDown:(NSEvent *)theEvent;
 - (BOOL)handleKeyUp:(NSEvent *)theEvent;
+
+- (BOOL)handleZoomImage;
 
 @end

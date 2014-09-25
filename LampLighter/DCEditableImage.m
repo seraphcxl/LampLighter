@@ -46,6 +46,7 @@
 
 @implementation DCEditableImage
 
+@synthesize delegate = _delegate;
 @synthesize url = _url;
 @synthesize uti = _uti;
 @synthesize rotation = _rotation;
@@ -123,6 +124,8 @@
         self.visiableRect = NSMakeRect(0.0f, 0.0f, width, height);
         
         [self fixupImageOrientation];
+        
+        self.delegate = nil;
     }
     NSString *msg = [NSString stringWithFormat:@"%@ %@%@", [self className], NSStringFromSelector(_cmd), sourceUrl];
     DCFunctionPerformanceTimingEnd(msg)
@@ -195,6 +198,7 @@
 
 - (void)dealloc {
     do {
+        self.delegate = nil;
         if (_image) {
             CGImageRelease(_image);
             _image = NULL;
@@ -517,7 +521,14 @@
         
         NSPoint center = NSMakePoint(bounds.origin.x + bounds.size.width / 2.0f, bounds.origin.y + bounds.size.height / 2.0f);
         
+        NSRect oldRect = self.visiableRect;
         self.visiableRect = NSMakeRect(center.x - visiableWith / 2.0f + self.translateX, center.y - visiableHeight / 2.0f + self.translateY, visiableWith, visiableHeight);
+        
+        if (!NSEqualRects(oldRect, self.visiableRect)) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(imageVisiableRectChanged:)]) {
+                [self.delegate imageVisiableRectChanged:self];
+            }
+        }
     } while (NO);
 }
 

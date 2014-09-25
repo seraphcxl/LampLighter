@@ -205,6 +205,10 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
     return NO;
 }
 
+- (BOOL)handleZoomImage {
+    return NO;
+}
+
 #pragma mark NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     do {

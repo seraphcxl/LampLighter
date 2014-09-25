@@ -296,6 +296,42 @@
     return NO;
 }
 
+- (BOOL)handleZoomImage {
+    BOOL result = NO;
+    do {
+        if (NSPointInRect(self.cropRect.origin, self.currentImg.visiableRect) && NSPointInRect(NSMakePoint(self.cropRect.origin.x + self.cropRect.size.width, self.cropRect.origin.y + self.cropRect.size.height), self.currentImg.visiableRect)) {
+            ;
+        } else {
+            CGFloat x = self.cropRect.origin.x;
+            CGFloat y = self.cropRect.origin.y;
+            CGFloat w = self.cropRect.size.width;
+            CGFloat h = self.cropRect.size.height;
+            if (x < self.currentImg.visiableRect.origin.x) {
+                x = self.currentImg.visiableRect.origin.x;
+            }
+            
+            CGFloat visiableRectRight = self.currentImg.visiableRect.origin.x + self.currentImg.visiableRect.size.width;
+            if (x + w > visiableRectRight) {
+                w = visiableRectRight - x;
+            }
+            
+            if (y < self.currentImg.visiableRect.origin.y) {
+                y = self.currentImg.visiableRect.origin.y;
+            }
+            
+            CGFloat visiableRectTop = self.currentImg.visiableRect.origin.y + self.currentImg.visiableRect.size.height;
+            if (y + h > visiableRectTop) {
+                h = visiableRectTop - y;
+            }
+            
+            self.cropRect = NSMakeRect(x, y, w, h);
+//            [self resetCropRectInRect:self.currentImg.visiableRect withMouseHitLocation:DCImageCropMouseHitLoc_Inside andLockPoint:NSMakePoint(0.0f, 0.0f)];
+        }
+        result = YES;
+    } while (NO);
+    return result;
+}
+
 - (NSPoint)fitinMouseHitLocationPointBy:(DCImageCropMouseHitLocation)mouseHitLoc andHitPoint:(NSPoint)hitPoint {
     CGFloat mouseHitLocX = 0.0f;
     CGFloat mouseHitLocY = 0.0f;

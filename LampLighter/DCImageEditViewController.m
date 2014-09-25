@@ -29,6 +29,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 - (void)imageEditorViewDidResized:(NSNotification *)notification;
 - (void)stepZoom:(BOOL)isZoomIn;
 - (void)_refresh;
+- (void)_center;
+- (void)_fitin;
+- (void)_actual;
 
 @end
 
@@ -143,10 +146,10 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 - (void)refresh {
     do {
         if (!self.allowZoomImage) {
-            [self fitin];
+            [self _fitin];
         }
         if (!self.allowDragImage) {
-            [self center];
+            [self _center];
         }
         [self _refresh];
     } while (NO);
@@ -182,37 +185,28 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)center {
     do {
-        if (!self.currentScene) {
-            break;
-        }
         if (!self.allowDragImage) {
             break;
         }
-        [self.currentScene moveWithX:0.0f andY:0.0f];
+        [self _center];
     } while (NO);
 }
 
 - (void)fitin {
     do {
-        if (!self.currentScene) {
-            break;
-        }
         if (!self.allowZoomImage) {
             break;
         }
-        [self.currentScene zoom:[self.currentScene calcFitinRatioSizeInView:self.view]];
+        [self _fitin];
     } while (NO);
 }
 
 - (void)actual {
     do {
-        if (!self.currentScene) {
-            break;
-        }
         if (!self.allowZoomImage) {
             break;
         }
-        [self.currentScene zoom:1.0f];
+        [self _actual];
     } while (NO);
 }
 
@@ -460,6 +454,33 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     } while (NO);
 }
 
+- (void)_center {
+    do {
+        if (!self.currentScene) {
+            break;
+        }
+        [self.currentScene moveWithX:0.0f andY:0.0f];
+    } while (NO);
+}
+
+- (void)_fitin {
+    do {
+        if (!self.currentScene) {
+            break;
+        }
+        [self.currentScene zoom:[self.currentScene calcFitinRatioSizeInView:self.view]];
+    } while (NO);
+}
+
+- (void)_actual {
+    do {
+        if (!self.currentScene) {
+            break;
+        }
+        [self.currentScene zoom:1.0f];
+    } while (NO);
+}
+
 #pragma mark - DCImageEditViewDrawDelegate
 - (void)imageEditView:(DCImageEditView *)view drawWithContext:(CGContextRef)context inRect:(CGRect)bounds {
     do {
@@ -693,7 +714,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)imageEditSceneZoomedImage:(DCImageEditScene *)scene {
     do {
-        ;
+//        [self.currentScene.imageEditTool handleZoomImage];
     } while (NO);
 }
 

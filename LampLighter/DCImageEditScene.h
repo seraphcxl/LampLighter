@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DCImageEditTool.h"
+#import "DCEditableImage.h"
 
 extern const CGFloat kImageEditor_ZoomRatio_Max;
 extern const CGFloat kImageEditor_ZoomRatio_Min;
@@ -16,7 +17,6 @@ extern const CGFloat kImageEditor_ZoomStep;
 
 extern NSString *kDCImageEditSceneCodingEditTool;
 
-@class DCEditableImage;
 @class DCImageEditScene;
 
 @protocol DCImageEditSceneDelegate <NSObject>
@@ -29,7 +29,7 @@ extern NSString *kDCImageEditSceneCodingEditTool;
 
 @end
 
-@interface DCImageEditScene : NSObject <DCImageEditToolActionDelegate> {
+@interface DCImageEditScene : NSObject <DCImageEditToolActionDelegate, DCEditableImageDelegate> {
 }
 
 @property (weak, nonatomic) id<DCImageEditSceneDelegate> delegate;

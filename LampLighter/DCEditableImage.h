@@ -8,8 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class DCEditableImage;
+
+@protocol DCEditableImageDelegate <NSObject>
+
+- (void)imageVisiableRectChanged:(DCEditableImage *)image;
+
+@end
+
 @interface DCEditableImage : NSObject {
 }
+
+@property (weak, nonatomic) id<DCEditableImageDelegate> delegate;
 
 @property (copy, nonatomic, readonly) NSURL *url;
 @property (copy, nonatomic, readonly) NSString *uti;
