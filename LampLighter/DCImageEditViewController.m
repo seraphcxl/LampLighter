@@ -714,7 +714,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 
 - (void)imageEditSceneZoomedImage:(DCImageEditScene *)scene {
     do {
-//        [self.currentScene.imageEditTool handleZoomImage];
+        ;
     } while (NO);
 }
 

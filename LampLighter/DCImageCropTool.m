@@ -352,6 +352,12 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
     } while (NO);
 }
 
+- (void)resetCropRect {
+    do {
+        [self resetCropRectInRect:self.currentImg.visiableRect withMouseHitLocation:DCImageCropMouseHitLoc_Inside andLockPoint:NSMakePoint(0.0f, 0.0f)];
+    } while (NO);
+}
+
 #pragma mark - Private
 - (void)applyEditionToImage {
     do {

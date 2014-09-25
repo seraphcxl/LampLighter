@@ -62,5 +62,6 @@ extern CGSize DCImageCropRatioAry[];
 
 - (void)resetCropRectInRect:(NSRect)bounds withMouseHitLocation:(DCImageCropMouseHitLocation)location andLockPoint:(NSPoint)lockPoint;
 - (void)resetCropType:(DCImageCropType)newCropType;
+- (void)resetCropRect;
 
 @end

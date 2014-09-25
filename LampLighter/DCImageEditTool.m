@@ -205,7 +205,7 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
     return NO;
 }
 
-- (BOOL)handleZoomImage {
+- (BOOL)handleImageVisiableRectChanged {
     return NO;
 }
 

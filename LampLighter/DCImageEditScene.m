@@ -475,7 +475,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         if (!image || !self.imageEditTool) {
             break;
         }
-        [self.imageEditTool handleZoomImage];
+        [self.imageEditTool handleImageVisiableRectChanged];
     } while (NO);
 }
 @end

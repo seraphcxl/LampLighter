@@ -274,6 +274,21 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     } while (NO);
 }
 
+- (IBAction)actionResetCropRect:(id)sender {
+    do {
+        if (!sender || sender != self.resetCropRectBtn) {
+            break;
+        }
+        if (self.imageEditVC.currentScene.imageEditTool.type != DCImageEditToolType_Crop) {
+            break;
+        }
+        DCImageCropTool *cropTool = (DCImageCropTool *)self.imageEditVC.currentScene.imageEditTool;
+        [cropTool resetCropRect];
+        
+        [self.imageEditVC refresh];
+    } while (NO);
+}
+
 - (IBAction)setRotateSliderValue:(id)sender {
     do {
         if (!sender || sender != self.rotateSlider) {

@@ -27,6 +27,7 @@
                 <outlet property="openBtn" destination="RUM-RN-tLv" id="a2T-IX-b2c"/>
                 <outlet property="redoBtn" destination="ph4-oL-MTF" id="cVQ-rn-8A4"/>
                 <outlet property="resetBtn" destination="pqw-t3-qWh" id="waI-KM-k2W"/>
+                <outlet property="resetCropRectBtn" destination="xNO-Xd-Ky1" id="OHT-tz-ODy"/>
                 <outlet property="rotateBtn" destination="nRe-t8-pAA" id="JFX-XB-m1y"/>
                 <outlet property="rotateSlider" destination="Qgy-QW-5Wd" id="nzI-5E-QVF"/>
                 <outlet property="saveBtn" destination="ioT-QU-4GB" id="kqS-W4-qxl"/>
@@ -789,6 +790,17 @@ Gw
                             <action selector="actionActual:" target="Voe-Tx-rLC" id="kU5-f0-x0p"/>
                         </connections>
                     </button>
+                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="s8d-YY-bAs">
+                        <rect key="frame" x="738" y="287" width="48" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="Kl9-Mm-Spr">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionStepZoomOut:" target="Voe-Tx-rLC" id="UFV-dC-jvc"/>
+                        </connections>
+                    </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="iNY-2m-fGT">
                         <rect key="frame" x="786" y="287" width="48" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -937,15 +949,15 @@ Gw
                             <action selector="actionForRedo:" target="Voe-Tx-rLC" id="Do5-wL-woC"/>
                         </connections>
                     </button>
-                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="s8d-YY-bAs">
-                        <rect key="frame" x="738" y="287" width="48" height="32"/>
+                    <button verticalHuggingPriority="750" id="xNO-Xd-Ky1">
+                        <rect key="frame" x="738" y="111" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="Kl9-Mm-Spr">
+                        <buttonCell key="cell" type="push" title="Reset Rect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nHa-B8-f71">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="actionStepZoomOut:" target="Voe-Tx-rLC" id="UFV-dC-jvc"/>
+                            <action selector="actionResetCropRect:" target="Voe-Tx-rLC" id="XHk-aQ-ZEl"/>
                         </connections>
                     </button>
                 </subviews>

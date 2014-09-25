@@ -23,6 +23,7 @@
 @property (weak) IBOutlet NSSlider *rotateSlider;
 
 @property (weak) IBOutlet NSButton *cropBtn;
+@property (weak) IBOutlet NSButton *resetCropRectBtn;
 @property (weak) IBOutlet NSComboBox *cropComboBox;
 @property (weak) IBOutlet NSButton *fitinBtn;
 @property (weak) IBOutlet NSButton *actualBtn;
@@ -46,6 +47,7 @@
 - (IBAction)resetCurrentImage:(id)sender;
 - (IBAction)showHideRotateTool:(id)sender;
 - (IBAction)showHideCropTool:(id)sender;
+- (IBAction)actionResetCropRect:(id)sender;
 - (IBAction)setRotateSliderValue:(id)sender;
 - (IBAction)actionFitin:(id)sender;
 - (IBAction)actionActual:(id)sender;

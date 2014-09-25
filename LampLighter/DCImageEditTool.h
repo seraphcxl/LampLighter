@@ -71,6 +71,6 @@ extern NSString *kDCImageEditToolCodingAnchorRadius;
 - (BOOL)handleKeyDown:(NSEvent *)theEvent;
 - (BOOL)handleKeyUp:(NSEvent *)theEvent;
 
-- (BOOL)handleZoomImage;
+- (BOOL)handleImageVisiableRectChanged;
 
 @end
