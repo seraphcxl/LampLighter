@@ -144,6 +144,8 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
     do {
         if (!self.allowZoomImage) {
             [self fitin];
+        }
+        if (!self.allowDragImage) {
             [self center];
         }
         [self _refresh];
@@ -183,6 +185,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (!self.currentScene) {
             break;
         }
+        if (!self.allowDragImage) {
+            break;
+        }
         [self.currentScene moveWithX:0.0f andY:0.0f];
     } while (NO);
 }
@@ -190,6 +195,9 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
 - (void)fitin {
     do {
         if (!self.currentScene) {
+            break;
+        }
+        if (!self.allowZoomImage) {
             break;
         }
         [self.currentScene zoom:[self.currentScene calcFitinRatioSizeInView:self.view]];

@@ -16,6 +16,7 @@
                 <outlet property="actualBtn" destination="vPY-L0-Szj" id="RSR-07-WVq"/>
                 <outlet property="applyCropBtn" destination="VPw-Eb-YkI" id="Wli-zz-A1p"/>
                 <outlet property="cancelCropBtn" destination="Mjk-Ay-OgK" id="2Xm-2T-nos"/>
+                <outlet property="centerBtn" destination="SLE-w6-uZL" id="qQx-LL-CKB"/>
                 <outlet property="cropBtn" destination="Ucf-QJ-A1K" id="nLf-Vm-mpU"/>
                 <outlet property="cropComboBox" destination="Sm6-wm-z92" id="xQZ-IH-fmy"/>
                 <outlet property="degreeTextField" destination="brN-Kh-jlB" id="ctb-mD-nu9"/>
@@ -749,6 +750,20 @@ Gw
                             <action selector="actionFitin:" target="Voe-Tx-rLC" id="H3W-ve-Twi"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" id="SLE-w6-uZL">
+                        <rect key="frame" x="642" y="237" width="72" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Center" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bbl-e4-VU9">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionCenter:" target="Voe-Tx-rLC" id="MmA-3y-dyI"/>
+                        </connections>
+                    </button>
                     <button id="GTv-xB-vqP">
                         <rect key="frame" x="723" y="329" width="96" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -797,7 +812,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="nRe-t8-pAA">
-                        <rect key="frame" x="642" y="241" width="96" height="32"/>
+                        <rect key="frame" x="642" y="196" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Rotate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2uC-og-30I">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -808,7 +823,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="brN-Kh-jlB">
-                        <rect key="frame" x="648" y="218" width="96" height="22"/>
+                        <rect key="frame" x="648" y="173" width="96" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="0b8-WS-jGw">
                             <font key="font" metaFont="system"/>
@@ -817,7 +832,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="Qgy-QW-5Wd">
-                        <rect key="frame" x="789" y="213" width="32" height="32"/>
+                        <rect key="frame" x="789" y="168" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" lineBreakMode="truncatingMiddle" continuous="YES" enabled="NO" alignment="left" maxValue="360" tickMarkPosition="above" numberOfTickMarks="12" sliderType="circular" id="p8s-uU-f5v"/>
                         <connections>
@@ -825,7 +840,7 @@ Gw
                         </connections>
                     </slider>
                     <button verticalHuggingPriority="750" id="Ucf-QJ-A1K">
-                        <rect key="frame" x="642" y="156" width="96" height="32"/>
+                        <rect key="frame" x="642" y="111" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Crop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KVF-cI-Mig">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -836,7 +851,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="VPw-Eb-YkI">
-                        <rect key="frame" x="642" y="66" width="96" height="32"/>
+                        <rect key="frame" x="642" y="21" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BOB-bV-9Tm">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -847,7 +862,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Mjk-Ay-OgK">
-                        <rect key="frame" x="738" y="66" width="96" height="32"/>
+                        <rect key="frame" x="738" y="21" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bdE-en-NeG">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -861,7 +876,7 @@ Gw
                         </connections>
                     </button>
                     <comboBox verticalHuggingPriority="750" id="Sm6-wm-z92">
-                        <rect key="frame" x="648" y="119" width="183" height="26"/>
+                        <rect key="frame" x="648" y="74" width="183" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <comboBoxCell key="cell" lineBreakMode="truncatingMiddle" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="7" id="cVe-ba-zij">
                             <font key="font" metaFont="system"/>
@@ -891,14 +906,14 @@ Gw
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="vUP-5B-Vvf">
-                        <rect key="frame" x="648" y="202" width="180" height="5"/>
+                        <rect key="frame" x="648" y="157" width="180" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="chS-rY-08O">
-                        <rect key="frame" x="648" y="112" width="180" height="5"/>
+                        <rect key="frame" x="648" y="67" width="180" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -926,6 +941,13 @@ Gw
                             <action selector="actionForRedo:" target="Voe-Tx-rLC" id="Do5-wL-woC"/>
                         </connections>
                     </button>
+                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="AaG-5n-MEV">
+                        <rect key="frame" x="648" y="234" width="180" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
                 </subviews>
             </view>
         </window>

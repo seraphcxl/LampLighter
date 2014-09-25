@@ -84,7 +84,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         self.imageURL = [[NSBundle mainBundle] URLForImageResource:@"Beauty"];
         [self.imageEditVC reloadCurrentImage:self.imageURL];
         [self.imageEditVC fitin];
-        
+        [self.imageEditVC center];
         [self setRotateToolEnabled:NO];
         [self setCropToolEnabled:NO];
         [self setApplyAndCancelEnabled:NO];
@@ -149,6 +149,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         }
         [self.imageEditVC reloadCurrentImage:self.imageURL];
         [self.imageEditVC fitin];
+        [self.imageEditVC center];
     } while (NO);
 }
 
@@ -181,7 +182,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                         self.imageURL = [[panel URLs] objectAtIndex:0];
                         [self.imageEditVC reloadCurrentImage:self.imageURL];
                         [self.imageEditVC fitin];
-                        
+                        [self.imageEditVC center];
                         [self setRotateToolEnabled:NO];
                         [self setCropToolEnabled:NO];
                         [self setApplyAndCancelEnabled:NO];
@@ -253,10 +254,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
 
 - (IBAction)showHideCropTool:(id)sender {
     do {
-        if (!self.imageEditVC.currentScene.imageEditTool) {
-            [self.imageEditVC setAllowZoomImage:NO];
-            [self.imageEditVC setAllowDragImage:NO];
-            
+        if (!self.imageEditVC.currentScene.imageEditTool) {            
             [self.imageEditVC.currentScene resetEditToolByType:DCImageEditToolType_Crop];
             [(DCImageCropTool *)self.imageEditVC.currentScene.imageEditTool resetCropType:(DCImageCropType)[self.cropComboBox indexOfSelectedItem]];
             
@@ -267,9 +265,12 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
             
             [self setApplyAndCancelEnabled:YES];
             
-            [self.fitinLockBtn setState:1];
-            
+//            [self.fitinLockBtn setState:1];
+            [self.imageEditVC fitin];
+            [self.imageEditVC center];
             [self.imageEditVC refresh];
+            
+            [self.imageEditVC setAllowDragImage:NO];
         }
     } while (NO);
 }
@@ -323,6 +324,16 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     [self.imageEditVC refresh];
 }
 
+- (IBAction)actionCenter:(id)sender {
+    do {
+        if (!sender || sender != self.centerBtn) {
+            break;
+        }
+        [self.imageEditVC center];
+    } while (NO);
+    [self.imageEditVC refresh];
+}
+
 - (IBAction)actionStepZoomOut:(id)sender {
     do {
         if (!sender || sender != self.stepZoomOutBtn) {
@@ -356,6 +367,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
             break;
         }
         [self.imageEditVC fitin];
+        [self.imageEditVC center];
         [self.imageEditVC refresh];
         
         [self cleanEditTools];
@@ -371,6 +383,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         [self.imageEditVC resetCurrentScene];
         [self.imageEditVC fitin];
+        [self.imageEditVC center];
         [self.imageEditVC refresh];
         
         [self setRotateToolEnabled:NO];
@@ -386,6 +399,9 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         [self.imageEditVC undo];
         
+        [self.imageEditVC fitin];
+        [self.imageEditVC center];
+        
         switch (self.imageEditVC.currentScene.imageEditTool.type) {
             case DCImageEditToolType_Rotate:
             {
@@ -399,14 +415,13 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                 [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
-                [self.fitinLockBtn setState:1];
+//                [self.fitinLockBtn setState:1];
             }
                 break;
             default:
                 break;
         }
         
-        [self.imageEditVC fitin];
         [self.imageEditVC refresh];
     } while (NO);
 }
@@ -415,6 +430,9 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         [self.imageEditVC redo];
         
+        [self.imageEditVC fitin];
+        [self.imageEditVC center];
+        
         switch (self.imageEditVC.currentScene.imageEditTool.type) {
             case DCImageEditToolType_Rotate:
             {
@@ -428,14 +446,13 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                 [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
-                [self.fitinLockBtn setState:1];
+//                [self.fitinLockBtn setState:1];
             }
                 break;
             default:
                 break;
         }
         
-        [self.imageEditVC fitin];
         [self.imageEditVC refresh];
     } while (NO);
 }

@@ -26,6 +26,7 @@
 @property (weak) IBOutlet NSComboBox *cropComboBox;
 @property (weak) IBOutlet NSButton *fitinBtn;
 @property (weak) IBOutlet NSButton *actualBtn;
+@property (weak) IBOutlet NSButton *centerBtn;
 
 @property (weak) IBOutlet NSButton *openBtn;
 @property (weak) IBOutlet NSButton *saveBtn;
@@ -50,6 +51,7 @@
 - (IBAction)actionFitin:(id)sender;
 - (IBAction)actionActual:(id)sender;
 - (IBAction)actionLockFitin:(id)sender;
+- (IBAction)actionCenter:(id)sender;
 - (IBAction)actionStepZoomOut:(id)sender;
 - (IBAction)actionStepZoomIn:(id)sender;
 - (IBAction)actionForApply:(id)sender;
