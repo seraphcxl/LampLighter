@@ -21,8 +21,8 @@
                 <outlet property="cropComboBox" destination="Sm6-wm-z92" id="xQZ-IH-fmy"/>
                 <outlet property="degreeTextField" destination="brN-Kh-jlB" id="ctb-mD-nu9"/>
                 <outlet property="fitinBtn" destination="3JR-VT-Tev" id="VZt-7H-C1P"/>
-                <outlet property="fitinLockBtn" destination="GTv-xB-vqP" id="o0N-5O-4qi"/>
                 <outlet property="imageEditView" destination="YJF-xK-uCV" id="QE6-RX-u1p"/>
+                <outlet property="locationLockBtn" destination="GTv-xB-vqP" id="uXo-xS-YqP"/>
                 <outlet property="mainView" destination="EiT-Mj-1SZ" id="0ud-cY-fuI"/>
                 <outlet property="openBtn" destination="RUM-RN-tLv" id="a2T-IX-b2c"/>
                 <outlet property="redoBtn" destination="ph4-oL-MTF" id="cVQ-rn-8A4"/>
@@ -765,14 +765,14 @@ Gw
                         </connections>
                     </button>
                     <button id="GTv-xB-vqP">
-                        <rect key="frame" x="723" y="329" width="96" height="18"/>
+                        <rect key="frame" x="714" y="329" width="116" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Fitin lock" bezelStyle="regularSquare" imagePosition="left" alignment="center" inset="2" id="EfA-hz-s1t">
+                        <buttonCell key="cell" type="check" title="Location lock" bezelStyle="regularSquare" imagePosition="left" alignment="center" inset="2" id="EfA-hz-s1t">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="actionLockFitin:" target="Voe-Tx-rLC" id="Gm1-zQ-21Q"/>
+                            <action selector="actionLockLocation:" target="Voe-Tx-rLC" id="eDK-BT-z32"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="vPY-L0-Szj">
@@ -787,17 +787,6 @@ Gw
                         </buttonCell>
                         <connections>
                             <action selector="actionActual:" target="Voe-Tx-rLC" id="kU5-f0-x0p"/>
-                        </connections>
-                    </button>
-                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="s8d-YY-bAs">
-                        <rect key="frame" x="722" y="287" width="48" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="Kl9-Mm-Spr">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="actionStepZoomOut:" target="Voe-Tx-rLC" id="UFV-dC-jvc"/>
                         </connections>
                     </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="iNY-2m-fGT">
@@ -905,6 +894,13 @@ Gw
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
+                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="AaG-5n-MEV">
+                        <rect key="frame" x="648" y="234" width="180" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="vUP-5B-Vvf">
                         <rect key="frame" x="648" y="157" width="180" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -941,13 +937,17 @@ Gw
                             <action selector="actionForRedo:" target="Voe-Tx-rLC" id="Do5-wL-woC"/>
                         </connections>
                     </button>
-                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="AaG-5n-MEV">
-                        <rect key="frame" x="648" y="234" width="180" height="5"/>
+                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="s8d-YY-bAs">
+                        <rect key="frame" x="738" y="287" width="48" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
+                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="Kl9-Mm-Spr">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionStepZoomOut:" target="Voe-Tx-rLC" id="UFV-dC-jvc"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
         </window>

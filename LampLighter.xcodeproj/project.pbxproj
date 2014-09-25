@@ -1,1599 +1,649 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>0068003CB94746E2855BA4B0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>F788FA6BD4A54A56B7E24C4B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3D1D37A0B56E4397845CD567</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>42414417D46648CE823D1323</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Pods-LampLighter-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>7ED23F8C1D3143BCB2C6EBBB</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-LampLighterTests.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-LampLighterTests.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8400EBB764804F908F00136D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>A22E25D770CE495F9DCCB880</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>8917D751196B72420082089A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageEditScene.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8917D752196B72420082089A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageEditScene.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8917D753196B72420082089A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>8917D752196B72420082089A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>891F1F841963AFEF00796F46</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>QuartzCore.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/QuartzCore.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>891F1F851963AFEF00796F46</key>
-		<dict>
-			<key>fileRef</key>
-			<string>891F1F841963AFEF00796F46</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>892C0272198897CB000694F4</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>892EB24F195BF906004CE94A</string>
-				<string>892EB256195BF906004CE94A</string>
-				<string>892EB254195BF906004CE94A</string>
-				<string>892EB255195BF906004CE94A</string>
-				<string>89E41BCB1966CCFE00637AB2</string>
-				<string>89E41BCC1966CCFE00637AB2</string>
-				<string>89347B271964F37700BCD74C</string>
-				<string>89347B281964F37700BCD74C</string>
-				<string>892EB257195BF906004CE94A</string>
-				<string>892EB258195BF906004CE94A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>EditTool</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB24F195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageEditTool.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB250195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageEditView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB251195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageEditView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB252195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageEditViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB253195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageEditViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB254195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageCropTool.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB255195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageCropTool.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB256195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageEditTool.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB257195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageRotateTool.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB258195BF906004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageRotateTool.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB259195BF906004CE94A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>892EB251195BF906004CE94A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>892EB25A195BF906004CE94A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>892EB253195BF906004CE94A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>892EB25B195BF906004CE94A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>892EB255195BF906004CE94A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>892EB25C195BF906004CE94A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>892EB256195BF906004CE94A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>892EB25D195BF906004CE94A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>892EB258195BF906004CE94A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>892EB25E195BF916004CE94A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>path</key>
-			<string>DCImageEditViewController.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>892EB25F195BF916004CE94A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>892EB25E195BF916004CE94A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89347B271964F37700BCD74C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageCropTool+ActionList.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89347B281964F37700BCD74C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageCropTool+ActionList.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89347B291964F37700BCD74C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89347B281964F37700BCD74C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A69A195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6AC195BB80B0092FC97</string>
-				<string>89B0A6CA195BB80C0092FC97</string>
-				<string>89B0A6A5195BB80B0092FC97</string>
-				<string>89B0A6A4195BB80B0092FC97</string>
-				<string>9CA20F53E57E4DA3917AE6B4</string>
-				<string>7ED23F8C1D3143BCB2C6EBBB</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A69B195BB80B0092FC97</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>CLASSPREFIX</key>
-				<string>DC</string>
-				<key>LastUpgradeCheck</key>
-				<string>0510</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Derek Chen</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>89B0A6C3195BB80C0092FC97</key>
-					<dict>
-						<key>TestTargetID</key>
-						<string>89B0A6A2195BB80B0092FC97</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>89B0A69E195BB80B0092FC97</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-				<string>Base</string>
-			</array>
-			<key>mainGroup</key>
-			<string>89B0A69A195BB80B0092FC97</string>
-			<key>productRefGroup</key>
-			<string>89B0A6A4195BB80B0092FC97</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>89B0A6A2195BB80B0092FC97</string>
-				<string>89B0A6C3195BB80C0092FC97</string>
-			</array>
-		</dict>
-		<key>89B0A69E195BB80B0092FC97</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>89B0A6D2195BB80C0092FC97</string>
-				<string>89B0A6D3195BB80C0092FC97</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>89B0A69F195BB80B0092FC97</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>892EB25C195BF906004CE94A</string>
-				<string>892EB25A195BF906004CE94A</string>
-				<string>89B0A6ED195BB84E0092FC97</string>
-				<string>89347B291964F37700BCD74C</string>
-				<string>892EB25B195BF906004CE94A</string>
-				<string>89B0A6B3195BB80B0092FC97</string>
-				<string>8917D753196B72420082089A</string>
-				<string>892EB25D195BF906004CE94A</string>
-				<string>89E41BCD1966CCFE00637AB2</string>
-				<string>89B0A6BA195BB80B0092FC97</string>
-				<string>892EB259195BF906004CE94A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>89B0A6A0195BB80B0092FC97</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>891F1F851963AFEF00796F46</string>
-				<string>89B0A6A7195BB80B0092FC97</string>
-				<string>0068003CB94746E2855BA4B0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>89B0A6A1195BB80B0092FC97</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>89B0A6B1195BB80B0092FC97</string>
-				<string>89B0A6BF195BB80C0092FC97</string>
-				<string>892EB25F195BF916004CE94A</string>
-				<string>89CA25831962F32900471681</string>
-				<string>89B0A6B7195BB80B0092FC97</string>
-				<string>89B0A6BD195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>89B0A6A2195BB80B0092FC97</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>89B0A6D4195BB80C0092FC97</string>
-			<key>buildPhases</key>
-			<array>
-				<string>99CDC4ADAFD248F6A28E2946</string>
-				<string>89B0A69F195BB80B0092FC97</string>
-				<string>89B0A6A0195BB80B0092FC97</string>
-				<string>89B0A6A1195BB80B0092FC97</string>
-				<string>42414417D46648CE823D1323</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>LampLighter</string>
-			<key>productName</key>
-			<string>LampLighter</string>
-			<key>productReference</key>
-			<string>89B0A6A3195BB80B0092FC97</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>89B0A6A3195BB80B0092FC97</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>LampLighter.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>89B0A6A4195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6A3195BB80B0092FC97</string>
-				<string>89B0A6C4195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6A5195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>891F1F841963AFEF00796F46</string>
-				<string>89B0A6A6195BB80B0092FC97</string>
-				<string>89B0A6C5195BB80C0092FC97</string>
-				<string>89B0A6A8195BB80B0092FC97</string>
-				<string>F788FA6BD4A54A56B7E24C4B</string>
-				<string>A22E25D770CE495F9DCCB880</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6A6195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Cocoa.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Cocoa.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>89B0A6A7195BB80B0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6A6195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6A8195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6A9195BB80B0092FC97</string>
-				<string>89B0A6AA195BB80B0092FC97</string>
-				<string>89B0A6AB195BB80B0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Other Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6A9195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>AppKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/AppKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>89B0A6AA195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreData.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CoreData.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>89B0A6AB195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>89B0A6AC195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>892C0272198897CB000694F4</string>
-				<string>89B0A6E6195BB84E0092FC97</string>
-				<string>89B0A6E5195BB84E0092FC97</string>
-				<string>8917D751196B72420082089A</string>
-				<string>8917D752196B72420082089A</string>
-				<string>892EB250195BF906004CE94A</string>
-				<string>892EB251195BF906004CE94A</string>
-				<string>892EB252195BF906004CE94A</string>
-				<string>892EB253195BF906004CE94A</string>
-				<string>892EB25E195BF916004CE94A</string>
-				<string>89B0A6B8195BB80B0092FC97</string>
-				<string>89B0A6B9195BB80B0092FC97</string>
-				<string>89B0A6BB195BB80C0092FC97</string>
-				<string>89B0A6BE195BB80C0092FC97</string>
-				<string>89CA25821962F32900471681</string>
-				<string>89B0A6AD195BB80B0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>LampLighter</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6AD195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6AE195BB80B0092FC97</string>
-				<string>89B0A6AF195BB80B0092FC97</string>
-				<string>89B0A6B2195BB80B0092FC97</string>
-				<string>89B0A6B4195BB80B0092FC97</string>
-				<string>89B0A6B5195BB80B0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6AE195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>LampLighter-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6AF195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6B0195BB80B0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B0195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B1195BB80B0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6AF195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6B2195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>main.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B3195BB80B0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6B2195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6B4195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>LampLighter-Prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B5195BB80B0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6B6195BB80B0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>Credits.rtf</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B6195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.rtf</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/Credits.rtf</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B7195BB80B0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6B5195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6B8195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCAppDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6B9195BB80B0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCAppDelegate.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6BA195BB80B0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6B9195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6BB195BB80C0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6BC195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>MainMenu.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6BC195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>name</key>
-			<string>Base</string>
-			<key>path</key>
-			<string>Base.lproj/MainMenu.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6BD195BB80C0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6BB195BB80C0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6BE195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Images.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6BF195BB80C0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6BE195BB80C0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6C0195BB80C0092FC97</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>89B0A6D1195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>89B0A6C1195BB80C0092FC97</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>89B0A6C7195BB80C0092FC97</string>
-				<string>89B0A6C6195BB80C0092FC97</string>
-				<string>8400EBB764804F908F00136D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>89B0A6C2195BB80C0092FC97</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>89B0A6CF195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>89B0A6C3195BB80C0092FC97</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>89B0A6D7195BB80C0092FC97</string>
-			<key>buildPhases</key>
-			<array>
-				<string>3D1D37A0B56E4397845CD567</string>
-				<string>89B0A6C0195BB80C0092FC97</string>
-				<string>89B0A6C1195BB80C0092FC97</string>
-				<string>89B0A6C2195BB80C0092FC97</string>
-				<string>D63FAB57F22B4964A2C7C019</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>89B0A6C9195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>LampLighterTests</string>
-			<key>productName</key>
-			<string>LampLighterTests</string>
-			<key>productReference</key>
-			<string>89B0A6C4195BB80C0092FC97</string>
-			<key>productType</key>
-			<string>com.apple.product-type.bundle.unit-test</string>
-		</dict>
-		<key>89B0A6C4195BB80C0092FC97</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>LampLighterTests.xctest</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>89B0A6C5195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>XCTest.framework</string>
-			<key>path</key>
-			<string>Library/Frameworks/XCTest.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>89B0A6C6195BB80C0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6C5195BB80C0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6C7195BB80C0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6A6195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6C8195BB80C0092FC97</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>89B0A69B195BB80B0092FC97</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>89B0A6A2195BB80B0092FC97</string>
-			<key>remoteInfo</key>
-			<string>LampLighter</string>
-		</dict>
-		<key>89B0A6C9195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>target</key>
-			<string>89B0A6A2195BB80B0092FC97</string>
-			<key>targetProxy</key>
-			<string>89B0A6C8195BB80C0092FC97</string>
-		</dict>
-		<key>89B0A6CA195BB80C0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6D0195BB80C0092FC97</string>
-				<string>89B0A6CB195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>LampLighterTests</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6CB195BB80C0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6CC195BB80C0092FC97</string>
-				<string>89B0A6CD195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6CC195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>LampLighterTests-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6CD195BB80C0092FC97</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>89B0A6CE195BB80C0092FC97</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6CE195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6CF195BB80C0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6CD195BB80C0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6D0195BB80C0092FC97</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>LampLighterTests.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6D1195BB80C0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6D0195BB80C0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89B0A6D2195BB80C0092FC97</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
-				<string>YES</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.9</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>macosx</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>89B0A6D3195BB80C0092FC97</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
-				<string>YES</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.9</string>
-				<key>SDKROOT</key>
-				<string>macosx</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>89B0A6D4195BB80C0092FC97</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>89B0A6D5195BB80C0092FC97</string>
-				<string>89B0A6D6195BB80C0092FC97</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>89B0A6D5195BB80C0092FC97</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>9CA20F53E57E4DA3917AE6B4</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>YES</string>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<string>$(inherited)</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>LampLighter/LampLighter-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>LampLighter/LampLighter-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>89B0A6D6195BB80C0092FC97</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>9CA20F53E57E4DA3917AE6B4</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>YES</string>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<string>$(inherited)</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>LampLighter/LampLighter-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>LampLighter/LampLighter-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>89B0A6D7195BB80C0092FC97</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>89B0A6D8195BB80C0092FC97</string>
-				<string>89B0A6D9195BB80C0092FC97</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>89B0A6D8195BB80C0092FC97</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>7ED23F8C1D3143BCB2C6EBBB</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(BUILT_PRODUCTS_DIR)/LampLighter.app/Contents/MacOS/LampLighter</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>LampLighter/LampLighter-Prefix.pch</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>LampLighterTests/LampLighterTests-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUNDLE_LOADER)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>xctest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>89B0A6D9195BB80C0092FC97</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>7ED23F8C1D3143BCB2C6EBBB</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(BUILT_PRODUCTS_DIR)/LampLighter.app/Contents/MacOS/LampLighter</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>LampLighter/LampLighter-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>LampLighterTests/LampLighterTests-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUNDLE_LOADER)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>xctest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>89B0A6E5195BB84E0092FC97</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCEditableImage.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6E6195BB84E0092FC97</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCEditableImage.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89B0A6ED195BB84E0092FC97</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89B0A6E5195BB84E0092FC97</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89CA25821962F32900471681</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>image.jpeg</string>
-			<key>path</key>
-			<string>Beauty.jpg</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89CA25831962F32900471681</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89CA25821962F32900471681</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>89E41BCB1966CCFE00637AB2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DCImageCropTool+Responder.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89E41BCC1966CCFE00637AB2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DCImageCropTool+Responder.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>89E41BCD1966CCFE00637AB2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>89E41BCC1966CCFE00637AB2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>99CDC4ADAFD248F6A28E2946</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>9CA20F53E57E4DA3917AE6B4</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-LampLighter.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-LampLighter.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A22E25D770CE495F9DCCB880</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-LampLighterTests.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>D63FAB57F22B4964A2C7C019</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Pods-LampLighterTests-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>F788FA6BD4A54A56B7E24C4B</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-LampLighter.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>89B0A69B195BB80B0092FC97</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0068003CB94746E2855BA4B0 /* libPods-LampLighter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F788FA6BD4A54A56B7E24C4B /* libPods-LampLighter.a */; };
+		8400EBB764804F908F00136D /* libPods-LampLighterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A22E25D770CE495F9DCCB880 /* libPods-LampLighterTests.a */; };
+		8917D753196B72420082089A /* DCImageEditScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D752196B72420082089A /* DCImageEditScene.m */; };
+		891F1F851963AFEF00796F46 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891F1F841963AFEF00796F46 /* QuartzCore.framework */; };
+		892EB259195BF906004CE94A /* DCImageEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB251195BF906004CE94A /* DCImageEditView.m */; };
+		892EB25A195BF906004CE94A /* DCImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB253195BF906004CE94A /* DCImageEditViewController.m */; };
+		892EB25B195BF906004CE94A /* DCImageCropTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB255195BF906004CE94A /* DCImageCropTool.m */; };
+		892EB25C195BF906004CE94A /* DCImageEditTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB256195BF906004CE94A /* DCImageEditTool.m */; };
+		892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 892EB258195BF906004CE94A /* DCImageRotateTool.m */; };
+		892EB25F195BF916004CE94A /* DCImageEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892EB25E195BF916004CE94A /* DCImageEditViewController.xib */; };
+		89347B291964F37700BCD74C /* DCImageCropTool+ActionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */; };
+		89B0A6A7195BB80B0092FC97 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B0A6A6195BB80B0092FC97 /* Cocoa.framework */; };
+		89B0A6B1195BB80B0092FC97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6AF195BB80B0092FC97 /* InfoPlist.strings */; };
+		89B0A6B3195BB80B0092FC97 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6B2195BB80B0092FC97 /* main.m */; };
+		89B0A6B7195BB80B0092FC97 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6B5195BB80B0092FC97 /* Credits.rtf */; };
+		89B0A6BA195BB80B0092FC97 /* DCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6B9195BB80B0092FC97 /* DCAppDelegate.m */; };
+		89B0A6BD195BB80C0092FC97 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6BB195BB80C0092FC97 /* MainMenu.xib */; };
+		89B0A6BF195BB80C0092FC97 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6BE195BB80C0092FC97 /* Images.xcassets */; };
+		89B0A6C6195BB80C0092FC97 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B0A6C5195BB80C0092FC97 /* XCTest.framework */; };
+		89B0A6C7195BB80C0092FC97 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B0A6A6195BB80B0092FC97 /* Cocoa.framework */; };
+		89B0A6CF195BB80C0092FC97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89B0A6CD195BB80C0092FC97 /* InfoPlist.strings */; };
+		89B0A6D1195BB80C0092FC97 /* LampLighterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */; };
+		89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */; };
+		89CA25831962F32900471681 /* Beauty.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89CA25821962F32900471681 /* Beauty.jpg */; };
+		89D31FA319D3BD2A007FE9A4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D31FA219D3BD2A007FE9A4 /* Accelerate.framework */; };
+		89E41BCD1966CCFE00637AB2 /* DCImageCropTool+Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		89B0A6C8195BB80C0092FC97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89B0A69B195BB80B0092FC97 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89B0A6A2195BB80B0092FC97;
+			remoteInfo = LampLighter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7ED23F8C1D3143BCB2C6EBBB /* Pods-LampLighterTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LampLighterTests.xcconfig"; path = "Pods/Pods-LampLighterTests.xcconfig"; sourceTree = "<group>"; };
+		8917D751196B72420082089A /* DCImageEditScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditScene.h; sourceTree = "<group>"; };
+		8917D752196B72420082089A /* DCImageEditScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditScene.m; sourceTree = "<group>"; };
+		891F1F841963AFEF00796F46 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		892EB24F195BF906004CE94A /* DCImageEditTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditTool.h; sourceTree = "<group>"; };
+		892EB250195BF906004CE94A /* DCImageEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditView.h; sourceTree = "<group>"; };
+		892EB251195BF906004CE94A /* DCImageEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditView.m; sourceTree = "<group>"; };
+		892EB252195BF906004CE94A /* DCImageEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageEditViewController.h; sourceTree = "<group>"; };
+		892EB253195BF906004CE94A /* DCImageEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditViewController.m; sourceTree = "<group>"; };
+		892EB254195BF906004CE94A /* DCImageCropTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageCropTool.h; sourceTree = "<group>"; };
+		892EB255195BF906004CE94A /* DCImageCropTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageCropTool.m; sourceTree = "<group>"; };
+		892EB256195BF906004CE94A /* DCImageEditTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageEditTool.m; sourceTree = "<group>"; };
+		892EB257195BF906004CE94A /* DCImageRotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCImageRotateTool.h; sourceTree = "<group>"; };
+		892EB258195BF906004CE94A /* DCImageRotateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCImageRotateTool.m; sourceTree = "<group>"; };
+		892EB25E195BF916004CE94A /* DCImageEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DCImageEditViewController.xib; sourceTree = "<group>"; };
+		89347B271964F37700BCD74C /* DCImageCropTool+ActionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DCImageCropTool+ActionList.h"; sourceTree = "<group>"; };
+		89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DCImageCropTool+ActionList.m"; sourceTree = "<group>"; };
+		89B0A6A3195BB80B0092FC97 /* LampLighter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LampLighter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89B0A6A6195BB80B0092FC97 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		89B0A6A9195BB80B0092FC97 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		89B0A6AA195BB80B0092FC97 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		89B0A6AB195BB80B0092FC97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		89B0A6AE195BB80B0092FC97 /* LampLighter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LampLighter-Info.plist"; sourceTree = "<group>"; };
+		89B0A6B0195BB80B0092FC97 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		89B0A6B2195BB80B0092FC97 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		89B0A6B4195BB80B0092FC97 /* LampLighter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LampLighter-Prefix.pch"; sourceTree = "<group>"; };
+		89B0A6B6195BB80B0092FC97 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		89B0A6B8195BB80B0092FC97 /* DCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCAppDelegate.h; sourceTree = "<group>"; };
+		89B0A6B9195BB80B0092FC97 /* DCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCAppDelegate.m; sourceTree = "<group>"; };
+		89B0A6BC195BB80C0092FC97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		89B0A6BE195BB80C0092FC97 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		89B0A6C4195BB80C0092FC97 /* LampLighterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LampLighterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		89B0A6C5195BB80C0092FC97 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		89B0A6CC195BB80C0092FC97 /* LampLighterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LampLighterTests-Info.plist"; sourceTree = "<group>"; };
+		89B0A6CE195BB80C0092FC97 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LampLighterTests.m; sourceTree = "<group>"; };
+		89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCEditableImage.m; sourceTree = "<group>"; };
+		89B0A6E6195BB84E0092FC97 /* DCEditableImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCEditableImage.h; sourceTree = "<group>"; };
+		89CA25821962F32900471681 /* Beauty.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Beauty.jpg; sourceTree = "<group>"; };
+		89D31FA219D3BD2A007FE9A4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		89E41BCB1966CCFE00637AB2 /* DCImageCropTool+Responder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DCImageCropTool+Responder.h"; sourceTree = "<group>"; };
+		89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DCImageCropTool+Responder.m"; sourceTree = "<group>"; };
+		9CA20F53E57E4DA3917AE6B4 /* Pods-LampLighter.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LampLighter.xcconfig"; path = "Pods/Pods-LampLighter.xcconfig"; sourceTree = "<group>"; };
+		A22E25D770CE495F9DCCB880 /* libPods-LampLighterTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LampLighterTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F788FA6BD4A54A56B7E24C4B /* libPods-LampLighter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LampLighter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		89B0A6A0195BB80B0092FC97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89D31FA319D3BD2A007FE9A4 /* Accelerate.framework in Frameworks */,
+				891F1F851963AFEF00796F46 /* QuartzCore.framework in Frameworks */,
+				89B0A6A7195BB80B0092FC97 /* Cocoa.framework in Frameworks */,
+				0068003CB94746E2855BA4B0 /* libPods-LampLighter.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89B0A6C1195BB80C0092FC97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89B0A6C7195BB80C0092FC97 /* Cocoa.framework in Frameworks */,
+				89B0A6C6195BB80C0092FC97 /* XCTest.framework in Frameworks */,
+				8400EBB764804F908F00136D /* libPods-LampLighterTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		892C0272198897CB000694F4 /* EditTool */ = {
+			isa = PBXGroup;
+			children = (
+				892EB24F195BF906004CE94A /* DCImageEditTool.h */,
+				892EB256195BF906004CE94A /* DCImageEditTool.m */,
+				892EB254195BF906004CE94A /* DCImageCropTool.h */,
+				892EB255195BF906004CE94A /* DCImageCropTool.m */,
+				89E41BCB1966CCFE00637AB2 /* DCImageCropTool+Responder.h */,
+				89E41BCC1966CCFE00637AB2 /* DCImageCropTool+Responder.m */,
+				89347B271964F37700BCD74C /* DCImageCropTool+ActionList.h */,
+				89347B281964F37700BCD74C /* DCImageCropTool+ActionList.m */,
+				892EB257195BF906004CE94A /* DCImageRotateTool.h */,
+				892EB258195BF906004CE94A /* DCImageRotateTool.m */,
+			);
+			name = EditTool;
+			sourceTree = "<group>";
+		};
+		89B0A69A195BB80B0092FC97 = {
+			isa = PBXGroup;
+			children = (
+				89B0A6AC195BB80B0092FC97 /* LampLighter */,
+				89B0A6CA195BB80C0092FC97 /* LampLighterTests */,
+				89B0A6A5195BB80B0092FC97 /* Frameworks */,
+				89B0A6A4195BB80B0092FC97 /* Products */,
+				9CA20F53E57E4DA3917AE6B4 /* Pods-LampLighter.xcconfig */,
+				7ED23F8C1D3143BCB2C6EBBB /* Pods-LampLighterTests.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		89B0A6A4195BB80B0092FC97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89B0A6A3195BB80B0092FC97 /* LampLighter.app */,
+				89B0A6C4195BB80C0092FC97 /* LampLighterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		89B0A6A5195BB80B0092FC97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89D31FA219D3BD2A007FE9A4 /* Accelerate.framework */,
+				891F1F841963AFEF00796F46 /* QuartzCore.framework */,
+				89B0A6A6195BB80B0092FC97 /* Cocoa.framework */,
+				89B0A6C5195BB80C0092FC97 /* XCTest.framework */,
+				89B0A6A8195BB80B0092FC97 /* Other Frameworks */,
+				F788FA6BD4A54A56B7E24C4B /* libPods-LampLighter.a */,
+				A22E25D770CE495F9DCCB880 /* libPods-LampLighterTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89B0A6A8195BB80B0092FC97 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89B0A6A9195BB80B0092FC97 /* AppKit.framework */,
+				89B0A6AA195BB80B0092FC97 /* CoreData.framework */,
+				89B0A6AB195BB80B0092FC97 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		89B0A6AC195BB80B0092FC97 /* LampLighter */ = {
+			isa = PBXGroup;
+			children = (
+				892C0272198897CB000694F4 /* EditTool */,
+				89B0A6E6195BB84E0092FC97 /* DCEditableImage.h */,
+				89B0A6E5195BB84E0092FC97 /* DCEditableImage.m */,
+				8917D751196B72420082089A /* DCImageEditScene.h */,
+				8917D752196B72420082089A /* DCImageEditScene.m */,
+				892EB250195BF906004CE94A /* DCImageEditView.h */,
+				892EB251195BF906004CE94A /* DCImageEditView.m */,
+				892EB252195BF906004CE94A /* DCImageEditViewController.h */,
+				892EB253195BF906004CE94A /* DCImageEditViewController.m */,
+				892EB25E195BF916004CE94A /* DCImageEditViewController.xib */,
+				89B0A6B8195BB80B0092FC97 /* DCAppDelegate.h */,
+				89B0A6B9195BB80B0092FC97 /* DCAppDelegate.m */,
+				89B0A6BB195BB80C0092FC97 /* MainMenu.xib */,
+				89B0A6BE195BB80C0092FC97 /* Images.xcassets */,
+				89CA25821962F32900471681 /* Beauty.jpg */,
+				89B0A6AD195BB80B0092FC97 /* Supporting Files */,
+			);
+			path = LampLighter;
+			sourceTree = "<group>";
+		};
+		89B0A6AD195BB80B0092FC97 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				89B0A6AE195BB80B0092FC97 /* LampLighter-Info.plist */,
+				89B0A6AF195BB80B0092FC97 /* InfoPlist.strings */,
+				89B0A6B2195BB80B0092FC97 /* main.m */,
+				89B0A6B4195BB80B0092FC97 /* LampLighter-Prefix.pch */,
+				89B0A6B5195BB80B0092FC97 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		89B0A6CA195BB80C0092FC97 /* LampLighterTests */ = {
+			isa = PBXGroup;
+			children = (
+				89B0A6D0195BB80C0092FC97 /* LampLighterTests.m */,
+				89B0A6CB195BB80C0092FC97 /* Supporting Files */,
+			);
+			path = LampLighterTests;
+			sourceTree = "<group>";
+		};
+		89B0A6CB195BB80C0092FC97 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				89B0A6CC195BB80C0092FC97 /* LampLighterTests-Info.plist */,
+				89B0A6CD195BB80C0092FC97 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		89B0A6A2195BB80B0092FC97 /* LampLighter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89B0A6D4195BB80C0092FC97 /* Build configuration list for PBXNativeTarget "LampLighter" */;
+			buildPhases = (
+				99CDC4ADAFD248F6A28E2946 /* Check Pods Manifest.lock */,
+				89B0A69F195BB80B0092FC97 /* Sources */,
+				89B0A6A0195BB80B0092FC97 /* Frameworks */,
+				89B0A6A1195BB80B0092FC97 /* Resources */,
+				42414417D46648CE823D1323 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LampLighter;
+			productName = LampLighter;
+			productReference = 89B0A6A3195BB80B0092FC97 /* LampLighter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		89B0A6C3195BB80C0092FC97 /* LampLighterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89B0A6D7195BB80C0092FC97 /* Build configuration list for PBXNativeTarget "LampLighterTests" */;
+			buildPhases = (
+				3D1D37A0B56E4397845CD567 /* Check Pods Manifest.lock */,
+				89B0A6C0195BB80C0092FC97 /* Sources */,
+				89B0A6C1195BB80C0092FC97 /* Frameworks */,
+				89B0A6C2195BB80C0092FC97 /* Resources */,
+				D63FAB57F22B4964A2C7C019 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				89B0A6C9195BB80C0092FC97 /* PBXTargetDependency */,
+			);
+			name = LampLighterTests;
+			productName = LampLighterTests;
+			productReference = 89B0A6C4195BB80C0092FC97 /* LampLighterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89B0A69B195BB80B0092FC97 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DC;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Derek Chen";
+				TargetAttributes = {
+					89B0A6C3195BB80C0092FC97 = {
+						TestTargetID = 89B0A6A2195BB80B0092FC97;
+					};
+				};
+			};
+			buildConfigurationList = 89B0A69E195BB80B0092FC97 /* Build configuration list for PBXProject "LampLighter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 89B0A69A195BB80B0092FC97;
+			productRefGroup = 89B0A6A4195BB80B0092FC97 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				89B0A6A2195BB80B0092FC97 /* LampLighter */,
+				89B0A6C3195BB80C0092FC97 /* LampLighterTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		89B0A6A1195BB80B0092FC97 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89B0A6B1195BB80B0092FC97 /* InfoPlist.strings in Resources */,
+				89B0A6BF195BB80C0092FC97 /* Images.xcassets in Resources */,
+				892EB25F195BF916004CE94A /* DCImageEditViewController.xib in Resources */,
+				89CA25831962F32900471681 /* Beauty.jpg in Resources */,
+				89B0A6B7195BB80B0092FC97 /* Credits.rtf in Resources */,
+				89B0A6BD195BB80C0092FC97 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89B0A6C2195BB80C0092FC97 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89B0A6CF195BB80C0092FC97 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3D1D37A0B56E4397845CD567 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		42414417D46648CE823D1323 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-LampLighter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		99CDC4ADAFD248F6A28E2946 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D63FAB57F22B4964A2C7C019 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-LampLighterTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		89B0A69F195BB80B0092FC97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				892EB25C195BF906004CE94A /* DCImageEditTool.m in Sources */,
+				892EB25A195BF906004CE94A /* DCImageEditViewController.m in Sources */,
+				89B0A6ED195BB84E0092FC97 /* DCEditableImage.m in Sources */,
+				89347B291964F37700BCD74C /* DCImageCropTool+ActionList.m in Sources */,
+				892EB25B195BF906004CE94A /* DCImageCropTool.m in Sources */,
+				89B0A6B3195BB80B0092FC97 /* main.m in Sources */,
+				8917D753196B72420082089A /* DCImageEditScene.m in Sources */,
+				892EB25D195BF906004CE94A /* DCImageRotateTool.m in Sources */,
+				89E41BCD1966CCFE00637AB2 /* DCImageCropTool+Responder.m in Sources */,
+				89B0A6BA195BB80B0092FC97 /* DCAppDelegate.m in Sources */,
+				892EB259195BF906004CE94A /* DCImageEditView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89B0A6C0195BB80C0092FC97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89B0A6D1195BB80C0092FC97 /* LampLighterTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		89B0A6C9195BB80C0092FC97 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89B0A6A2195BB80B0092FC97 /* LampLighter */;
+			targetProxy = 89B0A6C8195BB80C0092FC97 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		89B0A6AF195BB80B0092FC97 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89B0A6B0195BB80B0092FC97 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		89B0A6B5195BB80B0092FC97 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89B0A6B6195BB80B0092FC97 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		89B0A6BB195BB80C0092FC97 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89B0A6BC195BB80C0092FC97 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		89B0A6CD195BB80C0092FC97 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89B0A6CE195BB80C0092FC97 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		89B0A6D2195BB80C0092FC97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		89B0A6D3195BB80C0092FC97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		89B0A6D5195BB80C0092FC97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9CA20F53E57E4DA3917AE6B4 /* Pods-LampLighter.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LampLighter/LampLighter-Prefix.pch";
+				INFOPLIST_FILE = "LampLighter/LampLighter-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		89B0A6D6195BB80C0092FC97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9CA20F53E57E4DA3917AE6B4 /* Pods-LampLighter.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LampLighter/LampLighter-Prefix.pch";
+				INFOPLIST_FILE = "LampLighter/LampLighter-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		89B0A6D8195BB80C0092FC97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7ED23F8C1D3143BCB2C6EBBB /* Pods-LampLighterTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/LampLighter.app/Contents/MacOS/LampLighter";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LampLighter/LampLighter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "LampLighterTests/LampLighterTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		89B0A6D9195BB80C0092FC97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7ED23F8C1D3143BCB2C6EBBB /* Pods-LampLighterTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/LampLighter.app/Contents/MacOS/LampLighter";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LampLighter/LampLighter-Prefix.pch";
+				INFOPLIST_FILE = "LampLighterTests/LampLighterTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		89B0A69E195BB80B0092FC97 /* Build configuration list for PBXProject "LampLighter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89B0A6D2195BB80C0092FC97 /* Debug */,
+				89B0A6D3195BB80C0092FC97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89B0A6D4195BB80C0092FC97 /* Build configuration list for PBXNativeTarget "LampLighter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89B0A6D5195BB80C0092FC97 /* Debug */,
+				89B0A6D6195BB80C0092FC97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89B0A6D7195BB80C0092FC97 /* Build configuration list for PBXNativeTarget "LampLighterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89B0A6D8195BB80C0092FC97 /* Debug */,
+				89B0A6D9195BB80C0092FC97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 89B0A69B195BB80B0092FC97 /* Project object */;
+}

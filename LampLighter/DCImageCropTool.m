@@ -160,7 +160,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         CGFloat bottomY = self.cropRect.origin.y;
         
         // Mask
-        maskColor = CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(25.0f), DCRGBAConvert256ToPercentage(25.0f), DCRGBAConvert256ToPercentage(25.0f), 0.8f);
+        maskColor = CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(25.0f), DCRGBAConvert256ToPercentage(25.0f), DCRGBAConvert256ToPercentage(25.0f), 0.6f);
         CGContextSetFillColorWithColor(context, maskColor);
         // TopLeftRect
         NSRect topLectRect = DCMakeIntegerRect(0.0f, bottomY, leftX, bounds.size.height - bottomY);
@@ -175,13 +175,13 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         NSRect bottomRightRect = DCMakeIntegerRect(rightX, 0.0f, bounds.size.width - rightX, topY);
         CGContextFillRect(context, bottomRightRect);
         // CropRect
-        cropRectColor = CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(128.0f), DCRGBAConvert256ToPercentage(64.0f), DCRGBAConvert256ToPercentage(0.0f), 1.0f);
+        cropRectColor = [[NSColor mochaColor] cgColor];  // CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(128.0f), DCRGBAConvert256ToPercentage(64.0f), DCRGBAConvert256ToPercentage(0.0f), 1.0f);
         CGContextSetLineWidth(context, 2.0);
         CGContextSetStrokeColorWithColor(context, cropRectColor);
         CGContextAddRect(context, self.cropRect);
         CGContextStrokePath(context);
         // Corner anchor
-        cornerAnchorColor = CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(102.0f), DCRGBAConvert256ToPercentage(102.0f), 1.0f);
+        cornerAnchorColor = [[NSColor salmonColor] cgColor];  // CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(102.0f), DCRGBAConvert256ToPercentage(102.0f), 1.0f);
         CGContextSetFillColorWithColor(context, cornerAnchorColor);
         // TopLeftAnchor
         NSPoint topLeftAnchor = NSMakePoint(leftX, topY);
@@ -198,7 +198,7 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         
         if (self.cropType == DCImageCropType_Custom) {
             // Center anchor
-            centerAnchorColor = CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(0.0f), 1.0f);
+            centerAnchorColor = [[NSColor lemonColor] cgColor];  // CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(0.0f), 1.0f);
             CGContextSetFillColorWithColor(context, centerAnchorColor);
             // TopCenterAnchor
             NSPoint topCenterAnchor = NSMakePoint(middleX, topY);

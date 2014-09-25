@@ -31,7 +31,7 @@
 @property (weak) IBOutlet NSButton *openBtn;
 @property (weak) IBOutlet NSButton *saveBtn;
 @property (weak) IBOutlet NSButton *resetBtn;
-@property (weak) IBOutlet NSButton *fitinLockBtn;
+@property (weak) IBOutlet NSButton *locationLockBtn;
 @property (weak) IBOutlet NSButton *stepZoomOutBtn;
 @property (weak) IBOutlet NSButton *stepZoomInBtn;
 @property (weak) IBOutlet NSButton *applyCropBtn;
@@ -44,13 +44,12 @@
 - (IBAction)openImage:(id)sender;
 - (IBAction)saveImage:(id)sender;
 - (IBAction)resetCurrentImage:(id)sender;
-
 - (IBAction)showHideRotateTool:(id)sender;
 - (IBAction)showHideCropTool:(id)sender;
 - (IBAction)setRotateSliderValue:(id)sender;
 - (IBAction)actionFitin:(id)sender;
 - (IBAction)actionActual:(id)sender;
-- (IBAction)actionLockFitin:(id)sender;
+- (IBAction)actionLockLocation:(id)sender;
 - (IBAction)actionCenter:(id)sender;
 - (IBAction)actionStepZoomOut:(id)sender;
 - (IBAction)actionStepZoomIn:(id)sender;

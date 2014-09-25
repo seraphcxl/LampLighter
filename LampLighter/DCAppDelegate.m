@@ -59,10 +59,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         // Insert code here to initialize your application
         [self.mainView setWantsLayer:YES];
-        CGColorRef color = CGColorCreateGenericRGB(0.34, 0.34, 0.34, 1);
-        [self.mainView.layer setBackgroundColor:color];
-        CGColorRelease(color);
-        color = nil;
+        [self.mainView.layer setBackgroundColor:[[NSColor ironColor] CGColor]];
         
         [self.imageEditVC viewCtrlWillAppear];
         
@@ -265,12 +262,12 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
             
             [self setApplyAndCancelEnabled:YES];
             
-//            [self.fitinLockBtn setState:1];
+//            [self.locationLockBtn setState:1];
             [self.imageEditVC fitin];
             [self.imageEditVC center];
             [self.imageEditVC refresh];
             
-            [self.imageEditVC setAllowDragImage:NO];
+//            [self.imageEditVC setAllowDragImage:NO];
         }
     } while (NO);
 }
@@ -310,16 +307,18 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     [self.imageEditVC refresh];
 }
 
-- (IBAction)actionLockFitin:(id)sender {
+- (IBAction)actionLockLocation:(id)sender {
     do {
-        if (!sender || sender != self.fitinLockBtn) {
+        if (!sender || sender != self.locationLockBtn) {
             break;
         }
-        if (self.imageEditVC.currentScene.imageEditTool.type == DCImageEditToolType_Crop) {
-            break;
+        NSInteger state = self.locationLockBtn.state;
+        if (state) {
+            [self.imageEditVC fitin];
+            [self.imageEditVC center];
         }
-        NSInteger state = self.fitinLockBtn.state;
         self.imageEditVC.allowZoomImage = !state;
+        self.imageEditVC.allowDragImage = !state;
     } while (NO);
     [self.imageEditVC refresh];
 }
@@ -415,7 +414,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                 [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
-//                [self.fitinLockBtn setState:1];
+//                [self.locationLockBtn setState:1];
             }
                 break;
             default:
@@ -446,7 +445,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
                 [self.rotateBtn setEnabled:NO];
                 [self setCropToolEnabled:YES];
                 [self setApplyAndCancelEnabled:YES];
-//                [self.fitinLockBtn setState:1];
+//                [self.locationLockBtn setState:1];
             }
                 break;
             default:
@@ -561,7 +560,7 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
         [self.rotateSlider setFloatValue:0.0f];
         [self.degreeTextField setStringValue:@"0"];
         [self.cropComboBox selectItemWithObjectValue:[DCImageCropTool descriptionForImageCropType:DCImageCropType_Custom]];
-        [self.fitinLockBtn setState:0];
+        [self.locationLockBtn setState:0];
     } while (NO);
 }
 

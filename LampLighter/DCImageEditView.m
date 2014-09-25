@@ -52,16 +52,10 @@
 }
 
 - (void)fillBackgroundColor {
-    CGColorRef color = NULL;
     do {
-        color = CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(179.0f), DCRGBAConvert256ToPercentage(179.0f), DCRGBAConvert256ToPercentage(179.0f), 1.0f);
         [self setWantsLayer:YES];
-        [self.layer setBackgroundColor:color];
+        [self.layer setBackgroundColor:[[NSColor murcuryColor] CGColor]];
     } while (NO);
-    if (color) {
-        CGColorRelease(color);
-        color = NULL;
-    }
 }
 
 @end
