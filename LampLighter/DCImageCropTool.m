@@ -196,23 +196,21 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
         NSPoint bottomRightAnchor = NSMakePoint(rightX, bottomY);
         CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomRightAnchor]);
         
-        if (self.cropType == DCImageCropType_Custom) {
-            // Center anchor
-            centerAnchorColor = [[NSColor lemonColor] cgColor];  // CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(0.0f), 1.0f);
-            CGContextSetFillColorWithColor(context, centerAnchorColor);
-            // TopCenterAnchor
-            NSPoint topCenterAnchor = NSMakePoint(middleX, topY);
-            CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:topCenterAnchor]);
-            // BottomCenterAnchor
-            NSPoint bottomCenterAnchor = NSMakePoint(middleX, bottomY);
-            CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomCenterAnchor]);
-            // LeftCenterAnchor
-            NSPoint leftCenterAnchor = NSMakePoint(leftX, centerY);
-            CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:leftCenterAnchor]);
-            // RightCenterAnchor
-            NSPoint rightCenterAnchor = NSMakePoint(rightX, centerY);
-            CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:rightCenterAnchor]);
-        }
+        // Center anchor
+        centerAnchorColor = [[NSColor lemonColor] cgColor];  // CGColorCreateGenericRGB(DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(255.0f), DCRGBAConvert256ToPercentage(0.0f), 1.0f);
+        CGContextSetFillColorWithColor(context, centerAnchorColor);
+        // TopCenterAnchor
+        NSPoint topCenterAnchor = NSMakePoint(middleX, topY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:topCenterAnchor]);
+        // BottomCenterAnchor
+        NSPoint bottomCenterAnchor = NSMakePoint(middleX, bottomY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:bottomCenterAnchor]);
+        // LeftCenterAnchor
+        NSPoint leftCenterAnchor = NSMakePoint(leftX, centerY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:leftCenterAnchor]);
+        // RightCenterAnchor
+        NSPoint rightCenterAnchor = NSMakePoint(rightX, centerY);
+        CGContextFillEllipseInRect(context, [self createRectForAnchorByCenterPoint:rightCenterAnchor]);
     } while (NO);
     if (maskColor) {
         CGColorRelease(maskColor);
@@ -307,6 +305,26 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
                 case DCImageCropMouseHitLoc_BottomRight:
                 {
                     self.cropRect = NSMakeRect(lockPoint.x, lockPoint.y - cropRectHeight, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_TopCenter:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x - cropRectWidth / 2, lockPoint.y, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_BottomCenter:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x - cropRectWidth / 2, lockPoint.y - cropRectHeight, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_LeftCenter:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x - cropRectWidth, lockPoint.y - cropRectHeight / 2, cropRectWidth, cropRectHeight);
+                }
+                    break;
+                case DCImageCropMouseHitLoc_RightCenter:
+                {
+                    self.cropRect = NSMakeRect(lockPoint.x, lockPoint.y - cropRectHeight / 2, cropRectWidth, cropRectHeight);
                 }
                     break;
                 case DCImageCropMouseHitLoc_Inside:
