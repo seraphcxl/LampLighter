@@ -56,7 +56,8 @@ extern NSString *kDCImageEditToolCodingAnchorRadius;
 
 - (NSRect)createRectForAnchorByCenterPoint:(NSPoint)center;
 - (BOOL)isMouseHitLocation:(NSPoint)loc inAnchor:(NSPoint)anchor;
-
+- (BOOL)isMouseHitLocation:(NSPoint)loc onVerticalLineStart:(NSPoint)start end:(NSPoint)end;
+- (BOOL)isMouseHitLocation:(NSPoint)loc onHorizontalLineStart:(NSPoint)start end:(NSPoint)end;
 - (BOOL)handleMouseDown:(NSEvent *)theEvent;
 - (BOOL)handleRightMouseDown:(NSEvent *)theEvent;
 - (BOOL)handleMouseUp:(NSEvent *)theEvent;

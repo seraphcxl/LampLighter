@@ -121,6 +121,34 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
     return result;
 }
 
+- (BOOL)isMouseHitLocation:(NSPoint)loc onHorizontalLineStart:(NSPoint)start end:(NSPoint)end {
+    BOOL result = NO;
+    do {
+        if (loc.x < start.x || loc.x > end.x) {
+            break;
+        }
+        if (loc.y < start.y - self.anchorRadius || loc.y > start.y + self.anchorRadius) {
+            break;
+        }
+        result = YES;
+    } while (NO);
+    return result;
+}
+
+- (BOOL)isMouseHitLocation:(NSPoint)loc onVerticalLineStart:(NSPoint)start end:(NSPoint)end {
+    BOOL result = NO;
+    do {
+        if (loc.y > start.y || loc.y < end.y) {
+            break;
+        }
+        if (loc.x < start.x - self.anchorRadius || loc.x > start.x + self.anchorRadius) {
+            break;
+        }
+        result = YES;
+    } while (NO);
+    return result;
+}
+
 #pragma mark - Private
 - (void)applyEditionToImage {
     do {

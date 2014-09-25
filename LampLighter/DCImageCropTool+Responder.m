@@ -81,8 +81,81 @@
                 break;
             }
             
-            // line
+            // horizontal line
+            if ([self isMouseHitLocation:loc onHorizontalLineStart:topLeft end:topCenter]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_TopCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_TopLeft;
+                }
+                break;
+            }
             
+            if ([self isMouseHitLocation:loc onHorizontalLineStart:topCenter end:topRight]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_TopCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_TopRight;
+                }
+                break;
+            }
+            
+            if ([self isMouseHitLocation:loc onHorizontalLineStart:bottomLeft end:bottomCenter]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_BottomCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_BottomLeft;
+                }
+                break;
+            }
+            
+            if ([self isMouseHitLocation:loc onHorizontalLineStart:bottomCenter end:bottomRight]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_BottomCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_BottomRight;
+                }
+                break;
+            }
+            
+            // vertical line
+            if ([self isMouseHitLocation:loc onVerticalLineStart:topLeft end:leftCenter]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_LeftCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_TopLeft;
+                }
+                break;
+            }
+            
+            if ([self isMouseHitLocation:loc onVerticalLineStart:leftCenter end:bottomLeft]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_LeftCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_BottomLeft;
+                }
+                break;
+            }
+            
+            if ([self isMouseHitLocation:loc onVerticalLineStart:topRight end:rightCenter]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_RightCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_TopRight;
+                }
+                break;
+            }
+            
+            if ([self isMouseHitLocation:loc onVerticalLineStart:rightCenter end:bottomRight]) {
+                if (self.cropType == DCImageCropType_Custom) {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_RightCenter;
+                } else {
+                    self.mouseHitLocation = DCImageCropMouseHitLoc_BottomRight;
+                }
+                break;
+            }
+            
+            // inside or outside
             if (NSPointInRect(loc, self.cropRect)) {
                 self.mouseHitLocation = DCImageCropMouseHitLoc_Inside;
                 break;
