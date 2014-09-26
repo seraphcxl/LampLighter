@@ -47,6 +47,35 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
 }
 
 #pragma mark - Public
+- (BOOL)loadFormDict:(NSDictionary *)dict {
+    BOOL result = NO;
+    do {
+        if (!dict) {
+            break;
+        }
+        if (![super loadFormDict:dict]) {
+            break;
+        }
+        self.rotation = ABS(360.0f - [[dict objectForKey:kDCImageRotateToolRotation] floatValue]);
+    } while (NO);
+    return result;
+}
+
+- (NSDictionary *)getInfo {
+    NSMutableDictionary *result = nil;
+    do {
+        NSDictionary *tmp = [super getInfo];
+        if (!tmp) {
+            break;
+        }
+        
+        result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:self.rotation], kDCImageRotateToolRotation, nil];
+        
+        [result addEntriesFromDictionary:tmp];
+    } while (NO);
+    return result;
+}
+
 - (NSString *)imageEditToolDescription {
     return @"Rotate";
 }

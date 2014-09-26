@@ -9,6 +9,11 @@
 #import "DCEditableImage.h"
 #import "DCImageRotateTool.h"
 
+NSString *kDCEditableImageScaleX = @"DCEditableImageScaleX";
+NSString *kDCEditableImageScaleY = @"DCEditableImageScaleY";
+NSString *kDCEditableImageTranslateX = @"DCEditableImageTranslateX";
+NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
+
 @interface DCEditableImage () {
     CGImageRef _image;
     CFDictionaryRef _properties;
@@ -389,6 +394,30 @@
         CGColorRelease(visiableRectColor);
         visiableRectColor = NULL;
     }
+}
+
+- (BOOL)loadFromPreviewInfo:(NSDictionary *)dict {
+    BOOL result = NO;
+    do {
+        if (!dict) {
+            break;
+        }
+        
+        self.scaleX = [[dict objectForKey:kDCEditableImageScaleX] floatValue];
+        self.scaleY = [[dict objectForKey:kDCEditableImageScaleY] floatValue];
+        self.translateX = [[dict objectForKey:kDCEditableImageTranslateX] floatValue];
+        self.translateY = [[dict objectForKey:kDCEditableImageTranslateY] floatValue];
+        
+        result = YES;
+    } while (NO);
+    return result;
+}
+- (NSDictionary *)getPreviewInfo {
+    NSDictionary *result = nil;
+    do {
+        result = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:self.scaleX], kDCEditableImageScaleX, [NSNumber numberWithFloat:self.scaleY], kDCEditableImageScaleY, [NSNumber numberWithFloat:self.translateX], kDCEditableImageTranslateX, [NSNumber numberWithFloat:self.translateY], kDCEditableImageTranslateY, nil];
+    } while (NO);
+    return result;
 }
 
 #pragma mark - Private

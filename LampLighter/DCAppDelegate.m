@@ -415,8 +415,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         [self.imageEditVC undo];
         
-        [self.imageEditVC fitin];
-        [self.imageEditVC center];
+//        [self.imageEditVC fitin];
+//        [self.imageEditVC center];
         
         switch (self.imageEditVC.currentScene.imageEditTool.type) {
             case DCImageEditToolType_Rotate:
@@ -446,8 +446,8 @@ const int64_t kDefaultTimeoutLengthInNanoSeconds = 20000000000; // 20 Seconds
     do {
         [self.imageEditVC redo];
         
-        [self.imageEditVC fitin];
-        [self.imageEditVC center];
+//        [self.imageEditVC fitin];
+//        [self.imageEditVC center];
         
         switch (self.imageEditVC.currentScene.imageEditTool.type) {
             case DCImageEditToolType_Rotate:

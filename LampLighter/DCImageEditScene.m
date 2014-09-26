@@ -17,6 +17,7 @@ const CGFloat kImageEditor_ZoomRatio_Min = 0.05f;
 
 const CGFloat kImageEditor_ZoomStep = 0.05f;
 
+NSString *kDCImageEditSceneCodingEditImagePreviewInfo = @"DCImageEditSceneCodingEditImagePreviewInfo";
 NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 
 @interface DCImageEditScene () {
@@ -26,6 +27,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 @property (copy, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) DCEditableImage *editableImage;
 @property (strong, nonatomic) DCImageEditTool *imageEditTool;
+@property (strong, nonatomic) DCJSONUserDefault *userDef;
 
 @end
 
@@ -36,6 +38,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 @synthesize imageURL = _imageURL;
 @synthesize editableImage = _editableImage;
 @synthesize imageEditTool = _imageEditTool;
+@synthesize userDef = _userDef;
 
 + (NSString *)getCacheDir {
     NSString *result = nil;
@@ -104,7 +107,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 - (BOOL)active {
     BOOL result = NO;
     do {
-        if (![self initWithUUID:self.uuid imageURL:self.imageURL]) {
+        if (![self loadWithUUID:self.uuid imageURL:self.imageURL]) {
             break;
         }
         result = YES;
@@ -139,16 +142,6 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 - (void)dealloc {
     do {
         self.delegate = nil;
-//        NSString *cacheDir = [DCImageEditScene getCacheDir];
-//        NSFileManager *fileMgr = [NSFileManager defaultManager];
-//        BOOL isDir = NO;
-//        if ([fileMgr fileExistsAtPath:cacheDir isDirectory:&isDir] && isDir) {
-//            NSURL *cacheURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", cacheDir, self.uuid]];
-//            NSError *err = nil;
-//            if (![fileMgr removeItemAtURL:cacheURL error:&err] || err) {
-//                NSLog(@"%@", [err localizedDescription]);
-//            }
-//        }
         self.imageEditTool = nil;
         self.editableImage = nil;
         self.imageURL = nil;
@@ -157,7 +150,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 }
 
 #pragma mark - Public
-- (BOOL)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL {
+- (BOOL)loadWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL {
     BOOL result = NO;
     do {
         DCAssert(uuid != nil && imageURL != nil);
@@ -175,14 +168,47 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         }
         
         NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.uuid]];
-        isDirectory = NO;
-        if ([fileMgr fileExistsAtPath:path isDirectory:&isDirectory] && !isDirectory) {
-            NSData *data = [NSData dataWithContentsOfFile:path];
-            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            self.imageEditTool = [unarchiver decodeObjectForKey:kDCImageEditSceneCodingEditTool];
-            self.imageEditTool.actionDelegate = self;
-            [self.imageEditTool resetEditableImage:self.editableImage];            
+        
+        self.userDef = [[DCJSONUserDefault alloc] init];
+        [self.userDef initContents:path];
+        
+        NSDictionary *imagePreviewInfo = [self.userDef objectForKey:kDCImageEditSceneCodingEditImagePreviewInfo];
+        if (imagePreviewInfo) {
+            [self.editableImage loadFromPreviewInfo:imagePreviewInfo];
         }
+        
+        NSDictionary *editToolInfo = [self.userDef objectForKey:kDCImageEditSceneCodingEditTool];
+        if (editToolInfo) {
+            DCImageEditToolType type = (DCImageEditToolType)[[editToolInfo objectForKey:kDCImageEditToolCodingType] integerValue];
+            switch (type) {
+                case DCImageEditToolType_Rotate:
+                {
+                    self.imageEditTool = [[DCImageRotateTool alloc] init];
+                }
+                    break;
+                case DCImageEditToolType_Crop:
+                {
+                    self.imageEditTool = [[DCImageCropTool alloc] init];
+                }
+                    break;
+                default:
+                    break;
+            }
+            if (self.imageEditTool) {
+                [self.imageEditTool loadFormDict:editToolInfo];
+                self.imageEditTool.actionDelegate = self;
+                [self.imageEditTool resetEditableImage:self.editableImage];
+            }
+        }
+        
+//        isDirectory = NO;
+//        if ([fileMgr fileExistsAtPath:path isDirectory:&isDirectory] && !isDirectory) {
+//            NSData *data = [NSData dataWithContentsOfFile:path];
+//            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//            self.imageEditTool = [unarchiver decodeObjectForKey:kDCImageEditSceneCodingEditTool];
+//            self.imageEditTool.actionDelegate = self;
+//            [self.imageEditTool resetEditableImage:self.editableImage];            
+//        }
         
         result = YES;
     } while (NO);
@@ -353,14 +379,30 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         
         NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.uuid]];
         
-        NSMutableData *data = [NSMutableData data];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-        [archiver encodeObject:self.imageEditTool forKey:kDCImageEditSceneCodingEditTool];
-        [archiver finishEncoding];
-        
         [DCImageEditScene clearExistedFile:path];
         
-        [data writeToFile:path atomically:YES];
+        NSDictionary *imagePreviewInfo = [self.editableImage getPreviewInfo];
+        if (!imagePreviewInfo) {
+            break;
+        }
+        
+        NSDictionary *editToolInfo = [self.imageEditTool getInfo];
+        if (!editToolInfo) {
+            break;
+        }
+        
+        [self.userDef setObject:imagePreviewInfo forKey:kDCImageEditSceneCodingEditImagePreviewInfo];
+        [self.userDef setObject:editToolInfo forKey:kDCImageEditSceneCodingEditTool];
+        
+        [self.userDef synchronize];
+//        NSMutableData *data = [NSMutableData data];
+//        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//        [archiver encodeObject:self.imageEditTool forKey:kDCImageEditSceneCodingEditTool];
+//        [archiver finishEncoding];
+        
+        
+        
+//        [data writeToFile:path atomically:YES];
         
         result = YES;
     } while (NO);

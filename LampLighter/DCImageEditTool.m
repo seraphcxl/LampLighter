@@ -43,13 +43,20 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
 }
 
 #pragma mark - Lifecycle
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.anchorRadius = kImageEditor_DefaultAnchorRadius;
+        _anchorRadiusSqrt = powf(_anchorRadius, 2);
+    }
+    return self;
+}
+
 - (instancetype)initWithEditableImage:(DCEditableImage *)editableImage {
     self = [self init];
     if (self) {
         if (editableImage) {
             self.currentImg = editableImage;
-            self.anchorRadius = kImageEditor_DefaultAnchorRadius;
-            _anchorRadiusSqrt = powf(_anchorRadius, 2);
         }
     }
     return self;
@@ -77,6 +84,29 @@ NSString *kDCImageEditToolCodingAnchorRadius = @"DCImageEditToolCodingAnchorRadi
             [self applyEditionToImage];
         }
     } while (NO);
+}
+
+- (BOOL)loadFormDict:(NSDictionary *)dict {
+    BOOL result = NO;
+    do {
+        if (!dict) {
+            break;
+        }
+        
+        self.type = (DCImageEditToolType)[[dict objectForKey:kDCImageEditToolCodingType] integerValue];
+        self.edited = [[dict objectForKey:kDCImageEditToolCodingEdited] boolValue];
+        self.anchorRadius = [[dict objectForKey:kDCImageEditToolCodingAnchorRadius] floatValue];
+        result = YES;
+    } while (NO);
+    return result;
+}
+
+- (NSDictionary *)getInfo {
+    NSDictionary *result = nil;
+    do {
+        result = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.type], kDCImageEditToolCodingType, [NSNumber numberWithBool:self.edited], kDCImageEditToolCodingEdited, [NSNumber numberWithFloat:self.anchorRadius], kDCImageEditToolCodingAnchorRadius, nil];
+    } while (NO);
+    return result;
 }
 
 - (NSString *)imageEditToolDescription {

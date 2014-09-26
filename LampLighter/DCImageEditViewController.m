@@ -130,7 +130,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         
         NSString *uuid = [NSObject createUniqueStrByUUID];
         self.currentScene = [[DCImageEditScene alloc] init];
-        [self.currentScene initWithUUID:uuid imageURL:imageURL];
+        [self.currentScene loadWithUUID:uuid imageURL:imageURL];
         self.currentScene.delegate = self;
         
         NSString *urlStr = [imageURL absoluteString];
@@ -270,7 +270,7 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         [oldScene inactive];
         
         self.currentScene = [[DCImageEditScene alloc] init];
-        [self.currentScene initWithUUID:uuid imageURL:newFileURL];
+        [self.currentScene loadWithUUID:uuid imageURL:newFileURL];
         self.currentScene.delegate = self;
         self.allowDragImage = YES;
         self.allowZoomImage = YES;

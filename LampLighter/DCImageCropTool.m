@@ -124,6 +124,38 @@ NSString *kDCImageCropToolCodingCropRectSizeHeight = @"DCImageCropToolCodingCrop
     return result;
 }
 
+- (BOOL)loadFormDict:(NSDictionary *)dict {
+    BOOL result = NO;
+    do {
+        if (!dict) {
+            break;
+        }
+        
+        if (![super loadFormDict:dict]) {
+            break;
+        }
+        
+        self.cropType = [[dict objectForKey:kDCImageCropToolCodingCropType] integerValue];
+        self.cropRect = NSMakeRect([[dict objectForKey:kDCImageCropToolCodingCropRectOriginX] floatValue], [[dict objectForKey:kDCImageCropToolCodingCropRectOriginY] floatValue], [[dict objectForKey:kDCImageCropToolCodingCropRectSizeWidth] floatValue], [[dict objectForKey:kDCImageCropToolCodingCropRectSizeHeight] floatValue]);
+    } while (NO);
+    return result;
+}
+
+- (NSDictionary *)getInfo {
+    NSMutableDictionary *result = nil;
+    do {
+        NSDictionary *tmp = [super getInfo];
+        if (!tmp) {
+            break;
+        }
+        
+        result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:self.cropType], kDCImageCropToolCodingCropType, [NSNumber numberWithFloat:self.cropRect.origin.x], kDCImageCropToolCodingCropRectOriginX, [NSNumber numberWithFloat:self.cropRect.origin.y], kDCImageCropToolCodingCropRectOriginY, [NSNumber numberWithFloat:self.cropRect.size.width], kDCImageCropToolCodingCropRectSizeWidth, [NSNumber numberWithFloat:self.cropRect.size.height], kDCImageCropToolCodingCropRectSizeHeight, nil];
+        
+        [result addEntriesFromDictionary:tmp];
+    } while (NO);
+    return result;
+}
+
 - (NSString *)imageEditToolDescription {
     return @"Crop";
 }

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *kDCEditableImageScaleX;
+extern NSString *kDCEditableImageScaleY;
+extern NSString *kDCEditableImageTranslateX;
+extern NSString *kDCEditableImageTranslateY;
+
 @class DCEditableImage;
 
 @protocol DCEditableImageDelegate <NSObject>
@@ -50,5 +55,8 @@
 - (BOOL)saveCrop:(NSRect)cropRect as:(NSURL *)destURL type:(NSString *)type;
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)bounds;
+
+- (BOOL)loadFromPreviewInfo:(NSDictionary *)dict;
+- (NSDictionary *)getPreviewInfo;
 
 @end

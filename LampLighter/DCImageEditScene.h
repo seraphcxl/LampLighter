@@ -15,6 +15,7 @@ extern const CGFloat kImageEditor_ZoomRatio_Min;
 
 extern const CGFloat kImageEditor_ZoomStep;
 
+extern NSString *kDCImageEditSceneCodingEditImagePreviewInfo;
 extern NSString *kDCImageEditSceneCodingEditTool;
 
 @class DCImageEditScene;
@@ -45,7 +46,7 @@ extern NSString *kDCImageEditSceneCodingEditTool;
 - (BOOL)active;
 - (BOOL)inactive;
 
-- (BOOL)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL;
+- (BOOL)loadWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL;
 - (BOOL)reset;
 - (BOOL)resetEditToolByType:(DCImageEditToolType)type;
 
