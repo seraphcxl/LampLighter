@@ -170,7 +170,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.uuid]];
         
         self.userDef = [[DCJSONUserDefault alloc] init];
-        [self.userDef initContents:path];
+        [self.userDef initWithContents:path shouldEncrypt:YES];
         
         NSDictionary *imagePreviewInfo = [self.userDef objectForKey:kDCImageEditSceneCodingEditImagePreviewInfo];
         if (imagePreviewInfo) {

@@ -2,14 +2,14 @@
 # platform :ios, "6.0"
 
 target "LampLighter" do
-pod 'Tourbillon', '~> 0.9.8'
+pod 'Tourbillon', '~> 0.9.10'
 
-pod 'BalanceWheel', '~> 0.9.2'
+pod 'BalanceWheel', '~> 0.9.3'
 end
 
 target "LampLighterTests" do
-pod 'Tourbillon', '~> 0.9.8'
+pod 'Tourbillon', '~> 0.9.10'
 
-pod 'BalanceWheel', '~> 0.9.2'
+pod 'BalanceWheel', '~> 0.9.3'
 end
 
