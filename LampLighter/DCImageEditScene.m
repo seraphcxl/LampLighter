@@ -259,7 +259,6 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
             case DCImageEditToolType_Rotate:
             {
                 self.imageEditTool = [[DCImageRotateTool alloc] initWithEditableImage:self.editableImage];
-                result = YES;
             }
                 break;
             case DCImageEditToolType_Crop:
@@ -268,7 +267,6 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
                 DCImageCropTool *cropTool = [[DCImageCropTool alloc] initWithEditableImage:self.editableImage];
                 [cropTool resetCropType:cropType];
                 self.imageEditTool = cropTool;
-                result = YES;
             }
                 break;
             default:

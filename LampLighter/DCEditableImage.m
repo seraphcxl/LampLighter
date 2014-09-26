@@ -138,9 +138,9 @@ NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
 }
 
 - (void)reset {
+    CGImageSourceRef imageSrc = NULL;
     do {
         BOOL readSourceDone = NO;
-        CGImageSourceRef imageSrc = NULL;
         NSInteger width = 0;
         NSInteger height = 0;
         
@@ -171,10 +171,6 @@ NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
         
         readSourceDone = YES;
         
-        if (imageSrc) {
-            CFRelease(imageSrc);
-            imageSrc = nil;
-        }
         if (!readSourceDone) {
             if (_image) {
                 CGImageRelease(_image);
@@ -199,6 +195,10 @@ NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
         
         [self fixupImageOrientation];
     } while (NO);
+    if (imageSrc) {
+        CFRelease(imageSrc);
+        imageSrc = nil;
+    }
 }
 
 - (void)dealloc {
@@ -309,8 +309,10 @@ NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
                 CFDictionarySetValue(exifProp, kCGImagePropertyExifPixelYDimension, cfHeight);
                 
                 CFDictionarySetValue(prop, kCGImagePropertyExifDictionary, exifProp);
+                
+                CFRelease(exifProp);
+                exifProp = NULL;
             }
-            CFRelease(exifProp);
         }
         
         if ([self getImageOrientation] != 1) {
@@ -325,8 +327,10 @@ NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
                     CFDictionarySetValue(tiffProp, kCGImagePropertyTIFFOrientation, cfOrientation);
                     
                     CFDictionarySetValue(prop, kCGImagePropertyTIFFDictionary, tiffProp);
+                    
+                    CFRelease(tiffProp);
+                    tiffProp = NULL;
                 }
-                CFRelease(tiffProp);
             }
             // IPTC
             CFDictionaryRef srcIPTCProp = (CFDictionaryRef)CFDictionaryGetValue(_properties, kCGImagePropertyIPTCDictionary);
@@ -336,8 +340,10 @@ NSString *kDCEditableImageTranslateY = @"DCEditableImageTranslateY";
                     CFDictionarySetValue(iptcProp, kCGImagePropertyIPTCImageOrientation, cfOrientation);
                     
                     CFDictionarySetValue(prop, kCGImagePropertyIPTCDictionary, iptcProp);
+                    
+                    CFRelease(iptcProp);
+                    iptcProp = NULL;
                 }
-                CFRelease(iptcProp);
             }
             CGImageDestinationAddImage(imageDest, imageIOImage, prop);
             
