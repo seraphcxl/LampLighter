@@ -129,7 +129,8 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         [DCImageEditViewController clearCacheDir];
         
         NSString *uuid = [NSObject createUniqueStrByUUID];
-        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:imageURL];
+        self.currentScene = [[DCImageEditScene alloc] init];
+        [self.currentScene initWithUUID:uuid imageURL:imageURL];
         self.currentScene.delegate = self;
         
         NSString *urlStr = [imageURL absoluteString];
@@ -260,11 +261,16 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (![self.currentScene needCache]) {
             break;
         }
-        [self.undoAry pushObject:self.currentScene.uuid];
+        DCImageEditScene *oldScene = self.currentScene;
+        [self.undoAry pushObject:oldScene];
         
         NSString *uuid = [NSObject createUniqueStrByUUID];
         NSURL *newFileURL = [self.currentScene cacheWithNewUUID:uuid];
-        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:newFileURL];
+        
+        [oldScene inactive];
+        
+        self.currentScene = [[DCImageEditScene alloc] init];
+        [self.currentScene initWithUUID:uuid imageURL:newFileURL];
         self.currentScene.delegate = self;
         self.allowDragImage = YES;
         self.allowZoomImage = YES;
@@ -295,14 +301,18 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (self.undoAry.count == 0) {
             break;
         }
+        DCImageEditScene *oldScene = nil;
         if ([self.currentScene needCache]) {
-//            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
-            [self.redoAry pushObject:self.currentScene.uuid];
+            oldScene = self.currentScene;
+            if (![oldScene cacheEditInfo]) {
+                break;
+            }
+            [self.redoAry pushObject:oldScene];
+            [oldScene inactive];
         }
-        NSString *uuid = (NSString *)[self.undoAry popObject];
-        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.%@", uuid, uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
-        self.currentScene.delegate = nil;
-        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
+        DCImageEditScene *newScene = (DCImageEditScene *)[self.undoAry popObject];
+        [newScene active];
+        self.currentScene = newScene;
         self.currentScene.delegate = self;
     } while (NO);
     [self refresh];
@@ -313,14 +323,18 @@ typedef BOOL (^DCEditableImageSaveActionBlock)(DCEditableImage *editableImage, N
         if (self.redoAry.count == 0) {
             break;
         }
+        DCImageEditScene *oldScene = nil;
         if ([self.currentScene needCache]) {
-//            [self.currentScene cacheWithNewUUID:[NSObject createUniqueStrByUUID]];
-            [self.undoAry pushObject:self.currentScene.uuid];
+            oldScene = self.currentScene;
+            if (![oldScene cacheEditInfo]) {
+                break;
+            }
+            [self.undoAry pushObject:oldScene];
+            [oldScene inactive];
         }
-        NSString *uuid = (NSString *)[self.redoAry popObject];
-        NSString *path = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.%@", uuid, uuid, [[self.currentScene.imageURL relativePath] pathExtension]]];
-        self.currentScene.delegate = nil;
-        self.currentScene = [[DCImageEditScene alloc] initWithUUID:uuid imageURL:[NSURL fileURLWithPath:path]];
+        DCImageEditScene *newScene = (DCImageEditScene *)[self.redoAry popObject];
+        [newScene active];
+        self.currentScene = newScene;
         self.currentScene.delegate = self;
     } while (NO);
     [self refresh];

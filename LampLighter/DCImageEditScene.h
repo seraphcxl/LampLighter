@@ -42,11 +42,17 @@ extern NSString *kDCImageEditSceneCodingEditTool;
 + (NSURL *)cacheImage:(NSURL *)sourceURL withUUID:(NSString *)uuid;
 + (void)clearExistedFile:(NSString *)path;
 
-- (instancetype)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL;
+- (BOOL)active;
+- (BOOL)inactive;
+
+- (BOOL)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL;
 - (BOOL)reset;
 - (BOOL)resetEditToolByType:(DCImageEditToolType)type;
+
 - (BOOL)needCache;
 - (NSURL *)cacheWithNewUUID:(NSString *)newUUID;
+- (BOOL)cacheEditInfo;
+- (NSURL *)cacheEditImage:(NSString *)newUUID;
 
 - (BOOL)saveImageAs:(NSURL *)destURL;
 

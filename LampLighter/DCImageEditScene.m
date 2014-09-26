@@ -101,6 +101,29 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
     } while (NO);
 }
 
+- (BOOL)active {
+    BOOL result = NO;
+    do {
+        if (![self initWithUUID:self.uuid imageURL:self.imageURL]) {
+            break;
+        }
+        result = YES;
+    } while (NO);
+    return result;
+}
+
+- (BOOL)inactive {
+    BOOL result = NO;
+    do {
+        self.delegate = nil;
+        self.editableImage = nil;
+        self.imageEditTool = nil;
+        
+        result = YES;
+    } while (NO);
+    return result;
+}
+
 #pragma mark - Lifecycle
 - (id)init {
     self = [super init];
@@ -134,8 +157,8 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 }
 
 #pragma mark - Public
-- (instancetype)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL {
-    DCImageEditScene *result = nil;
+- (BOOL)initWithUUID:(NSString *)uuid imageURL:(NSURL *)imageURL {
+    BOOL result = NO;
     do {
         DCAssert(uuid != nil && imageURL != nil);
         self.uuid = uuid;
@@ -161,7 +184,7 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
             [self.imageEditTool resetEditableImage:self.editableImage];            
         }
         
-        result = self;
+        result = YES;
     } while (NO);
     return result;
 }
@@ -300,10 +323,22 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
 - (NSURL *)cacheWithNewUUID:(NSString *)newUUID {
     NSURL *result = nil;
     do {
-        if (!newUUID || !self.editableImage) {
+        if (!newUUID || !self.editableImage || !self.imageEditTool) {
             break;
         }
         
+        if (![self cacheEditInfo]) {
+            break;
+        }
+        
+        result = [self cacheEditImage:newUUID];
+    } while (NO);
+    return result;
+}
+
+- (BOOL)cacheEditInfo {
+    BOOL result = NO;
+    do {
         if (!self.imageEditTool) {
             break;
         }
@@ -326,14 +361,28 @@ NSString *kDCImageEditSceneCodingEditTool = @"DCImageEditSceneCodingEditTool";
         [DCImageEditScene clearExistedFile:path];
         
         [data writeToFile:path atomically:YES];
+        
+        result = YES;
+    } while (NO);
+    return result;
+}
+
+- (NSURL *)cacheEditImage:(NSString *)newUUID {
+    NSURL *result = nil;
+    do {
+        if (!newUUID || !self.editableImage) {
+            break;
+        }
+        
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
         // save image
-        cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:newUUID];
-        isDirectory = NO;
+        NSString *cacheDir = [[DCImageEditScene getCacheDir] stringByAppendingPathComponent:newUUID];
+        BOOL isDirectory = NO;
         if (![fileMgr fileExistsAtPath:cacheDir isDirectory:&isDirectory] || !isDirectory) {
             [fileMgr createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:NULL error:NULL];
         }
         
-        path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", newUUID, [[self.imageURL absoluteString] pathExtension]]];
+        NSString *path = [cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", newUUID, [[self.imageURL absoluteString] pathExtension]]];
         
         [DCImageEditScene clearExistedFile:path];
         
