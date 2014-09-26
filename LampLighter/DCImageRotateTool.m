@@ -101,20 +101,20 @@ const CGFloat kDCImageRotateTool_HandleLineLength = kDCImageRotateTool_BaseRadiu
         NSPoint handleLineLocation = NSMakePoint(0.0f, 0.0f);
         
         handleLineLocation.x = self.centerPoint.x - sinf(radian) * kDCImageRotateTool_HandleLineLength;
-        if (handleLineLocation.x < 0.0f) {
-            handleLineLocation.x = 0.0f;
-        }
-        if (handleLineLocation.x > bounds.size.width) {
-            handleLineLocation.x = bounds.size.width;
-        }
+//        if (handleLineLocation.x < 0.0f) {
+//            handleLineLocation.x = 0.0f;
+//        }
+//        if (handleLineLocation.x > bounds.size.width) {
+//            handleLineLocation.x = bounds.size.width;
+//        }
         
         handleLineLocation.y = self.centerPoint.y + cosf(radian) * kDCImageRotateTool_HandleLineLength;
-        if (handleLineLocation.y < 0.0f) {
-            handleLineLocation.y = 0.0f;
-        }
-        if (handleLineLocation.y > bounds.size.height) {
-            handleLineLocation.y = bounds.size.height;
-        }
+//        if (handleLineLocation.y < 0.0f) {
+//            handleLineLocation.y = 0.0f;
+//        }
+//        if (handleLineLocation.y > bounds.size.height) {
+//            handleLineLocation.y = bounds.size.height;
+//        }
         
         self.handleLocation = handleLineLocation;
         CGContextAddLineToPoint(context, handleLineLocation.x, handleLineLocation.y);
